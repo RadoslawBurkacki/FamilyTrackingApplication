@@ -12,5 +12,81 @@
             android:layout_height="551dp" tools:layout_editor_absoluteY="8dp"
             tools:layout_editor_absoluteX="8dp">
 
+        <TextView
+                android:text="Create Account"
+                android:textSize="36sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" android:layout_marginTop="47dp" android:id="@+id/title"/>
+
+        <Button
+                android:text="NEXT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+                android:layout_marginRight="45dp" android:layout_marginEnd="45dp" android:layout_marginBottom="21dp"
+                android:id="@+id/registerNext"
+                android:background="@drawable/round_corners"/>
+
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:ems="10"
+                android:layout_below="@+id/title" android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" android:layout_marginLeft="42dp"
+                android:layout_marginStart="42dp" android:layout_marginTop="95dp" android:id="@+id/txtEmail"/>
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:layout_below="@+id/txtEmail" android:layout_alignLeft="@+id/txtEmail"
+                android:layout_alignStart="@+id/txtEmail" android:layout_marginTop="50dp" android:id="@+id/txtPassword"/>
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:layout_below="@+id/txtPassword" android:layout_alignLeft="@+id/txtPassword"
+                android:layout_alignStart="@+id/txtPassword" android:layout_marginTop="50dp"
+                android:id="@+id/txtRePassword"/>
+        <TextView
+                android:text="Enter your email."
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblemail"
+                android:layout_marginBottom="47dp"
+                android:layout_above="@+id/txtPassword" android:layout_alignLeft="@+id/txtEmail"
+                android:layout_alignStart="@+id/txtEmail"/>
+        <TextView
+                android:text="Enter your password."
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_below="@+id/txtEmail" android:layout_alignLeft="@+id/txtPassword"
+                android:layout_alignStart="@+id/txtPassword" android:id="@+id/lblpass1"/>
+        <TextView
+                android:text="Re-enter password."
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp" android:id="@+id/lblpass2"
+                android:layout_below="@+id/txtPassword" android:layout_alignLeft="@+id/txtRePassword"
+                android:layout_alignStart="@+id/txtRePassword"/>
+        <TextView
+                android:text="Use at least 6 characters."
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView13"
+                android:layout_below="@+id/txtPassword" android:layout_alignLeft="@+id/txtPassword"
+                android:layout_alignStart="@+id/txtPassword"/>
+        <TextView
+                android:text="Use at least 6 characters."
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView14"
+                android:layout_below="@+id/txtRePassword" android:layout_alignLeft="@+id/txtRePassword"
+                android:layout_alignStart="@+id/txtRePassword"/>
+
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

@@ -17,10 +17,11 @@
                 android:text="REGISTER"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/button" android:layout_above="@+id/textView2" android:layout_centerHorizontal="true"
-                android:layout_marginBottom="106dp"
+                android:id="@+id/button"
+                android:layout_marginBottom="50dp"
                 android:background="@drawable/round_corners"
-                android:width="335dp"/>
+                android:width="335dp" android:layout_above="@+id/textView2" android:layout_alignLeft="@+id/button2"
+                android:layout_alignStart="@+id/button2"/>
 
 
         <Button
@@ -42,5 +43,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:layout_above="@+id/button2"
                 android:layout_centerHorizontal="true" android:id="@+id/textView2"/>
+        <TextView
+                android:text="((LOGO))"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" android:layout_marginTop="65dp" android:id="@+id/textView5"/>
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
