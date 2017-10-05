@@ -1,18 +1,30 @@
 package com.honoursproject.radoslawburkacki.familytrackingapplication;
 
-import java.util.Date;
 
-public class User {
+import java.io.Serializable;
 
-    private int id;
+public class User implements Serializable{
+
+
+    private long id;
     private String email;
     private String password;
     private String fname;
     private String lname;
-    private Date dob;
 
-    public User() {
+    public User(){
 
+    }
+
+    public User(String email, String password, String fname, String lname) {
+        this.email = email;
+        this.password = password;
+        this.fname = fname;
+        this.lname = lname;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getEmail() {
@@ -45,13 +57,5 @@ public class User {
 
     public void setLname(String lname) {
         this.lname = lname;
-    }
-
-    public Date getDob() {
-        return dob;
-    }
-
-    public void setDob(Date dob) {
-        this.dob = dob;
     }
 }

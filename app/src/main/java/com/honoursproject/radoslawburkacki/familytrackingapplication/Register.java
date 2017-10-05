@@ -3,13 +3,11 @@ package com.honoursproject.radoslawburkacki.familytrackingapplication;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+
+
 
 
 public class Register extends AppCompatActivity {
@@ -55,9 +53,12 @@ public class Register extends AppCompatActivity {
                         newUser.setEmail(email.getText().toString());
                         newUser.setPassword(pass.getText().toString());
 
-                        startActivity(new Intent(Register.this, Register2.class)); // open new activity called Register
 
 
+                        Intent intent = new Intent(Register.this, Register2.class);
+                        intent.putExtra("user",newUser);
+                        startActivity(intent);
+                        finish();
 
 
                     } else {
