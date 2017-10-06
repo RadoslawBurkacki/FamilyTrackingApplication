@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.honoursproject.radoslawburkacki.familytrackingapplication.User;
+import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 import com.squareup.okhttp.*;
 
 public class RegisterTask extends AsyncTask<User, String, Integer> {

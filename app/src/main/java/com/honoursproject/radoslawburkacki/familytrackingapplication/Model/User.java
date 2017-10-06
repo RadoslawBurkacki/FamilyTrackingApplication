@@ -1,4 +1,4 @@
-package com.honoursproject.radoslawburkacki.familytrackingapplication;
+package com.honoursproject.radoslawburkacki.familytrackingapplication.Model;
 
 
 import java.io.Serializable;

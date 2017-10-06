@@ -6,8 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
-
+import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 
 
 public class Register extends AppCompatActivity {
