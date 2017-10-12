@@ -3,7 +3,13 @@
           package="com.honoursproject.radoslawburkacki.familytrackingapplication">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.READ_PROFILE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+
 
     <application
             android:allowBackup="true"
@@ -12,19 +18,25 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name="com.honoursproject.radoslawburkacki.familytrackingapplication.MainActivity">
+        <activity android:name=".MainActivity"
+                  android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.honoursproject.radoslawburkacki.familytrackingapplication.Register">
+        <activity android:name=".Register"
+                  android:screenOrientation="portrait">
         </activity>
-        <activity android:name="com.honoursproject.radoslawburkacki.familytrackingapplication.Register2">
+        <activity android:name=".Register2"
+                  android:screenOrientation="portrait">
             android:noHistory="true"
         </activity>
-
+        <activity android:name=".Login"
+                  android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

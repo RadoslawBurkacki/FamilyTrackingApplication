@@ -23,7 +23,7 @@ public class Register2 extends AppCompatActivity implements RegisterTask.AsyncRe
     private EditText lname;
     private Button create;
     private User newUser;
-    private String serverAddress = "http://192.168.0.13:8080/";
+    private String serverAddress = "http://10.16.29.215:8080/";
 
 
     @Override
@@ -44,15 +44,24 @@ public class Register2 extends AppCompatActivity implements RegisterTask.AsyncRe
             @Override
             public void onClick(View view) {
 
-                newUser.setFname(fname.getText().toString());
-                newUser.setLname(lname.getText().toString());
-                register();
+                if(fname.getText().toString().equals("") || lname.getText().toString().equals("")){
+                    pleaseEnterCredentials();
+                }
+                else {
+                    newUser.setFname(fname.getText().toString());
+                    newUser.setLname(lname.getText().toString());
+                    register();
 
-                finish();
+                    finish();
+                }
             }
 
         });
 
+    }
+
+    private void pleaseEnterCredentials(){
+        Toast.makeText(this,"Please enter first name and last name.",Toast.LENGTH_LONG).show();
     }
 
     private boolean isNetworkAvailable() {
