@@ -23,7 +23,7 @@ public class Register2 extends AppCompatActivity implements RegisterTask.AsyncRe
     private EditText lname;
     private Button create;
     private User newUser;
-    private String serverAddress = "http://10.16.29.215:8080/";
+    private String serverAddress = "http://10.16.23.194:8080/";
 
 
     @Override
