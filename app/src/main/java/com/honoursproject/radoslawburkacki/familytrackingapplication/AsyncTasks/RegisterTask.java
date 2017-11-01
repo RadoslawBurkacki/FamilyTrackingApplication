@@ -14,18 +14,14 @@ public class RegisterTask extends AsyncTask<User, String, Integer> {
         void processFinish(Integer statuscode);
     }
 
-    ServerValues server;
     public AsyncResponse delegate = null;
     int statuscode;
     User newUser;
-
 
     public RegisterTask(AsyncResponse delegate,User newUser){
         this.newUser = newUser;
         this.delegate = delegate;
     }
-
-
 
     @Override
     protected Integer doInBackground(User... param) {
@@ -44,7 +40,7 @@ public class RegisterTask extends AsyncTask<User, String, Integer> {
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-                    .url(server.getServerAddress()+"register/")
+                    .url(ServerValues.SERVER_ADDRESS+"register/")
                     .post(requestBody)
                     .addHeader("content-type", "application/json")
                     .build();
