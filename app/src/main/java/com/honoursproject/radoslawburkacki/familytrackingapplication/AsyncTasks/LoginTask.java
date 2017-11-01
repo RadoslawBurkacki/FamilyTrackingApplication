@@ -8,20 +8,27 @@ import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.ServerValues;
 import com.squareup.okhttp.*;
 
-public class RegisterTask extends AsyncTask<User, String, Integer> {
+public class LoginTask extends AsyncTask<User, String, Integer> {
 
+
+    ServerValues s;
     public interface AsyncResponse {
         void processFinish(Integer statuscode);
     }
 
-    ServerValues server;
-    public AsyncResponse delegate = null;
+    public RegisterTask.AsyncResponse delegate = null;
+
+
     int statuscode;
-    User newUser;
+    String email;
+    String password;
+    String serveraddress;
 
 
-    public RegisterTask(AsyncResponse delegate,User newUser){
-        this.newUser = newUser;
+    public LoginTask(RegisterTask.AsyncResponse delegate, String email, String password){
+        this.email = email;
+        this.password = password;
+        this.serveraddress = serveraddress;
         this.delegate = delegate;
     }
 
@@ -33,18 +40,15 @@ public class RegisterTask extends AsyncTask<User, String, Integer> {
         final MediaType jsonMediaType = MediaType.parse("application/json");
         try {
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("id", newUser.getId());
-            jsonObject.addProperty("email", newUser.getEmail());
-            jsonObject.addProperty("password", newUser.getPassword());
-            jsonObject.addProperty("fname", newUser.getFname());
-            jsonObject.addProperty("lname", newUser.getLname());
+            jsonObject.addProperty("email", email);
+            jsonObject.addProperty("password", password);
 
             RequestBody requestBody = RequestBody.create(jsonMediaType, new Gson().toJson(jsonObject));
 
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-                    .url(server.getServerAddress()+"register/")
+                    .url(s.getServerAddress()+"register/")
                     .post(requestBody)
                     .addHeader("content-type", "application/json")
                     .build();
