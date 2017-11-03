@@ -23,7 +23,11 @@ public class Register2 extends AppCompatActivity implements RegisterTask.AsyncRe
     private EditText lname;
     private Button create;
     private User newUser;
+<<<<<<< HEAD
     private String serverAddress = "http://10.16.23.194:8080/";
+=======
+
+>>>>>>> 79f52da588f50d0b7559756f797154bb60691536
 
 
     @Override
@@ -88,7 +92,7 @@ public class Register2 extends AppCompatActivity implements RegisterTask.AsyncRe
 
         }
         else{
-            Toast.makeText(this, "Sorry. Our server is currently offline.",
+            Toast.makeText(this, "Sorry. Our server is currently offline." + statuscode,
                     Toast.LENGTH_LONG).show();
         }
 
@@ -96,7 +100,7 @@ public class Register2 extends AppCompatActivity implements RegisterTask.AsyncRe
     }
 
     public void register() {
-        new RegisterTask(this, newUser, serverAddress).execute();
+        new RegisterTask(this, newUser).execute();
     }
 
 

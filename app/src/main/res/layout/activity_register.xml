@@ -36,7 +36,8 @@
                 android:ems="10"
                 android:layout_below="@+id/title" android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" android:layout_marginLeft="42dp"
-                android:layout_marginStart="42dp" android:layout_marginTop="95dp" android:id="@+id/txtEmail"/>
+                android:layout_marginStart="42dp" android:layout_marginTop="95dp" android:id="@+id/txtEmail"
+        />
         <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -44,7 +45,7 @@
                 android:ems="10"
                 android:layout_below="@+id/txtEmail" android:layout_alignLeft="@+id/txtEmail"
                 android:layout_alignStart="@+id/txtEmail" android:layout_marginTop="50dp" android:id="@+id/txtPassword"
-                android:text=""/>
+                android:text="111111"/>
         <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,7 +53,7 @@
                 android:ems="10"
                 android:layout_below="@+id/txtPassword" android:layout_alignLeft="@+id/txtPassword"
                 android:layout_alignStart="@+id/txtPassword" android:layout_marginTop="50dp"
-                android:id="@+id/txtRePassword" android:text=""/>
+                android:id="@+id/txtRePassword" android:text="111111"/>
         <TextView
                 android:text="Enter your email."
                 android:layout_width="wrap_content"
