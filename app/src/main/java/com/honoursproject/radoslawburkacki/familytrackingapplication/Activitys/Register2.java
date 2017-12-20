@@ -1,4 +1,4 @@
-package com.honoursproject.radoslawburkacki.familytrackingapplication;
+package com.honoursproject.radoslawburkacki.familytrackingapplication.Activitys;
 
 
 import android.content.Context;
@@ -7,13 +7,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.RegisterTask;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
+import com.honoursproject.radoslawburkacki.familytrackingapplication.R;
 
 
 public class Register2 extends AppCompatActivity implements RegisterTask.AsyncResponse {
@@ -23,12 +23,6 @@ public class Register2 extends AppCompatActivity implements RegisterTask.AsyncRe
     private EditText lname;
     private Button create;
     private User newUser;
-<<<<<<< HEAD
-    private String serverAddress = "http://10.16.23.194:8080/";
-=======
-
->>>>>>> 79f52da588f50d0b7559756f797154bb60691536
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/avitivity_main_background"
-        tools:context="com.honoursproject.radoslawburkacki.familytrackingapplication.MainActivity"
+        tools:context="com.honoursproject.radoslawburkacki.familytrackingapplication.Activitys.MainActivity"
         android:id="@+id/constraintLayout">
 
 
@@ -23,11 +23,11 @@
                 android:text="REGISTER"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/button"
+                android:id="@+id/joinfamily"
                 android:layout_marginBottom="50dp"
                 android:background="@drawable/btnregister"
-                android:width="335dp" android:layout_above="@+id/textView2" android:layout_alignLeft="@+id/button2"
-                android:layout_alignStart="@+id/button2"/>
+                android:width="335dp" android:layout_above="@+id/textView2" android:layout_alignLeft="@+id/createnewfamily"
+                android:layout_alignStart="@+id/createnewfamily"/>
 
 
         <Button
@@ -36,7 +36,7 @@
                 android:text="LOG IN"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="55dp" android:id="@+id/button2"
+                android:layout_marginBottom="55dp" android:id="@+id/createnewfamily"
                 android:width="335dp"
                 android:background="@drawable/btnlogin"
                 android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"/>
@@ -46,14 +46,14 @@
                 android:textSize="14dp"
                 android:text="New user? Register for free."
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:layout_alignBottom="@+id/button"
+                android:layout_height="wrap_content" android:layout_alignBottom="@+id/joinfamily"
                 android:layout_centerHorizontal="true" android:layout_marginBottom="49dp" android:id="@+id/textView"/>
         <TextView
                 android:textColor="@color/colorWhite"
                 android:textSize="14dp"
                 android:text="Already a user?"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:layout_above="@+id/button2"
+                android:layout_height="wrap_content" android:layout_above="@+id/createnewfamily"
                 android:layout_centerHorizontal="true" android:id="@+id/textView2"/>
         <TextView
                 android:textColor="@color/colorWhite"

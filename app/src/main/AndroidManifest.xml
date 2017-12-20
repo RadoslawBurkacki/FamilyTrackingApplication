@@ -18,7 +18,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name=".MainActivity"
+                android:name=".Activitys.MainActivity"
                 android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -27,19 +27,23 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".Register"
+                android:name=".Activitys.Register"
                 android:screenOrientation="portrait">
         </activity>
         <activity
-                android:name=".Register2"
+                android:name=".Activitys.Register2"
                 android:screenOrientation="portrait">
             android:noHistory="true"
         </activity>
         <activity
-                android:name=".Login"
+                android:name=".Activitys.Login"
                 android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".FamilyActivity">
+        <activity android:name=".Activitys.Family_setup">
+        </activity>
+        <activity android:name=".Activitys.Join_family">
+        </activity>
+        <activity android:name=".Activitys.Create_family">
         </activity>
     </application>
 
