@@ -72,7 +72,10 @@ public class Login extends AppCompatActivity implements LoginTask.AsyncResponse 
 
             } else if (!isUserFamilyMember) { // User is not a member of any family go to family creation/join
 
-                startActivity(new Intent(Login.this, Family_setup.class)); // open new activity called Register
+                Intent intent = new Intent(Login.this, Family_setup.class);
+                intent.putExtra("user",user);
+                intent.putExtra("token", token);
+                startActivity(intent);
             }
 
         } else {

@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,9 +33,10 @@ public class Register2 extends AppCompatActivity implements RegisterTask.AsyncRe
         Intent i = getIntent();
         newUser = (User) i.getSerializableExtra("user");
 
-        fname = (EditText) findViewById(R.id.fname);
-        lname = (EditText) findViewById(R.id.lname);
+        fname = (EditText) findViewById(R.id.familyid);
+        lname = (EditText) findViewById(R.id.familypassword);
         create = (Button) findViewById(R.id.registerCreate);
+
 
 
         create.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +50,7 @@ public class Register2 extends AppCompatActivity implements RegisterTask.AsyncRe
                 else {
                     newUser.setFname(fname.getText().toString());
                     newUser.setLname(lname.getText().toString());
+
                     register();
 
                     finish();

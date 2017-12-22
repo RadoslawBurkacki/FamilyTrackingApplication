@@ -25,10 +25,10 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        email = (EditText) findViewById(R.id.txtEmail);
+        email = (EditText) findViewById(R.id.txtFamilyName);
         pass = (EditText) findViewById(R.id.txtPassword);
         pass2 = (EditText) findViewById(R.id.txtRePassword);
-        btnnext = (Button) findViewById(R.id.registerNext);
+        btnnext = (Button) findViewById(R.id.createFamily);
 
 
 

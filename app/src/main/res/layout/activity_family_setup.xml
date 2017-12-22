@@ -9,17 +9,18 @@
 
     <RelativeLayout
             android:layout_width="368dp"
-            android:layout_height="551dp" tools:layout_editor_absoluteY="8dp"
-            tools:layout_editor_absoluteX="8dp">
-
+            android:layout_height="551dp"
+            app:layout_constraintRight_toRightOf="parent" app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/main">
 
         <TextView
-                android:text="Family Setup"
+                android:text="Create new family"
                 android:textSize="36sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp" android:id="@+id/textView10" android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"/>
+                android:layout_height="wrap_content" android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" android:layout_marginTop="47dp" android:id="@+id/title"/>
+
 
         <Button
                 android:textColor="@color/colorDarkGrey"
@@ -28,10 +29,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/joinfamily"
-                android:layout_marginBottom="67dp"
+                android:layout_marginBottom="50dp"
                 android:background="@drawable/btnregister"
-                android:width="335dp"
-                android:layout_above="@+id/createnewfamily" android:layout_alignLeft="@+id/createnewfamily"
+                android:width="335dp" android:layout_above="@+id/textView2"
+                android:layout_alignLeft="@+id/createnewfamily"
                 android:layout_alignStart="@+id/createnewfamily"/>
 
 
@@ -46,7 +47,19 @@
                 android:background="@drawable/btnlogin"
                 android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"/>
 
-    >
-
+        <TextView
+                android:textColor="@color/colorWhite"
+                android:textSize="14dp"
+                android:text="New user? Register for free."
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_alignBottom="@+id/joinfamily"
+                android:layout_centerHorizontal="true" android:layout_marginBottom="49dp" android:id="@+id/textView"/>
+        <TextView
+                android:textColor="@color/colorWhite"
+                android:textSize="14dp"
+                android:text="Already a user?"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_above="@+id/createnewfamily"
+                android:layout_centerHorizontal="true" android:id="@+id/textView2"/>
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

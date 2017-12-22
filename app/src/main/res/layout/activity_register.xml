@@ -9,8 +9,10 @@
 
     <RelativeLayout
             android:layout_width="368dp"
-            android:layout_height="551dp" tools:layout_editor_absoluteY="8dp"
-            tools:layout_editor_absoluteX="8dp">
+            android:layout_height="551dp"
+            app:layout_constraintRight_toRightOf="parent" app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/main">
 
         <TextView
                 android:text="Create Account"
@@ -25,7 +27,7 @@
                 android:layout_height="wrap_content" android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
                 android:layout_marginRight="45dp" android:layout_marginEnd="45dp" android:layout_marginBottom="21dp"
-                android:id="@+id/registerNext"
+                android:id="@+id/createFamily"
                 android:background="@drawable/round_corners"
                 android:width="150dp"/>
 
@@ -36,15 +38,15 @@
                 android:ems="10"
                 android:layout_below="@+id/title" android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" android:layout_marginLeft="42dp"
-                android:layout_marginStart="42dp" android:layout_marginTop="95dp" android:id="@+id/txtEmail"
+                android:layout_marginStart="42dp" android:layout_marginTop="95dp" android:id="@+id/txtFamilyName"
         />
         <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:ems="10"
-                android:layout_below="@+id/txtEmail" android:layout_alignLeft="@+id/txtEmail"
-                android:layout_alignStart="@+id/txtEmail" android:layout_marginTop="50dp" android:id="@+id/txtPassword"
+                android:layout_below="@+id/txtFamilyName" android:layout_alignLeft="@+id/txtFamilyName"
+                android:layout_alignStart="@+id/txtFamilyName" android:layout_marginTop="50dp" android:id="@+id/txtPassword"
                 android:text="111111"/>
         <EditText
                 android:layout_width="wrap_content"
@@ -60,14 +62,14 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/lblemail"
                 android:layout_marginBottom="47dp"
-                android:layout_above="@+id/txtPassword" android:layout_alignLeft="@+id/txtEmail"
-                android:layout_alignStart="@+id/txtEmail"/>
+                android:layout_above="@+id/txtPassword" android:layout_alignLeft="@+id/txtFamilyName"
+                android:layout_alignStart="@+id/txtFamilyName"/>
         <TextView
                 android:text="Enter your password."
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:layout_below="@+id/txtEmail" android:layout_alignLeft="@+id/txtPassword"
+                android:layout_below="@+id/txtFamilyName" android:layout_alignLeft="@+id/txtPassword"
                 android:layout_alignStart="@+id/txtPassword" android:id="@+id/lblpass1"/>
         <TextView
                 android:text="Re-enter password."
@@ -81,8 +83,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView13"
-                android:layout_below="@+id/txtPassword" android:layout_alignLeft="@+id/registerNext"
-                android:layout_alignStart="@+id/registerNext" android:layout_marginLeft="12dp"
+                android:layout_below="@+id/txtPassword" android:layout_alignLeft="@+id/createFamily"
+                android:layout_alignStart="@+id/createFamily" android:layout_marginLeft="12dp"
                 android:layout_marginStart="12dp"/>
         <TextView
                 android:text="Use at least 6 characters."
