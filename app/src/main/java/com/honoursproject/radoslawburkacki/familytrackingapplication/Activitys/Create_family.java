@@ -52,6 +52,9 @@ public class Create_family extends AppCompatActivity implements CreateFamilyTask
                     createNewFamily();
 
 
+                    startActivity(new Intent(Create_family.this, Map.class)); // open new activity called Register
+
+
                 }
 
             }
@@ -61,14 +64,22 @@ public class Create_family extends AppCompatActivity implements CreateFamilyTask
     }
 
 
-
     @Override
-    public void processFinish( int statuscode, Family family) {
+    public void processFinish(int statuscode, Family family) {
+        Log.d("1", "@@@@@@@@@@@@@@@@@"+statuscode);
+
+        if(statuscode == 400){ // if user is already a member of family then family wasnt
+
+        }
+        else if(statuscode == 201){ // family created
+
+        }
+
     }
 
 
-    void createNewFamily(){
+    void createNewFamily() {
         new CreateFamilyTask(this, newFamily, token).execute();
     }
 
-    }
+}

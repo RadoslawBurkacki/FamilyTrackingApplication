@@ -40,7 +40,7 @@ public class RegisterTask extends AsyncTask<User, String, Integer> {
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-                    .url(ServerValues.SERVER_ADDRESS+"register/")
+                    .url(ServerValues.SERVER_ADDRESS+"/users")
                     .post(requestBody)
                     .addHeader("content-type", "application/json")
                     .build();

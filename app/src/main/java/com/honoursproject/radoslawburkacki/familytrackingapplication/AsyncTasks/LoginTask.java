@@ -60,7 +60,7 @@ public class LoginTask extends AsyncTask<Void, Void, String> {
 
             if (statuscode == 200) { // send new request if authentication was successful this request is used to get user instance using email
                 Request request2 = new Request.Builder()
-                        .url(ServerValues.SERVER_ADDRESS + "/user/" + email)
+                        .url(ServerValues.SERVER_ADDRESS + "/users/" + email)
                         .get()
                         .addHeader("content-type", "application/json")
                         .addHeader("Authorization", token)
@@ -78,7 +78,7 @@ public class LoginTask extends AsyncTask<Void, Void, String> {
 
                 // check if user is a member of any family, the response which will be received will send a status code, 302 if found and 404 if not
                 Request request3 = new Request.Builder()
-                        .url(ServerValues.SERVER_ADDRESS + "/family/check/" + user.getId())
+                        .url(ServerValues.SERVER_ADDRESS + "/families/by-user-id/" + user.getId())
                         .head()
                         .addHeader("content-type", "application/json")
                         .addHeader("Authorization", token)

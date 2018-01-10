@@ -39,7 +39,7 @@
                 android:layout_below="@+id/title" android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" android:layout_marginLeft="42dp"
                 android:layout_marginStart="42dp" android:layout_marginTop="95dp" android:id="@+id/txtFamilyName"
-        />
+                android:text="1@1.pl"/>
         <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

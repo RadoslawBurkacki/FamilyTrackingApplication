@@ -28,13 +28,13 @@
                 android:layout_height="wrap_content" android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
                 android:layout_marginRight="45dp" android:layout_marginEnd="45dp" android:layout_marginBottom="21dp"
-                android:id="@+id/registerCreate"
+                android:id="@+id/btnjoinFamily"
                 android:background="@drawable/round_corners"
                 android:width="150dp"/>
         <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:ems="10"
                 android:id="@+id/familyid"
                 android:layout_marginTop="95dp"

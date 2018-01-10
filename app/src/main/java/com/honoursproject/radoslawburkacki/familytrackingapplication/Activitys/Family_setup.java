@@ -37,8 +37,10 @@ public class Family_setup extends AppCompatActivity {
             @Override
             public void onClick(View view) { // when join button is pressed...
 
-                startActivity(new Intent(Family_setup.this, Join_family.class)); // open new activity called Register
-
+                Intent intent = new Intent(Family_setup.this, Join_family.class);
+                intent.putExtra("user",user);
+                intent.putExtra("token", token);
+                startActivity(intent);
             }
         });
 

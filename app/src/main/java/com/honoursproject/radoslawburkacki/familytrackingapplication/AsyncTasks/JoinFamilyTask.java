@@ -9,21 +9,26 @@ import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.ServerValues;
 import com.squareup.okhttp.*;
 
-
-public class CreateFamilyTask extends AsyncTask<Void, Void, Void> {
+public class JoinFamilyTask extends AsyncTask<Void, Void, Void> {
 
     public interface AsyncResponse {
-        void processFinish(int statuscode, Family family);
+        void processFinish(int statuscode);
     }
 
-    public CreateFamilyTask.AsyncResponse delegate = null;
-    int statuscode;
-    Family family;
-    String token;
+    public JoinFamilyTask.AsyncResponse delegate = null;
 
-    public CreateFamilyTask(AsyncResponse delegate, Family family, String token) {
-        this.family = family;
+
+    User user;
+    String token;
+    String familyid;
+    String familypassword;
+    int statuscode;
+
+    public JoinFamilyTask(AsyncResponse delegate, User user, String token, String familyid, String familypassword) {
+        this.user = user;
         this.token = token;
+        this.familyid = familyid;
+        this.familypassword = familypassword;
         this.delegate = delegate;
     }
 
@@ -33,17 +38,16 @@ public class CreateFamilyTask extends AsyncTask<Void, Void, Void> {
         final MediaType jsonMediaType = MediaType.parse("application/json");
         try {
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("familyId", family.getId());
-            jsonObject.addProperty("creatorId", family.getCreatorId());
-            jsonObject.addProperty("familyName", family.getFamilyName());
-            jsonObject.addProperty("joiningPassword", family.getJoiningPassword());
+            jsonObject.addProperty("familyId", familyid);
+            jsonObject.addProperty("familyPassword", familypassword);
+            jsonObject.addProperty("userid", user.getId());
 
             RequestBody requestBody = RequestBody.create(jsonMediaType, new Gson().toJson(jsonObject));
 
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-                    .url(ServerValues.SERVER_ADDRESS + "/families")
+                    .url(ServerValues.SERVER_ADDRESS + "/family/"+ familyid +"/join")
                     .post(requestBody)
                     .addHeader("content-type", "application/json")
                     .addHeader("Authorization", token)
@@ -69,7 +73,7 @@ public class CreateFamilyTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void v) {
-        delegate.processFinish(statuscode, family);
+        delegate.processFinish(statuscode);
     }
 
 
