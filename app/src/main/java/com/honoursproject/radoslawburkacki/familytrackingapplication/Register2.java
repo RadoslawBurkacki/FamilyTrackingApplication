@@ -1,4 +1,4 @@
-package com.honoursproject.radoslawburkacki.familytrackingapplication.Activitys;
+package com.honoursproject.radoslawburkacki.familytrackingapplication;
 
 
 import android.content.Context;
@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.RegisterTask;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.R;
+
 
 
 public class Register2 extends AppCompatActivity implements RegisterTask.AsyncResponse {

@@ -9,11 +9,9 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.READ_PROFILE"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
-
-    <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the 'MyLocation' functionality. 
+    The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+    Google Maps Android API v2, but you must specify either coarse or fine
+    location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
@@ -24,34 +22,37 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity
-                android:name=".Activitys.MainActivity"
-                android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+        <activity
+                android:name=".MainActivity"
+                android:screenOrientation="portrait">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
-                android:name=".Activitys.Register"
+                android:name=".Register"
                 android:screenOrientation="portrait">
         </activity>
         <activity
-                android:name=".Activitys.Register2"
+                android:name=".Register2"
                 android:screenOrientation="portrait">
             android:noHistory="true"
         </activity>
         <activity
-                android:name=".Activitys.Login"
+                android:name=".Login"
                 android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".Activitys.Family_setup">
+        <activity android:name=".Family_setup">
         </activity>
-        <activity android:name=".Activitys.Join_family">
+        <activity android:name=".Join_family">
         </activity>
-        <activity android:name=".Activitys.Create_family">
+        <activity android:name=".Create_family">
         </activity>
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -60,13 +61,17 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/. 
         -->
+
         <meta-data
                 android:name="com.google.android.geo.API_KEY"
                 android:value="@string/google_maps_key"/>
 
         <activity
-                android:name=".Activitys.Map"
-                android:label="@string/title_activity_map">
+                android:name="com.honoursproject.radoslawburkacki.familytrackingapplication.Map"
+                android:label="@string/title_activity_map"
+                android:theme="@style/Map">
+
+
         </activity>
     </application>
 

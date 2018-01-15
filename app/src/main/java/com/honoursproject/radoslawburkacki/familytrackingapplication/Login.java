@@ -1,4 +1,4 @@
-package com.honoursproject.radoslawburkacki.familytrackingapplication.Activitys;
+package com.honoursproject.radoslawburkacki.familytrackingapplication;
 
 
 import android.content.Intent;
@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.LoginTask;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
-import com.honoursproject.radoslawburkacki.familytrackingapplication.R;
+
 
 public class Login extends AppCompatActivity implements LoginTask.AsyncResponse {
 
@@ -53,7 +53,7 @@ public class Login extends AppCompatActivity implements LoginTask.AsyncResponse 
     public void processFinish(String token, int statuscode, User user, boolean isUserFamilyMember) {
 
         if (statuscode == 401) { // error 401 means that user has entered wrong credentials
-            Toast.makeText(this, "You have entered wrong email or password. Please try again.",
+            Toast.makeText(this, "You have entered wrong email or password. Please try agaain.",
                     Toast.LENGTH_LONG).show();
             email.setText("");
             password.setText("");
@@ -69,6 +69,12 @@ public class Login extends AppCompatActivity implements LoginTask.AsyncResponse 
                     Toast.LENGTH_LONG).show();
 
             if (isUserFamilyMember) { // User is already member of a family so open map screen
+
+                Intent intent = new Intent(Login.this, Map.class);
+                intent.putExtra("user",user);
+                intent.putExtra("token", token);
+                startActivity(intent);
+
 
             } else if (!isUserFamilyMember) { // User is not a member of any family go to family creation/join
 

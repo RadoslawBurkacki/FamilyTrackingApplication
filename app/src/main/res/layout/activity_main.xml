@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/avitivity_main_background"
-        tools:context="com.honoursproject.radoslawburkacki.familytrackingapplication.Activitys.MainActivity"
+        tools:context="com.honoursproject.radoslawburkacki.familytrackingapplication.MainActivity"
         android:id="@+id/constraintLayout">
 
 

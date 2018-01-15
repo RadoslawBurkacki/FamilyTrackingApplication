@@ -1,4 +1,4 @@
-package com.honoursproject.radoslawburkacki.familytrackingapplication.Activitys;
+package com.honoursproject.radoslawburkacki.familytrackingapplication;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +11,7 @@ import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.Family;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.R;
+
 
 public class Create_family extends AppCompatActivity implements CreateFamilyTask.AsyncResponse {
 
@@ -52,7 +53,10 @@ public class Create_family extends AppCompatActivity implements CreateFamilyTask
                     createNewFamily();
 
 
-                    startActivity(new Intent(Create_family.this, Map.class)); // open new activity called Register
+                    Intent intent = new Intent(Create_family.this, Map.class);
+                    intent.putExtra("user",user);
+                    intent.putExtra("token", token);
+                    startActivity(intent);
 
 
                 }

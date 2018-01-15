@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.Family;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
-import com.honoursproject.radoslawburkacki.familytrackingapplication.ServerValues;
+import com.honoursproject.radoslawburkacki.familytrackingapplication.*;
 import com.squareup.okhttp.*;
 
 public class JoinFamilyTask extends AsyncTask<Void, Void, Void> {
@@ -40,14 +40,14 @@ public class JoinFamilyTask extends AsyncTask<Void, Void, Void> {
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("familyId", familyid);
             jsonObject.addProperty("familyPassword", familypassword);
-            jsonObject.addProperty("userid", user.getId());
+            jsonObject.addProperty("userId", user.getId());
 
             RequestBody requestBody = RequestBody.create(jsonMediaType, new Gson().toJson(jsonObject));
 
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-                    .url(ServerValues.SERVER_ADDRESS + "/family/"+ familyid +"/join")
+                    .url(ServerValues.SERVER_ADDRESS + "/families/")
                     .post(requestBody)
                     .addHeader("content-type", "application/json")
                     .addHeader("Authorization", token)
