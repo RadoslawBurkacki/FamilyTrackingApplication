@@ -16,4 +16,7 @@
     <string name="title_activity_map_main_screen">Map</string>
     <string name="title_activity_maps_activi_y">Map</string>
     <string name="title_activity_maps">MapMainScreen</string>
+
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 </resources>

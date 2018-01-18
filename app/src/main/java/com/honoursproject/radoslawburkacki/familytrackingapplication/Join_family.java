@@ -48,16 +48,6 @@ public class Join_family extends AppCompatActivity implements JoinFamilyTask.Asy
 
                     JoinFamily();
 
-                    if (statuscode == 201){
-
-                        Intent intent = new Intent(Join_family.this, Map.class);
-                        intent.putExtra("user",user);
-                        intent.putExtra("token", token);
-                        startActivity(intent);
-
-                    }else{
-
-                    }
 
                 }
 
@@ -75,6 +65,11 @@ public class Join_family extends AppCompatActivity implements JoinFamilyTask.Asy
         if (statuscode == 201) {
             Toast.makeText(this, "You have joined family.",
                     Toast.LENGTH_LONG).show();
+
+            Intent intent = new Intent(Join_family.this, Map.class);
+            intent.putExtra("user",user);
+            intent.putExtra("token", token);
+            startActivity(intent);
 
         } else if (statuscode == 404) {
             Toast.makeText(this, "Family does not exist",

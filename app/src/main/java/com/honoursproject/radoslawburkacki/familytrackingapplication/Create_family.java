@@ -48,7 +48,7 @@ public class Create_family extends AppCompatActivity implements CreateFamilyTask
                 if (pass.getText().toString().length() >= 6 && pass.getText().toString().equals(pass2.getText().toString())) { // if password is
                     // at least 6 chars and both passwords are the same then...
 
-                    newFamily = new Family(user.getId(), familyname.getText().toString(), pass.getText().toString());
+                    newFamily = new Family(user.getId(), familyname.getText().toString(), pass.getText().toString(),null);
 
                     createNewFamily();
 

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      android:id="@+id/drawermenu">
+
+
+    <item android:title="Family members" android:orderInCategory="10" android:id="@+id/a">
+        <menu android:id="@+id/aa">
+
+        </menu>
+    </item>
+
+
+    <item android:title="Features" android:orderInCategory="20">
+        <menu>
+            <item android:id="@+id/nav_chat"
+                  android:title="Chat"/>
+
+            <item android:id="@+id/nav_SOS"
+                  android:title="SOS"/>
+        </menu>
+    </item>
+
+
+    <item android:title="Family" android:orderInCategory="30">
+        <menu>
+            <item android:id="@+id/nav_myfamily"
+                  android:title="My Family"/>
+        </menu>
+    </item>
+
+
+    <item android:title="Other" android:orderInCategory="40">
+        <menu>
+            <item android:id="@+id/nav_settings"
+                  android:title="Settings"/>
+
+            <item android:id="@+id/nav_about"
+                  android:title="About"/>
+
+            <item android:id="@+id/nav_signout"
+                  android:title="Sign Out"/>
+        </menu>
+    </item>
+
+
+</menu>
