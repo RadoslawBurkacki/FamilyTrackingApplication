@@ -32,17 +32,12 @@ dependencies {
     })
 
 
-
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.squareup.okhttp:okhttp:2.7.5'
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.wdullaer:materialdatetimepicker:2.3.0'
     compile 'com.android.support:design:26.+'
-
-
-    //Google play services
-    compile 'com.google.android.gms:play-services:11.4.0'
-
+    compile 'com.google.android.gms:play-services-maps:11.0.4'
     testCompile 'junit:junit:4.12'
 }

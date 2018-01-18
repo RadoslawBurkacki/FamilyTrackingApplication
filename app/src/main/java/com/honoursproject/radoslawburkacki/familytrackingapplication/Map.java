@@ -26,9 +26,9 @@ import android.view.*;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationServices;
+
+
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -56,7 +56,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private NavigationView navigationView;
     private GoogleApiClient googleApiClient;
-    private FusedLocationProviderClient mFusedLocationProviderClient;
+
 
 
     private Family family;
@@ -64,7 +64,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
     private String token;
     private Boolean mLocationPermissionsGranted = false;
 
-    private LocationManager mLocationManager;
+
 
     Menu menu;
 
@@ -132,6 +132,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
             intent.putExtra("token", token);
             intent.putExtra("family", family);
             startActivity(intent);
+
         }
         if (id == R.id.nav_SOS) {
 
@@ -149,6 +150,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
         } else { // user tracking request, id is the user id that tracking is requested
             //need to do call to the server requesting the location of user (id)
+            Log.d(TAG,""+item.getItemId() + item.getTitle());
 
         }
 
@@ -171,16 +173,15 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
     public void processFinish(Family f) {
         this.family = f;
 
+        Log.d(TAG,f.toString());
+
         MenuItem myMoveGroupItem = navigationView.getMenu().getItem(0);
         SubMenu subMenu = myMoveGroupItem.getSubMenu();
-        subMenu.add(user.getFname() + " " + user.getLname());
+
 
         if (f.getFamilyMembers().size() != 0) {
             for (User u : f.getFamilyMembers()) {
 
-                if (u.getId() == user.getId()) {
-                    continue;
-                }
 
                 subMenu.add(Menu.NONE, (int) u.getId(), Menu.NONE, u.getFname() + " " + u.getLname());
             }
