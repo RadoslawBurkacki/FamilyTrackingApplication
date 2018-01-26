@@ -21,7 +21,6 @@
     </FrameLayout>
 
 
-
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -44,8 +43,6 @@
             android:layout_gravity="start">
 
     </android.support.design.widget.NavigationView>
-
-
 
 
 </android.support.v4.widget.DrawerLayout>

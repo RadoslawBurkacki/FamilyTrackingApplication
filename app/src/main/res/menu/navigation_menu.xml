@@ -3,14 +3,14 @@
       android:id="@+id/drawermenu">
 
 
-    <item android:title="Family members" android:orderInCategory="10" android:id="@+id/a">
+    <item android:title="Family members tracking" android:orderInCategory="10" android:id="@+id/a">
         <menu android:id="@+id/aa">
 
         </menu>
     </item>
 
 
-    <item android:title="Features" android:orderInCategory="20">
+    <item android:title="Features" android:orderInCategory="20" >
         <menu>
             <item android:id="@+id/nav_chat"
                   android:title="Chat"/>

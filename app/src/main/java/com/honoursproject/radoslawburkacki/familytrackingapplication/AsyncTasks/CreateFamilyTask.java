@@ -34,7 +34,7 @@ public class CreateFamilyTask extends AsyncTask<Void, Void, Void> {
         final MediaType jsonMediaType = MediaType.parse("application/json");
         try {
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("familyId", family.getId());
+            jsonObject.addProperty("id", family.getId());
             jsonObject.addProperty("creatorId", family.getCreatorId());
             jsonObject.addProperty("familyName", family.getFamilyName());
             jsonObject.addProperty("joiningPassword", family.getJoiningPassword());

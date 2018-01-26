@@ -70,6 +70,8 @@ public class Login extends AppCompatActivity implements LoginTask.AsyncResponse 
 
             if (isUserFamilyMember) { // User is already member of a family so open map screen
 
+
+
                 Intent intent = new Intent(Login.this, Map.class);
                 intent.putExtra("user",user);
                 intent.putExtra("token", token);

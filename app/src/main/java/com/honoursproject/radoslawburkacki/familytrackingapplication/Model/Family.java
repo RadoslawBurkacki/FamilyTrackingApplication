@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Family implements Serializable {
 
-    Long familyId;
+    Long id;
     Long creatorId;
     String familyName;
     String joiningPassword;
@@ -25,7 +25,7 @@ public class Family implements Serializable {
     }
 
     public Long getId() {
-        return familyId;
+        return id;
     }
 
     public Long getCreatorId() {
@@ -71,7 +71,7 @@ public class Family implements Serializable {
             a= a+ ", familyMembers=" + u.toString();
         }
         return "Family{" +
-                "familyId=" + familyId +
+                "familyId=" + id +
                 ", creatorId=" + creatorId +
                 ", familyName='" + familyName + '\'' +
                 ", joiningPassword='" + joiningPassword + '\'' +

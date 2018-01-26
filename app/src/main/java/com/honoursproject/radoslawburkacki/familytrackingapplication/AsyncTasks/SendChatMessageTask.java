@@ -2,37 +2,33 @@ package com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks
 
 import android.os.AsyncTask;
 import android.util.Log;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.Family;
-import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
+import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.Message;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.ServerValues;
 import com.squareup.okhttp.*;
 
-public class SendCoordinatesTask extends AsyncTask<Void, Void, Void> {
+
+public class SendChatMessageTask extends AsyncTask<Void, Void, Void> {
 
     public interface AsyncResponse {
-        void processFinish();
+        void processFinish(int statuscode);
     }
 
-    public SendCoordinatesTask.AsyncResponse delegate = null;
+    public SendChatMessageTask.AsyncResponse delegate = null;
 
-    public SendCoordinatesTask(AsyncResponse delegate, LatLng latLng, String token, long userid, long familyid) {
+
+    public SendChatMessageTask(AsyncResponse delegate, Message m, String token) {
+
         this.delegate = delegate;
-        this.latLng = latLng;
+        this.m = m;
         this.token = token;
-        this.userid = userid;
-        this.familyid = familyid;
     }
 
-    LatLng latLng;
+    int statuscode;
     String token;
-    long userid;
-    long familyid;
+
+    private Message m;
 
     @Override
     protected Void doInBackground(Void... param) {
@@ -40,22 +36,26 @@ public class SendCoordinatesTask extends AsyncTask<Void, Void, Void> {
         final MediaType jsonMediaType = MediaType.parse("application/json");
         try {
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("latitude", latLng.latitude);
-            jsonObject.addProperty("longitude", latLng.longitude);
+            jsonObject.addProperty("messageId", m.getMessageId());
+            jsonObject.addProperty("fromId", m.getFromId());
+            jsonObject.addProperty("toId", m.getToId());
+            jsonObject.addProperty("message", m.getMessage());
+            jsonObject.addProperty("date", m.getDate());
 
             RequestBody requestBody = RequestBody.create(jsonMediaType, new Gson().toJson(jsonObject));
 
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-                    .url(ServerValues.SERVER_ADDRESS + "/families/location/" + userid)
+                    .url(ServerValues.SERVER_ADDRESS + "/chat/")
                     .post(requestBody)
                     .addHeader("content-type", "application/json")
                     .addHeader("Authorization", token)
                     .build();
 
+            Response response = client.newCall(request).execute();
 
-            client.newCall(request).execute();
+            statuscode = response.code();
 
 
         } catch (Exception e) {
@@ -72,7 +72,7 @@ public class SendCoordinatesTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void v) {
-        delegate.processFinish();
+        delegate.processFinish(statuscode);
     }
 
 

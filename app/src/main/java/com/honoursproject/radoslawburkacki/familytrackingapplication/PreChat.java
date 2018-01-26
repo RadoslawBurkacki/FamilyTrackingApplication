@@ -1,20 +1,13 @@
 package com.honoursproject.radoslawburkacki.familytrackingapplication;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.*;
 import android.widget.*;
+import com.honoursproject.radoslawburkacki.familytrackingapplication.CustomAdapters.AdapterFamilyMember;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.Family;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class PreChat extends AppCompatActivity {
 
@@ -46,6 +39,7 @@ public class PreChat extends AppCompatActivity {
             }
         }
 
+
         AdapterFamilyMember customAdapter = new AdapterFamilyMember(this, R.layout.row_prechat, family.getFamilyMembers());
         listView.setAdapter(customAdapter);
 
@@ -55,6 +49,8 @@ public class PreChat extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+
 
                 Intent intent = new Intent(PreChat.this, Chat.class); // instance id? for recoognition of each unique chat??
                 intent.putExtra("user", user);

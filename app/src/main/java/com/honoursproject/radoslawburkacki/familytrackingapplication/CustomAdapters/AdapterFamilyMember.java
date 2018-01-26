@@ -1,4 +1,4 @@
-package com.honoursproject.radoslawburkacki.familytrackingapplication;
+package com.honoursproject.radoslawburkacki.familytrackingapplication.CustomAdapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
+import com.honoursproject.radoslawburkacki.familytrackingapplication.R;
 
 import java.util.List;
 
@@ -20,10 +21,6 @@ public class AdapterFamilyMember extends ArrayAdapter<User> {
         super(context, resource, users);
     }
 
-    public Long getUserId(){
-
-        return getUserId();
-    }
 
 
     @Override

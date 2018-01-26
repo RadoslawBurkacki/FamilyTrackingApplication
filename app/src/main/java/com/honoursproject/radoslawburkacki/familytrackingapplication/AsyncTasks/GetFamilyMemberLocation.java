@@ -2,29 +2,32 @@ package com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks
 
 import android.os.AsyncTask;
 import android.util.Log;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.Family;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.ServerValues;
 import com.squareup.okhttp.*;
+import org.json.JSONObject;
 
-
-public class GetFamilyTask extends AsyncTask<Void, Void, Void> {
+public class GetFamilyMemberLocation extends AsyncTask<Void, Void, Void> {
 
     public interface AsyncResponse {
-        void processFinish(Family family);
+        void processFinish(int statuscode, LatLng coordinates, long familyMemberId);
     }
 
-    public GetFamilyTask.AsyncResponse delegate = null;
+    public GetFamilyMemberLocation.AsyncResponse delegate = null;
 
-    User user;
-    Family f;
+    int statuscode;
     String token;
+    long familyMemberId;
+    LatLng coordinates;
 
-    public GetFamilyTask(AsyncResponse delegate, User user, String token) {
-        this.user = user;
+    public GetFamilyMemberLocation(AsyncResponse delegate, String token, long familyMemberId) {
+        this.familyMemberId = familyMemberId;
         this.token = token;
         this.delegate = delegate;
     }
@@ -32,12 +35,12 @@ public class GetFamilyTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... param) {
 
-        try {
 
+        try {
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-                    .url(ServerValues.SERVER_ADDRESS + "/families/by-user-id/"+user.getId())
+                    .url(ServerValues.SERVER_ADDRESS + "/families/location/" + familyMemberId)
                     .get()
                     .addHeader("content-type", "application/json")
                     .addHeader("Authorization", token)
@@ -45,15 +48,20 @@ public class GetFamilyTask extends AsyncTask<Void, Void, Void> {
 
             Response response = client.newCall(request).execute();
 
+            statuscode = response.code();
+
             String jsonData = response.body().string();
 
             Gson gson = new Gson();
             JsonParser parser = new JsonParser();
             JsonElement mJson = parser.parse(jsonData);
-            f = gson.fromJson(mJson, Family.class);
+            coordinates = gson.fromJson(mJson, LatLng.class);
+
+            Log.d("hello", ""+ coordinates.latitude + coordinates.longitude);
+
 
         } catch (Exception e) {
-            Log.d("", e.toString());
+
         }
 
         return null;
@@ -66,7 +74,7 @@ public class GetFamilyTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void v) {
-        delegate.processFinish(f);
+        delegate.processFinish(statuscode, coordinates, familyMemberId);
     }
 
 
