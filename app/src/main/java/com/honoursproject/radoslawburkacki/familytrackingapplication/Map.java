@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.*;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
@@ -49,21 +50,17 @@ import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFamilyTask.AsyncResponse, GetFamilyMemberLocation.AsyncResponse, NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MapActivity";
-
-    private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
-    private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
-    private static final float DEFAULT_ZOOM = 15f;
+    private static final float DEFAULT_ZOOM = 11f;
 
     private GoogleMap mMap;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private NavigationView navigationView;
 
+    private boolean firstRunCentred = false;
     private Family family;
     private User user;
     private String token;
-    private Boolean mLocationPermissionsGranted = false;
 
     private BroadcastReceiver broadcastReceiver;
 
@@ -99,9 +96,14 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         getFamily();
 
 
-        /////////////////////first call network location and then gps
+        LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+        boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
-
+        // Check if enabled and if not send user to the GPS settings
+        if (!enabled) {
+            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivity(intent);
+        }
     }
 
     private void startLocationService() {
@@ -145,8 +147,19 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
                 @Override
                 public void onReceive(Context context, Intent intent) {
 
-                    moveCamera(new LatLng((Double) intent.getExtras().get("Lat"), (Double) intent.getExtras().get("Long")), DEFAULT_ZOOM);
+                    if (firstRunCentred) {
 
+                    } else if (!firstRunCentred) {
+                        moveCamera(new LatLng((Double) intent.getExtras().get("Lat"), (Double) intent.getExtras().get("Long")), DEFAULT_ZOOM);
+
+                        Marker marker = mMap.addMarker(new MarkerOptions()
+                                .position(new LatLng((Double) intent.getExtras().get("Lat"), (Double) intent.getExtras().get("Long")))
+                                .title(user.getFname() + " " + user.getFname())
+                                .snippet("xx"));
+                        marker.setVisible(true);
+
+                        firstRunCentred = true;
+                    }
                 }
             };
         }
@@ -171,10 +184,6 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera52.256334, 21.052733
-        LatLng sydney = new LatLng(52.256334, 21.052733);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
     @Override
@@ -247,7 +256,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         if (f.getFamilyMembers().size() != 0) {
             for (User u : f.getFamilyMembers()) {
 
-                if(u.getId() == user.getId()){
+                if (u.getId() == user.getId()) {
                     subMenu.add(Menu.NONE, (int) u.getId(), Menu.NONE, u.getFname() + " " + u.getLname() + " (Me)");
                     continue;
                 }

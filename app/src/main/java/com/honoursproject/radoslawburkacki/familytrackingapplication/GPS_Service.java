@@ -55,11 +55,9 @@ public class GPS_Service extends Service implements SendCoordinatesTask.AsyncRes
                 i.putExtra("Long", location.getLongitude());
 
 
-
                 SendCoordinates(new LatLng(location.getLatitude(), location.getLongitude()));
 
                 sendBroadcast(i);
-
 
             }
 
@@ -81,10 +79,13 @@ public class GPS_Service extends Service implements SendCoordinatesTask.AsyncRes
             }
         };
 
+
         locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
 
         //noinspection MissingPermission
+
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3000, 0, listener);
+
 
     }
 

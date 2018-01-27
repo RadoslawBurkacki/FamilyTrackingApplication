@@ -40,7 +40,7 @@
                 android:layout_marginTop="95dp"
                 android:layout_below="@+id/title" android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" android:layout_marginLeft="26dp"
-                android:layout_marginStart="42dp" android:text="Radoslaw"/>
+                android:layout_marginStart="42dp"/>
 
         <EditText
                 android:layout_width="wrap_content"
@@ -49,7 +49,7 @@
                 android:ems="10"
                 android:layout_marginTop="50dp" android:id="@+id/familypassword" android:layout_below="@+id/familyid"
                 android:layout_alignLeft="@+id/familyid" android:layout_alignStart="@+id/familyid"
-                android:text="Burkacki"/>
+        />
         <TextView
                 android:text="Please enter your first name."
                 android:layout_width="wrap_content"
