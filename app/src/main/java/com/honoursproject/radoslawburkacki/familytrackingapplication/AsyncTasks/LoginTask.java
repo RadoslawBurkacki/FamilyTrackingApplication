@@ -57,6 +57,8 @@ public class LoginTask extends AsyncTask<Void, Void, String> {
             statuscode = response.code();
             token = response.header("Authorization");
 
+            response.body().close();
+
 
             if (statuscode == 200) { // send new request if authentication was successful this request is used to get user instance using email
                 Request request2 = new Request.Builder()
@@ -69,6 +71,8 @@ public class LoginTask extends AsyncTask<Void, Void, String> {
                 Response response2 = client.newCall(request2).execute();
 
                 String jsonData = response2.body().string();
+
+                response2.body().close();
 
                 Gson gson = new Gson();
                 JsonParser parser = new JsonParser();
@@ -92,6 +96,8 @@ public class LoginTask extends AsyncTask<Void, Void, String> {
                 else if(response3.code() == 404){
                     isUserFamilyMember = false;
                 }
+
+                response3.body().close();
             }
 
         } catch (Exception e) {

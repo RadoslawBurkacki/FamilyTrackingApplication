@@ -26,6 +26,7 @@ public class GPS_Service extends Service implements SendCoordinatesTask.AsyncRes
     private String token;
     private Long familyid;
 
+    private Intent ii;
 
     @Nullable
     @Override
@@ -35,10 +36,12 @@ public class GPS_Service extends Service implements SendCoordinatesTask.AsyncRes
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        this.token = intent.getStringExtra("token");
-        this.userid = intent.getLongExtra("userid", 0);
-        this.familyid = intent.getLongExtra("familyid", 0);
-
+        ii = intent;
+        if (intent != null) {
+            this.token = intent.getStringExtra("token");
+            this.userid = intent.getLongExtra("userid", 0);
+            this.familyid = intent.getLongExtra("familyid", 0);
+        }
 
         return 0;
     }
@@ -50,14 +53,15 @@ public class GPS_Service extends Service implements SendCoordinatesTask.AsyncRes
         listener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                Intent i = new Intent("location_update");
-                i.putExtra("Lat", location.getLatitude());
-                i.putExtra("Long", location.getLongitude());
+                if (ii != null) {
+                    Intent i = new Intent("location_update");
+                    i.putExtra("Lat", location.getLatitude());
+                    i.putExtra("Long", location.getLongitude());
 
+                    SendCoordinates(new LatLng(location.getLatitude(), location.getLongitude()));
 
-                SendCoordinates(new LatLng(location.getLatitude(), location.getLongitude()));
-
-                sendBroadcast(i);
+                    sendBroadcast(i);
+                }
 
             }
 

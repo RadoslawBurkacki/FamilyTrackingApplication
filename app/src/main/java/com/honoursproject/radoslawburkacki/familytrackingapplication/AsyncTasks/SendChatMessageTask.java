@@ -57,6 +57,8 @@ public class SendChatMessageTask extends AsyncTask<Void, Void, Void> {
 
             statuscode = response.code();
 
+            response.body().close();
+
 
         } catch (Exception e) {
             Log.d("test1", e.toString());

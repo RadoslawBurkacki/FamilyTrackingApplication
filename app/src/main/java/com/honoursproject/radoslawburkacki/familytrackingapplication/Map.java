@@ -50,7 +50,7 @@ import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFamilyTask.AsyncResponse, GetFamilyMemberLocation.AsyncResponse, NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MapActivity";
-    private static final float DEFAULT_ZOOM = 11f;
+    private static final float DEFAULT_ZOOM = 15f;
 
     private GoogleMap mMap;
     private DrawerLayout drawerLayout;
@@ -96,6 +96,8 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         getFamily();
 
 
+/*
+
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
@@ -104,6 +106,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
             Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             startActivity(intent);
         }
+        */
     }
 
     private void startLocationService() {
@@ -132,6 +135,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 100) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+
                 startLocationService();
             } else {
                 runtime_permissions();
@@ -176,13 +180,17 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
 
     private void moveCamera(LatLng latLng, float zoom) {
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
+
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
     }
 
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setMyLocationEnabled(true);
+
 
     }
 
@@ -206,6 +214,10 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
                 break;
 
             case R.id.nav_myfamily:
+
+                Intent intentFamilyDetails = new Intent(Map.this, FamilyDetails.class);
+                intentFamilyDetails.putExtra("family", family);
+                startActivity(intentFamilyDetails);
 
                 break;
 
@@ -254,17 +266,22 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
 
         if (f.getFamilyMembers().size() != 0) {
+
+            Log.d(TAG, "Setting up drawer menu");
+
             for (User u : f.getFamilyMembers()) {
 
                 if (u.getId() == user.getId()) {
-                    subMenu.add(Menu.NONE, (int) u.getId(), Menu.NONE, u.getFname() + " " + u.getLname() + " (Me)");
+                    //subMenu.add(Menu.NONE, (int) u.getId(), Menu.NONE, u.getFname() + " " + u.getLname() + " (Me)");
                     continue;
                 }
 
                 subMenu.add(Menu.NONE, (int) u.getId(), Menu.NONE, u.getFname() + " " + u.getLname());
+            }
 
-                if (!runtime_permissions())
-                    startLocationService();
+            if (!runtime_permissions()) {
+                startLocationService();
+                Log.d(TAG, "Starting location service");
             }
         }
     }
@@ -286,6 +303,10 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
                     .title(family.getFamilyMembers().get((int) familyMemberId - 1).getFname() + " " + family.getFamilyMembers().get((int) familyMemberId - 1).getLname())
                     .snippet("xx"));
             marker.setVisible(true);
+
+
+            marker.showInfoWindow();
+
         } else if (statuscode == 404) {
             Toast.makeText(this, "We cant locate this user",
                     Toast.LENGTH_LONG).show();

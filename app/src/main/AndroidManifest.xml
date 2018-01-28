@@ -23,16 +23,14 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-
         <activity
                 android:name=".MainActivity"
                 android:screenOrientation="portrait">
-
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
                 android:name=".Register"
@@ -68,29 +66,26 @@
                 android:value="@string/google_maps_key"/>
 
         <activity
-                android:name="com.honoursproject.radoslawburkacki.familytrackingapplication.Map"
+                android:name=".Map"
                 android:label="@string/title_activity_map"
                 android:theme="@style/Map">
-
         </activity>
-
         <activity
                 android:name=".PreChat"
                 android:label="@string/title_activity_map"
                 android:theme="@style/Map">
-
         </activity>
-
         <activity
                 android:name=".Chat"
                 android:label="@string/title_activity_map"
                 android:theme="@style/Map"
-                android:windowSoftInputMode="stateHidden" >
-
+                android:windowSoftInputMode="stateHidden">
         </activity>
 
         <service android:name=".GPS_Service"/>
 
+        <activity android:name=".FamilyDetails">
+        </activity>
     </application>
 
 </manifest>

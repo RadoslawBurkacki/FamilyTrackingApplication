@@ -51,6 +51,8 @@ public class RegisterTask extends AsyncTask<User, String, Integer> {
             statuscode = response.code();
             Log.d("con1n", response.message());
 
+            response.body().close();
+
         } catch (Exception e) {
             Log.d("con1n", e.toString());
         }

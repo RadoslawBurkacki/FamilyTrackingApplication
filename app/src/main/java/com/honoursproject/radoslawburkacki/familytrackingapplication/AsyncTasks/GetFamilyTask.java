@@ -47,6 +47,8 @@ public class GetFamilyTask extends AsyncTask<Void, Void, Void> {
 
             String jsonData = response.body().string();
 
+            response.body().close();
+
             Gson gson = new Gson();
             JsonParser parser = new JsonParser();
             JsonElement mJson = parser.parse(jsonData);

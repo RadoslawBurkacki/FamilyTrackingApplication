@@ -50,10 +50,14 @@ public class CreateFamilyTask extends AsyncTask<Void, Void, Void> {
                     .addHeader("Authorization", token)
                     .build();
 
+
             Response response = client.newCall(request).execute();
 
             statuscode = response.code();
             token = response.header("Authorization");
+
+            response.body().close();
+
 
         } catch (Exception e) {
             Log.d("test1", e.toString());
