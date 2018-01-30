@@ -60,8 +60,6 @@ public class Chat extends AppCompatActivity implements SendChatMessageTask.Async
 
         final ListView listOfMessages = (ListView) findViewById(R.id.list_of_messages);
 
-        System.out.println(dateFormat.format(date)); //2016/11/16 12:08:43
-
         messages.add(new Message((long) 0, user.getId(), receiver.getId(), "Message1 ", dateFormat.format(date)));
         messages.add(new Message((long) 0, user.getId(), receiver.getId(), "Message2 ", dateFormat.format(date)));
         messages.add(new Message((long) 0, user.getId(), receiver.getId(), "Message3 ", dateFormat.format(date)));

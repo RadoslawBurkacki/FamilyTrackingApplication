@@ -59,7 +59,6 @@ public class SendCoordinatesTask extends AsyncTask<Void, Void, Void> {
 
 
 
-
         } catch (Exception e) {
             Log.d("test1", e.toString());
         }

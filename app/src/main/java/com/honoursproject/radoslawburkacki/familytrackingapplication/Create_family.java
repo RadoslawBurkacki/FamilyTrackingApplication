@@ -1,19 +1,23 @@
 package com.honoursproject.radoslawburkacki.familytrackingapplication;
 
 import android.content.Intent;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.CreateFamilyTask;
+import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.GetFamilyTask;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.Family;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.R;
 
 
-public class Create_family extends AppCompatActivity implements CreateFamilyTask.AsyncResponse {
+public class Create_family extends AppCompatActivity implements CreateFamilyTask.AsyncResponse, GetFamilyTask.AsyncResponse {
 
     EditText familyname;
     Button createfamily;
@@ -23,7 +27,6 @@ public class Create_family extends AppCompatActivity implements CreateFamilyTask
     User user;
     String token;
     Family newFamily;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,34 +51,45 @@ public class Create_family extends AppCompatActivity implements CreateFamilyTask
                 if (pass.getText().toString().length() >= 6 && pass.getText().toString().equals(pass2.getText().toString())) { // if password is
                     // at least 6 chars and both passwords are the same then...
 
-                    newFamily = new Family(user.getId(), familyname.getText().toString(), pass.getText().toString(),null);
+                    newFamily = new Family(user.getId(), familyname.getText().toString(), pass.getText().toString(), null);
 
                     createNewFamily();
 
-
                     Intent intent = new Intent(Create_family.this, Map.class);
-                    intent.putExtra("user",user);
+                    intent.putExtra("user", user);
                     intent.putExtra("token", token);
                     startActivity(intent);
-
 
                 }
 
             }
         });
 
-
     }
 
+    void GetFamily() {
+        new GetFamilyTask(this, user, token).execute();
+    }
 
     @Override
-    public void processFinish(int statuscode, Family family) {
-        Log.d("1", "@@@@@@@@@@@@@@@@@"+statuscode);
+    public void processFinish(Family f) {
 
-        if(statuscode == 400){ // if user is already a member of family then family wasnt
+        final Toast toast = Toast.makeText(getBaseContext(), "Family created successfully\nFamily unique identifier is: " + f.getId() + ".\nDetails about family can be found in MyFamily tab",Toast.LENGTH_SHORT);
+        toast.show();
+        new CountDownTimer(10000, 1000)
+        {
+            public void onTick(long millisUntilFinished) {toast.show();}
+            public void onFinish() {toast.cancel();}
+        }.start();
+    }
 
-        }
-        else if(statuscode == 201){ // family created
+    @Override
+    public void processFinish(int stautscode) {
+
+        if (stautscode == 201) {// family created
+            GetFamily();
+
+        } else {
 
         }
 

@@ -10,8 +10,6 @@ import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.Messa
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.R;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class AdapterChatMessage extends ArrayAdapter<Message> {

@@ -95,18 +95,6 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
         getFamily();
 
-
-/*
-
-        LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
-        boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
-
-        // Check if enabled and if not send user to the GPS settings
-        if (!enabled) {
-            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivity(intent);
-        }
-        */
     }
 
     private void startLocationService() {
@@ -135,6 +123,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 100) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+
 
                 startLocationService();
             } else {
@@ -180,16 +169,20 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
 
     private void moveCamera(LatLng latLng, float zoom) {
-        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
-
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
     }
 
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         mMap = googleMap;
-        mMap.setMyLocationEnabled(true);
+        try{
+            mMap.setMyLocationEnabled(true);
+        }catch(SecurityException e){
+            System.out.println(e.toString());
+        }
+
 
 
     }

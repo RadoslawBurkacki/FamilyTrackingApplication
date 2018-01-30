@@ -14,7 +14,7 @@ import com.squareup.okhttp.*;
 public class CreateFamilyTask extends AsyncTask<Void, Void, Void> {
 
     public interface AsyncResponse {
-        void processFinish(int statuscode, Family family);
+        void processFinish(int statuscode);
     }
 
     public CreateFamilyTask.AsyncResponse delegate = null;
@@ -74,7 +74,7 @@ public class CreateFamilyTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void v) {
-        delegate.processFinish(statuscode, family);
+        delegate.processFinish(statuscode);
     }
 
 
