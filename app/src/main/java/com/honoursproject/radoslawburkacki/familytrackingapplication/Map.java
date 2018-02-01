@@ -47,6 +47,8 @@ import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.Family;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 
+import java.util.HashMap;
+
 public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFamilyTask.AsyncResponse, GetFamilyMemberLocation.AsyncResponse, NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MapActivity";
@@ -56,13 +58,14 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private NavigationView navigationView;
+    private BroadcastReceiver broadcastReceiver;
 
     private boolean firstRunCentred = false;
     private Family family;
     private User user;
     private String token;
 
-    private BroadcastReceiver broadcastReceiver;
+    HashMap<Long, Marker> markerList = new HashMap<Long,Marker>();
 
     Menu menu;
 
@@ -95,6 +98,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
         getFamily();
 
+
     }
 
     private void startLocationService() {
@@ -117,14 +121,11 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         return false;
     }
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 100) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-
-
                 startLocationService();
             } else {
                 runtime_permissions();
@@ -151,6 +152,8 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
                                 .snippet("xx"));
                         marker.setVisible(true);
 
+                        markerList.put(user.getId(),marker);
+
                         firstRunCentred = true;
                     }
                 }
@@ -167,23 +170,19 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         }
     }
 
-
     private void moveCamera(LatLng latLng, float zoom) {
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
     }
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
         mMap = googleMap;
-        try{
-            mMap.setMyLocationEnabled(true);
-        }catch(SecurityException e){
-            System.out.println(e.toString());
-        }
+        // try{
 
-
+        // }catch(SecurityException e){
+        //    System.out.println(e.toString());
+        //}
 
     }
 
@@ -233,7 +232,6 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
                 break;
         }
 
-
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -265,7 +263,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
             for (User u : f.getFamilyMembers()) {
 
                 if (u.getId() == user.getId()) {
-                    //subMenu.add(Menu.NONE, (int) u.getId(), Menu.NONE, u.getFname() + " " + u.getLname() + " (Me)");
+                    subMenu.add(Menu.NONE, (int) u.getId(), Menu.NONE, u.getFname() + " " + u.getLname() + " (Me)");
                     continue;
                 }
 
@@ -276,6 +274,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
                 startLocationService();
                 Log.d(TAG, "Starting location service");
             }
+
         }
     }
 
@@ -286,17 +285,29 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
 
     @Override
-    public void processFinish(int statuscode, LatLng coordinates, long familyMemberId) {
+    public void processFinish(int statuscode, LatLng coordinates, long familyMemberId) {  // Getting family member location result
+        String trackedUserName = "";
+
+        for (User u : family.getFamilyMembers()) {
+            if (u.getId() == familyMemberId) {
+                trackedUserName = u.getFname() + " " + u.getLname();
+            }
+        }
 
         if (statuscode == 302) {
             moveCamera(coordinates, DEFAULT_ZOOM);
 
+            if(markerList.containsKey(familyMemberId)){ // check if marker for user x is already in the HashMap
+                markerList.get(familyMemberId).setVisible(false);   // if true then remove marker
+            }
+
             Marker marker = mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(coordinates.latitude, coordinates.longitude))
-                    .title(family.getFamilyMembers().get((int) familyMemberId - 1).getFname() + " " + family.getFamilyMembers().get((int) familyMemberId - 1).getLname())
+                    .title(trackedUserName)
                     .snippet("xx"));
             marker.setVisible(true);
 
+            markerList.put(familyMemberId, marker); // add marker to hash list
 
             marker.showInfoWindow();
 

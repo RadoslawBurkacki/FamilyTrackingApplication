@@ -57,7 +57,9 @@ public class SendCoordinatesTask extends AsyncTask<Void, Void, Void> {
 
             client.newCall(request).execute();
 
+            Response response = client.newCall(request).execute();
 
+            response.body().close();
 
         } catch (Exception e) {
             Log.d("test1", e.toString());

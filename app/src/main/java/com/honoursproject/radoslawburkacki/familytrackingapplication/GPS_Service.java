@@ -11,6 +11,7 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -77,9 +78,12 @@ public class GPS_Service extends Service implements SendCoordinatesTask.AsyncRes
 
             @Override
             public void onProviderDisabled(String s) {
+
+
                 Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
+
             }
         };
 
@@ -88,7 +92,7 @@ public class GPS_Service extends Service implements SendCoordinatesTask.AsyncRes
 
         //noinspection MissingPermission
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 0, listener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3000, 0, listener);
 
 
     }
