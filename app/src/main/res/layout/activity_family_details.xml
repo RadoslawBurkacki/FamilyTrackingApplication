@@ -28,15 +28,6 @@
                 android:id="@+id/lblFamilyId"
                 android:layout_below="@+id/lblFamilyName" android:layout_alignLeft="@+id/lblFamilyName"
                 android:layout_alignStart="@+id/lblFamilyName"/>
-        <android.support.constraint.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" android:layout_below="@+id/lblFamilyId"
-                android:layout_centerHorizontal="true" android:layout_marginTop="35dp">
-
-            <ListView android:layout_width="352dp" android:layout_height="429dp" tools:layout_editor_absoluteY="8dp"
-                      tools:layout_editor_absoluteX="8dp" android:id="@+id/listOfFamilyMembers"  android:background="@drawable/purple2_background"></ListView>
-
-        </android.support.constraint.ConstraintLayout>
         <TextView
                 android:text="Family Members List:"
                 android:layout_width="wrap_content"
@@ -44,5 +35,16 @@
                 android:id="@+id/textView12" android:layout_below="@+id/lblFamilyId"
                 android:layout_alignLeft="@+id/lblFamilyId" android:layout_alignStart="@+id/lblFamilyId"
                 android:layout_marginTop="15dp"/>
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:layout_below="@+id/lblFamilyId"
+                android:layout_centerHorizontal="true" android:layout_marginTop="35dp">
+
+            <ListView android:layout_width="352dp" android:layout_height="429dp"
+                      android:id="@+id/listOfFamilyMembers"
+                      app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toTopOf="parent"
+                      app:layout_constraintRight_toRightOf="parent" app:layout_constraintLeft_toLeftOf="parent"></ListView>
+
+        </android.support.constraint.ConstraintLayout>
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
