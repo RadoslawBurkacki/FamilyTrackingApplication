@@ -7,15 +7,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.RegisterTask;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
-import com.honoursproject.radoslawburkacki.familytrackingapplication.R;
-
 
 
 public class Register2 extends AppCompatActivity implements RegisterTask.AsyncResponse {
@@ -38,8 +35,8 @@ public class Register2 extends AppCompatActivity implements RegisterTask.AsyncRe
         lname = (EditText) findViewById(R.id.familypassword);
         create = (Button) findViewById(R.id.registerCreate);
 
-        fname.setText("first name");
-        lname.setText("last name");
+         fname.setText("first name");
+         lname.setText("last name");
 
 
 

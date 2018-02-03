@@ -2,30 +2,36 @@ package com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks
 
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.Family;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.ServerValues;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 
-import com.squareup.okhttp.*;
+/**
+ * Created by radek on 03/02/2018.
+ */
+
+public class SendFCMTokenTask extends AsyncTask<Void, Void, Void> {
 
 
-public class CreateFamilyTask extends AsyncTask<Void, Void, Void> {
-
-    public interface AsyncResponse {
-        void processFinish(int statuscode);
-    }
-
-    public CreateFamilyTask.AsyncResponse delegate = null;
-    int statuscode;
-    Family family;
-    String token;
-
-    public CreateFamilyTask(AsyncResponse delegate, Family family, String token) {
-        this.family = family;
+    public SendFCMTokenTask(Long userid, String token, String FCMToken) {
+        this.userid = userid;
         this.token = token;
-        this.delegate = delegate;
+        this.FCMToken = FCMToken;
+
     }
+
+    long userid;
+    String token;
+    String FCMToken;
+
 
     @Override
     protected Void doInBackground(Void... param) {
@@ -33,38 +39,30 @@ public class CreateFamilyTask extends AsyncTask<Void, Void, Void> {
         final MediaType jsonMediaType = MediaType.parse("application/json");
         try {
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("id", family.getId());
-            jsonObject.addProperty("creatorId", family.getCreatorId());
-            jsonObject.addProperty("familyName", family.getFamilyName());
-            jsonObject.addProperty("joiningPassword", family.getJoiningPassword());
+            jsonObject.addProperty("userId", userid);
+            jsonObject.addProperty("myFCMToken", FCMToken);
 
             RequestBody requestBody = RequestBody.create(jsonMediaType, new Gson().toJson(jsonObject));
 
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-                    .url(ServerValues.SERVER_ADDRESS + "/families")
+                    .url(ServerValues.SERVER_ADDRESS + "/fcmtoken")
                     .post(requestBody)
                     .addHeader("content-type", "application/json")
                     .addHeader("Authorization", token)
                     .build();
 
-
             Response response = client.newCall(request).execute();
-
-            statuscode = response.code();
-            token = response.header("Authorization");
 
             response.body().close();
 
-
         } catch (Exception e) {
-            Log.d("test1", e.toString());
+            Log.d("SendFCMTokenTask", e.toString());
         }
 
         return null;
     }
-
 
     @Override
     protected void onProgressUpdate(Void... values) {
@@ -72,9 +70,7 @@ public class CreateFamilyTask extends AsyncTask<Void, Void, Void> {
     }
 
     @Override
-    protected void onPostExecute(Void v) {
-        delegate.processFinish(statuscode);
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
     }
-
-
 }

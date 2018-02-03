@@ -2,14 +2,10 @@ package com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks
 
 import android.os.AsyncTask;
 import android.util.Log;
-import com.google.android.gms.maps.GoogleMap;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.Family;
-import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.ServerValues;
 import com.squareup.okhttp.*;
 
@@ -54,8 +50,6 @@ public class SendCoordinatesTask extends AsyncTask<Void, Void, Void> {
                     .addHeader("Authorization", token)
                     .build();
 
-
-            client.newCall(request).execute();
 
             Response response = client.newCall(request).execute();
 

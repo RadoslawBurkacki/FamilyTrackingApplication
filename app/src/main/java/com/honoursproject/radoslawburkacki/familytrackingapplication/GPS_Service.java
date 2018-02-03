@@ -10,13 +10,9 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.util.Log;
-import android.widget.Toast;
+
 import com.google.android.gms.maps.model.LatLng;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.SendCoordinatesTask;
-import com.squareup.okhttp.*;
 
 
 public class GPS_Service extends Service implements SendCoordinatesTask.AsyncResponse {

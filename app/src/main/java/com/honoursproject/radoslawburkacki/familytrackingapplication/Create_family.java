@@ -2,10 +2,8 @@ package com.honoursproject.radoslawburkacki.familytrackingapplication;
 
 import android.content.Intent;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +12,6 @@ import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.
 import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.GetFamilyTask;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.Family;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
-import com.honoursproject.radoslawburkacki.familytrackingapplication.R;
 
 
 public class Create_family extends AppCompatActivity implements CreateFamilyTask.AsyncResponse, GetFamilyTask.AsyncResponse {
@@ -59,6 +56,8 @@ public class Create_family extends AppCompatActivity implements CreateFamilyTask
                     intent.putExtra("user", user);
                     intent.putExtra("token", token);
                     startActivity(intent);
+
+
 
                 }
 

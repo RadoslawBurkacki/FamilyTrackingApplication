@@ -3,7 +3,6 @@ package com.honoursproject.radoslawburkacki.familytrackingapplication;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -70,6 +69,7 @@ public class Join_family extends AppCompatActivity implements JoinFamilyTask.Asy
             intent.putExtra("user",user);
             intent.putExtra("token", token);
             startActivity(intent);
+
 
         } else if (statuscode == 404) {
             Toast.makeText(this, "Family does not exist",

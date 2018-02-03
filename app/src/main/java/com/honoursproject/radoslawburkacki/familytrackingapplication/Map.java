@@ -6,20 +6,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.location.*;
 import android.os.Build;
-import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.internal.NavigationMenu;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -27,12 +19,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.*;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -40,12 +31,12 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.GetFamilyMemberLocation;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.GetFamilyTask;
+import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.SendFCMTokenTask;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.Family;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
+import com.honoursproject.radoslawburkacki.familytrackingapplication.fcm.MyFirebaseInstanceIDService;
 
 import java.util.HashMap;
 
@@ -98,7 +89,9 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
         getFamily();
 
+        SendFcmToken(user.getId(), token, FirebaseInstanceId.getInstance().getToken());
 
+        Log.d("abc", FirebaseInstanceId.getInstance().getToken());
     }
 
     private void startLocationService() {
@@ -176,14 +169,6 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
-        mMap = googleMap;
-        // try{
-
-        // }catch(SecurityException e){
-        //    System.out.println(e.toString());
-        //}
-
     }
 
     @Override
@@ -241,6 +226,20 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    // Below this line is the AsyncTask section
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void SendFcmToken(Long userid, String token, String FCMtoken){
+        new SendFCMTokenTask(userid, token, FCMtoken).execute();
+    }
 
     public void getFamily() {
         new GetFamilyTask(this, user, token).execute();
@@ -283,7 +282,6 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         new GetFamilyMemberLocation(this, token, familyMemberId).execute();
     }
 
-
     @Override
     public void processFinish(int statuscode, LatLng coordinates, long familyMemberId) {  // Getting family member location result
         String trackedUserName = "";
@@ -320,13 +318,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 
 }
 

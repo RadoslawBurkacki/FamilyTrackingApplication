@@ -3,10 +3,8 @@ package com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks
 import android.os.AsyncTask;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.Family;
-import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.ServerValues;
 import com.squareup.okhttp.*;
 

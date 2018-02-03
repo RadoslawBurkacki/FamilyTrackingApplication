@@ -1,7 +1,5 @@
 package com.honoursproject.radoslawburkacki.familytrackingapplication.Model;
 
-import java.util.Date;
-
 public class Message {
 
     long messageId;

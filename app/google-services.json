@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "732829130920",
+    "firebase_url": "https://stunning-oasis-192002.firebaseio.com",
+    "project_id": "stunning-oasis-192002",
+    "storage_bucket": "stunning-oasis-192002.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:732829130920:android:5348dbf0f73d24ad",
+        "android_client_info": {
+          "package_name": "com.honoursproject.radoslawburkacki.familytrackingapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "732829130920-3thje7bakf1q3t3l19a81get86is407o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCe0mXsrMcYJEdXLxpPGJBAHESsMm9n0IA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

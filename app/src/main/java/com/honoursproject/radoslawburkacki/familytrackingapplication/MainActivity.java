@@ -6,8 +6,13 @@ import android.graphics.drawable.AnimationDrawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.honoursproject.radoslawburkacki.familytrackingapplication.fcm.MyFirebaseInstanceIDService;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -27,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         startBackgroundAnimation();
 
+
         btnlogin = (Button) findViewById(R.id.createnewfamily);
         btnregister = (Button) findViewById(R.id.joinfamily);
 
@@ -45,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
 
     }
 
