@@ -16,12 +16,15 @@ public class User implements Serializable{
 
     }
 
-    public User(String email, String password, String fname, String lname) {
+    public User(Long id, String email, String password, String fname, String lname) {
+        this.id = id;
         this.email = email;
         this.password = password;
         this.fname = fname;
         this.lname = lname;
     }
+
+
 
     public long getId() {
         return id;

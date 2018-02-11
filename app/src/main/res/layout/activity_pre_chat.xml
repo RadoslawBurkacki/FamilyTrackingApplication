@@ -14,8 +14,7 @@
             android:id="@+id/listview"
             android:divider="#000000"
             android:dividerHeight="3px"
-
-
-            tools:layout_editor_absoluteY="8dp" tools:layout_editor_absoluteX="8dp"/>
+            tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp"/>
 
 </android.support.constraint.ConstraintLayout>

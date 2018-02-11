@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.Message;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.R;
@@ -14,18 +15,17 @@ import java.util.List;
 
 public class AdapterChatMessage extends ArrayAdapter<Message> {
 
-    User sender;
-
+    User user;
+    User receiver;
 
     public AdapterChatMessage(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
     }
 
-    public AdapterChatMessage(Context context, int resource, List<Message> chatMessages, User sender) {
+    public AdapterChatMessage(Context context, int resource, List<Message> chatMessages, User user, User receiver) {
         super(context, resource, chatMessages);
-
-        this.sender = sender;
-
+        this.user = user;
+        this.receiver = receiver;
     }
 
     @Override
@@ -48,7 +48,13 @@ public class AdapterChatMessage extends ArrayAdapter<Message> {
 
 
             if (tt1 != null) {
-                tt1.setText(sender.getFname() + " " +sender.getLname());
+                if(chatMessage.getFromId() == user.getId()){
+                    tt1.setText(user.getFname() +" " +user.getLname()+": ");
+                }
+                else if(chatMessage.getFromId() == receiver.getId()){
+                    tt1.setText(receiver.getFname() +" " +receiver.getLname()+": ");
+                }
+
             }
 
             if (tt2 != null) {

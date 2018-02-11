@@ -1,6 +1,7 @@
 package com.honoursproject.radoslawburkacki.familytrackingapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.*;
@@ -10,7 +11,7 @@ import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.Famil
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 
 public class PreChat extends AppCompatActivity {
-
+    public static final String MY_PREFS_NAME = "MyPrefsFile";
     private final String TAG = "PreChat";
 
     ListView listView;
@@ -27,9 +28,12 @@ public class PreChat extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.listview);
 
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        token = prefs.getString("token",null);
+
         Intent i = getIntent();
         user = (User) i.getSerializableExtra("user");
-        token = (String) i.getSerializableExtra("token");
+
         family = (Family) i.getSerializableExtra("family");
 
         for (User u : family.getFamilyMembers()) {
@@ -55,7 +59,6 @@ public class PreChat extends AppCompatActivity {
                 Intent intent = new Intent(PreChat.this, Chat.class); // instance id? for recoognition of each unique chat??
                 intent.putExtra("user", user);
                 intent.putExtra("receiver", family.getFamilyMembers().get(i));
-                intent.putExtra("token", token);
                 startActivity(intent);
 
             }

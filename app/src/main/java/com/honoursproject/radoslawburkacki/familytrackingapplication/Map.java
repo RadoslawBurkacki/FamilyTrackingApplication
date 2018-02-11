@@ -5,6 +5,7 @@ import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.content.Intent;
@@ -31,6 +32,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.GetFamilyMemberLocation;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.GetFamilyTask;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.SendFCMTokenTask;
@@ -41,7 +43,7 @@ import com.honoursproject.radoslawburkacki.familytrackingapplication.fcm.MyFireb
 import java.util.HashMap;
 
 public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFamilyTask.AsyncResponse, GetFamilyMemberLocation.AsyncResponse, NavigationView.OnNavigationItemSelectedListener {
-
+    public static final String MY_PREFS_NAME = "MyPrefsFile";
     private static final String TAG = "MapActivity";
     private static final float DEFAULT_ZOOM = 15f;
 
@@ -56,7 +58,8 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
     private User user;
     private String token;
 
-    HashMap<Long, Marker> markerList = new HashMap<Long,Marker>();
+    SharedPreferences prefs;
+    HashMap<Long, Marker> markerList = new HashMap<Long, Marker>();
 
     Menu menu;
 
@@ -65,9 +68,14 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        Intent i = getIntent();
-        user = (User) i.getSerializableExtra("user");
-        token = (String) i.getSerializableExtra("token");
+
+        prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+
+
+        token = prefs.getString("token", null);
+
+        user = new User(prefs.getLong("userid", 0), prefs.getString("email", null), "", prefs.getString("fname", null), prefs.getString("lname", null));
+
 
         navigationView = (NavigationView) findViewById(R.id.navigationview);
 
@@ -90,6 +98,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         getFamily();
 
         SendFcmToken(user.getId(), token, FirebaseInstanceId.getInstance().getToken());
+
 
         Log.d("abc", FirebaseInstanceId.getInstance().getToken());
     }
@@ -145,7 +154,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
                                 .snippet("xx"));
                         marker.setVisible(true);
 
-                        markerList.put(user.getId(),marker);
+                        markerList.put(user.getId(), marker);
 
                         firstRunCentred = true;
                     }
@@ -169,6 +178,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
     }
 
     @Override
@@ -180,7 +190,6 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
                 Intent intent = new Intent(Map.this, PreChat.class);
                 intent.putExtra("user", user);
-                intent.putExtra("token", token);
                 intent.putExtra("family", family);
                 startActivity(intent);
 
@@ -234,10 +243,18 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         return super.onOptionsItemSelected(item);
     }
 
+    private void saveFamilyToSharedPreferences(Family f) {
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(f);
+        prefsEditor.putString("Family", json);
+        prefsEditor.commit();
+    }
+
     // Below this line is the AsyncTask section
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void SendFcmToken(Long userid, String token, String FCMtoken){
+    public void SendFcmToken(Long userid, String token, String FCMtoken) {
         new SendFCMTokenTask(userid, token, FCMtoken).execute();
     }
 
@@ -246,16 +263,17 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
     }
 
     @Override
-    public void processFinish(Family f) {
+    public void processFinish(Family f) { // get family result
         this.family = f;
-
         Log.d(TAG, family.toString());
 
         MenuItem myMoveGroupItem = navigationView.getMenu().getItem(0);
         SubMenu subMenu = myMoveGroupItem.getSubMenu();
 
 
-        if (f.getFamilyMembers().size() != 0) {
+        if (f.getFamilyMembers().size() != 0) { // family has atleast 1 family member
+
+            saveFamilyToSharedPreferences(f);
 
             Log.d(TAG, "Setting up drawer menu");
 
@@ -283,7 +301,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
     }
 
     @Override
-    public void processFinish(int statuscode, LatLng coordinates, long familyMemberId) {  // Getting family member location result
+    public void processFinish(int statuscode, LatLng coordinates, long familyMemberId) {  // Gett family member location result
         String trackedUserName = "";
 
         for (User u : family.getFamilyMembers()) {
@@ -295,7 +313,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         if (statuscode == 302) {
             moveCamera(coordinates, DEFAULT_ZOOM);
 
-            if(markerList.containsKey(familyMemberId)){ // check if marker for user x is already in the HashMap
+            if (markerList.containsKey(familyMemberId)) { // check if marker for user x is already in the HashMap
                 markerList.get(familyMemberId).setVisible(false);   // if true then remove marker
             }
 
@@ -316,8 +334,6 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
 
     }
-
-
 
 
 }

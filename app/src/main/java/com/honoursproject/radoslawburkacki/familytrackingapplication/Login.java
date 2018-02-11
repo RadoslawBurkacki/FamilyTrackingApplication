@@ -2,17 +2,21 @@ package com.honoursproject.radoslawburkacki.familytrackingapplication;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.LoginTask;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 
 
 public class Login extends AppCompatActivity implements LoginTask.AsyncResponse {
+
+    public static final String MY_PREFS_NAME = "MyPrefsFile";
 
     Button btnlogin;
     EditText email;
@@ -74,17 +78,23 @@ public class Login extends AppCompatActivity implements LoginTask.AsyncResponse 
             if (isUserFamilyMember) { // User is already member of a family so open map screen
 
 
+                SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                editor.putString("token", token);
+                editor.putLong("userid", user.getId());
+                editor.putString("fname", user.getFname());
+                editor.putString("lname", user.getLname());
+                editor.putString("email", user.getEmail());
+                editor.apply();
+
 
                 Intent intent = new Intent(Login.this, Map.class);
-                intent.putExtra("user",user);
-                intent.putExtra("token", token);
                 startActivity(intent);
 
 
             } else if (!isUserFamilyMember) { // User is not a member of any family go to family creation/join
 
                 Intent intent = new Intent(Login.this, Family_setup.class);
-                intent.putExtra("user",user);
+                intent.putExtra("user", user);
                 intent.putExtra("token", token);
                 startActivity(intent);
             }

@@ -102,6 +102,13 @@
             </intent-filter>
         </service>
 
+        <receiver android:name=".DataReceiver" >
+            <intent-filter>
+                <action android:name="newmessage" />
+            </intent-filter>
+        </receiver>
+
+
 
 
     </application>

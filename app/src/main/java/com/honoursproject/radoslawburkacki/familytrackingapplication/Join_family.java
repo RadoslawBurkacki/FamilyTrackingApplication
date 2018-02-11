@@ -1,6 +1,7 @@
 package com.honoursproject.radoslawburkacki.familytrackingapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +14,7 @@ import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 
 
 public class Join_family extends AppCompatActivity implements JoinFamilyTask.AsyncResponse {
-
+    public static final String MY_PREFS_NAME = "MyPrefsFile";
     EditText familyid;
     EditText familypassword;
     Button joinfamily;
@@ -65,9 +66,16 @@ public class Join_family extends AppCompatActivity implements JoinFamilyTask.Asy
             Toast.makeText(this, "You have joined family.",
                     Toast.LENGTH_LONG).show();
 
+
+            SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+            editor.putString("token", token);
+            editor.putLong("userid", user.getId());
+            editor.putString("fname", user.getFname());
+            editor.putString("lname", user.getLname());
+            editor.putString("email", user.getEmail());
+            editor.apply();
+
             Intent intent = new Intent(Join_family.this, Map.class);
-            intent.putExtra("user",user);
-            intent.putExtra("token", token);
             startActivity(intent);
 
 
