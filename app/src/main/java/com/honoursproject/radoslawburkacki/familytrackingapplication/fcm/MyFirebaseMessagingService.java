@@ -42,7 +42,7 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
         Log.d("FCM", "data received from FCM");
 
         if (remoteMessage.getData().size() > 0) { // data has been sent
-
+            Log.d("FCM", remoteMessage.getData().toString());
             if (remoteMessage.getData().containsKey("fromid") && remoteMessage.getData().containsKey("toid")
                     && remoteMessage.getData().containsKey("date")
                     && remoteMessage.getData().containsKey("message")) {  // its a private chat message
@@ -76,14 +76,37 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
                 showPMNotification(remoteMessage.getData().get("message"), remoteMessage.getData().get("fromid"), remoteMessage.getData().get("toid"), remoteMessage.getData().get("date"));
 
             }
+            else if(remoteMessage.getData().containsKey("newfamilymember")){
+                showNewFamilyMemberNotification(remoteMessage.getData().get("newfamilymember"));
+                Log.d("FCM", "sending broadcast to map");
+                Intent z = new Intent("newUserJoinedFamily");
+                sendBroadcast(z);
+            }
         }
 
         //showNotification(remoteMessage.getData().get("message"));
     }
 
 
-    private void showPMNotification(String message, String senderid, String toid, String date) {
+    private void showNewFamilyMemberNotification(String newFamilyMemberName) {
 
+        Log.d("FCM", "Displaying new family member notification");
+
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setAutoCancel(true)
+                .setContentTitle("New user has joined your family")
+                .setContentText(newFamilyMemberName)
+                .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark);
+
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        manager.notify(0, builder.build());
+
+    }
+
+
+    private void showPMNotification(String message, String senderid, String toid, String date) {
 
         User sender = new User();
         User user = new User();

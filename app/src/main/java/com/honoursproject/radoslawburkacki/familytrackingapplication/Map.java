@@ -2,6 +2,7 @@ package com.honoursproject.radoslawburkacki.familytrackingapplication;
 
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
@@ -14,6 +15,7 @@ import android.support.design.widget.NavigationView;
 import android.os.Bundle;
 
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -39,6 +41,7 @@ import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.Family;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.fcm.MyFirebaseInstanceIDService;
+import com.honoursproject.radoslawburkacki.familytrackingapplication.fcm.MyFirebaseMessagingService;
 
 import java.util.HashMap;
 
@@ -46,6 +49,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
     public static final String MY_PREFS_NAME = "MyPrefsFile";
     private static final String TAG = "MapActivity";
     private static final float DEFAULT_ZOOM = 15f;
+
 
     private GoogleMap mMap;
     private DrawerLayout drawerLayout;
@@ -68,17 +72,13 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-
         prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-
 
         token = prefs.getString("token", null);
 
         user = new User(prefs.getLong("userid", 0), prefs.getString("email", null), "", prefs.getString("fname", null), prefs.getString("lname", null));
 
-
         navigationView = (NavigationView) findViewById(R.id.navigationview);
-
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
@@ -97,10 +97,10 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
         getFamily();
 
+
         SendFcmToken(user.getId(), token, FirebaseInstanceId.getInstance().getToken());
 
 
-        Log.d("abc", FirebaseInstanceId.getInstance().getToken());
     }
 
     private void startLocationService() {
@@ -135,6 +135,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         }
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -143,26 +144,40 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
                 @Override
                 public void onReceive(Context context, Intent intent) {
 
-                    if (firstRunCentred) {
+                    Log.d("aaa", intent.getAction().toString());
 
-                    } else if (!firstRunCentred) {
-                        moveCamera(new LatLng((Double) intent.getExtras().get("Lat"), (Double) intent.getExtras().get("Long")), DEFAULT_ZOOM);
 
-                        Marker marker = mMap.addMarker(new MarkerOptions()
-                                .position(new LatLng((Double) intent.getExtras().get("Lat"), (Double) intent.getExtras().get("Long")))
-                                .title(user.getFname() + " " + user.getFname())
-                                .snippet("xx"));
-                        marker.setVisible(true);
+                    if (intent.getAction().toString().equals("location_update")) {
+                        if (!firstRunCentred) {
+                            moveCamera(new LatLng((Double) intent.getExtras().get("Lat"), (Double) intent.getExtras().get("Long")), DEFAULT_ZOOM);
 
-                        markerList.put(user.getId(), marker);
+                            Marker marker = mMap.addMarker(new MarkerOptions()
+                                    .position(new LatLng((Double) intent.getExtras().get("Lat"), (Double) intent.getExtras().get("Long")))
+                                    .title(user.getFname() + " " + user.getFname())
+                                    .snippet("xx"));
+                            marker.setVisible(true);
 
-                        firstRunCentred = true;
+                            markerList.put(user.getId(), marker);
+                            firstRunCentred = true;
+                        }
+
+                    } else if (intent.getAction().toString().equals("newUserJoinedFamily")) {
+
+                        getFamily();
                     }
+
+
                 }
             };
         }
-        registerReceiver(broadcastReceiver, new IntentFilter("location_update"));
+        Log.d("aaa", "register new receiver");
+        IntentFilter filterRefreshUpdate = new IntentFilter();
+        filterRefreshUpdate.addAction("newUserJoinedFamily");
+        filterRefreshUpdate.addAction("location_update");
+
+        registerReceiver(broadcastReceiver, filterRefreshUpdate);
     }
+
 
     @Override
     protected void onDestroy() {
@@ -196,6 +211,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
                 break;
 
             case R.id.nav_SOS:
+
 
                 break;
 
@@ -251,6 +267,14 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         prefsEditor.commit();
     }
 
+    private Family getFamilyFromSharedPreferences() {
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = prefs.getString("Family", "");
+        Family f = gson.fromJson(json, Family.class);
+        return f;
+    }
+
     // Below this line is the AsyncTask section
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -267,31 +291,42 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         this.family = f;
         Log.d(TAG, family.toString());
 
-        MenuItem myMoveGroupItem = navigationView.getMenu().getItem(0);
-        SubMenu subMenu = myMoveGroupItem.getSubMenu();
-
-
         if (f.getFamilyMembers().size() != 0) { // family has atleast 1 family member
 
             saveFamilyToSharedPreferences(f);
 
+            if (isMyServiceRunning(GPS_Service.class)) {
+                Log.d(TAG, "gps service on");
+            } else {
+                Log.d(TAG, "gps service off");
+                if (!runtime_permissions()) {
+                    startLocationService();
+                    Log.d(TAG, "Starting location service");
+                }
+            }
+
             Log.d(TAG, "Setting up drawer menu");
 
-            for (User u : f.getFamilyMembers()) {
+            setUpDrawerMenu();
 
-                if (u.getId() == user.getId()) {
-                    subMenu.add(Menu.NONE, (int) u.getId(), Menu.NONE, u.getFname() + " " + u.getLname() + " (Me)");
-                    continue;
-                }
+        }
+    }
 
-                subMenu.add(Menu.NONE, (int) u.getId(), Menu.NONE, u.getFname() + " " + u.getLname());
+    public void setUpDrawerMenu() {
+        MenuItem myMoveGroupItem = navigationView.getMenu().getItem(0);
+        SubMenu subMenu = myMoveGroupItem.getSubMenu();
+        subMenu.clear();
+
+        Family f = getFamilyFromSharedPreferences();
+
+        for (User u : f.getFamilyMembers()) {
+
+            if (u.getId() == user.getId()) {
+                subMenu.add(Menu.NONE, (int) u.getId(), Menu.NONE, u.getFname() + " " + u.getLname() + " (Me)");
+                continue;
             }
 
-            if (!runtime_permissions()) {
-                startLocationService();
-                Log.d(TAG, "Starting location service");
-            }
-
+            subMenu.add(Menu.NONE, (int) u.getId(), Menu.NONE, u.getFname() + " " + u.getLname());
         }
     }
 
@@ -333,6 +368,27 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         }
 
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    private boolean isMyServiceRunning(Class<?> GPS_Service) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (GPS_Service.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 

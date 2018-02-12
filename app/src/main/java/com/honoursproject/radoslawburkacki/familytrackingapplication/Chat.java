@@ -114,7 +114,6 @@ public class Chat extends AppCompatActivity implements SendChatMessageTask.Async
 
         @Override
         public void onReceive(Context context, Intent intent) {
-
             setUpChat();
         }
     }
