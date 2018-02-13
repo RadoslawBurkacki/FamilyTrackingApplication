@@ -82,11 +82,29 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
                 Intent z = new Intent("newUserJoinedFamily");
                 sendBroadcast(z);
             }
+            else if(remoteMessage.getData().containsKey("sos")){
+                showSOSnotification(remoteMessage);
+            }
         }
 
         //showNotification(remoteMessage.getData().get("message"));
     }
 
+    private void showSOSnotification(RemoteMessage remoteMessage){
+
+        Log.d("FCM", "Displaying SOS notification");
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setAutoCancel(true)
+                .setContentTitle(remoteMessage.getData().get("sos")+": SOS!")
+                .setContentText(remoteMessage.getData().get("sos")+": SOS!")
+                .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark);
+
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        manager.notify(0, builder.build());
+
+    }
 
     private void showNewFamilyMemberNotification(String newFamilyMemberName) {
 

@@ -88,7 +88,7 @@ public class GPS_Service extends Service implements SendCoordinatesTask.AsyncRes
 
         //noinspection MissingPermission
 
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3000, 0, listener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, listener);
 
 
     }

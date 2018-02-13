@@ -3,8 +3,10 @@ package com.honoursproject.radoslawburkacki.familytrackingapplication;
 
 import android.Manifest;
 import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -38,6 +40,7 @@ import com.google.gson.Gson;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.GetFamilyMemberLocation;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.GetFamilyTask;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.SendFCMTokenTask;
+import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.SendSOSTask;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.Family;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.fcm.MyFirebaseInstanceIDService;
@@ -45,7 +48,7 @@ import com.honoursproject.radoslawburkacki.familytrackingapplication.fcm.MyFireb
 
 import java.util.HashMap;
 
-public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFamilyTask.AsyncResponse, GetFamilyMemberLocation.AsyncResponse, NavigationView.OnNavigationItemSelectedListener {
+public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFamilyTask.AsyncResponse, GetFamilyMemberLocation.AsyncResponse, SendSOSTask.AsyncResponse, NavigationView.OnNavigationItemSelectedListener {
     public static final String MY_PREFS_NAME = "MyPrefsFile";
     private static final String TAG = "MapActivity";
     private static final float DEFAULT_ZOOM = 15f;
@@ -97,6 +100,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
         getFamily();
 
+        Log.d("\n", FirebaseInstanceId.getInstance().getToken());
 
         SendFcmToken(user.getId(), token, FirebaseInstanceId.getInstance().getToken());
 
@@ -211,7 +215,25 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
                 break;
 
             case R.id.nav_SOS:
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case DialogInterface.BUTTON_POSITIVE:
+                                //Yes button clicked
+                                sendSOS();
+                                break;
 
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                //No button clicked
+                                break;
+                        }
+                    }
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
 
                 break;
 
@@ -275,6 +297,46 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         return f;
     }
 
+    public void setUpDrawerMenu() {
+        MenuItem myMoveGroupItem = navigationView.getMenu().getItem(0);
+        SubMenu subMenu = myMoveGroupItem.getSubMenu();
+        subMenu.clear();
+
+        Family f = getFamilyFromSharedPreferences();
+
+        for (User u : f.getFamilyMembers()) {
+
+            if (u.getId() == user.getId()) {
+                subMenu.add(Menu.NONE, (int) u.getId(), Menu.NONE, u.getFname() + " " + u.getLname() + " (Me)");
+                continue;
+            }
+
+            subMenu.add(Menu.NONE, (int) u.getId(), Menu.NONE, u.getFname() + " " + u.getLname());
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    private boolean isMyServiceRunning(Class<?> GPS_Service) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (GPS_Service.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     // Below this line is the AsyncTask section
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -311,25 +373,6 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
         }
     }
-
-    public void setUpDrawerMenu() {
-        MenuItem myMoveGroupItem = navigationView.getMenu().getItem(0);
-        SubMenu subMenu = myMoveGroupItem.getSubMenu();
-        subMenu.clear();
-
-        Family f = getFamilyFromSharedPreferences();
-
-        for (User u : f.getFamilyMembers()) {
-
-            if (u.getId() == user.getId()) {
-                subMenu.add(Menu.NONE, (int) u.getId(), Menu.NONE, u.getFname() + " " + u.getLname() + " (Me)");
-                continue;
-            }
-
-            subMenu.add(Menu.NONE, (int) u.getId(), Menu.NONE, u.getFname() + " " + u.getLname());
-        }
-    }
-
 
     public void getFamilyMemberLocation(long familyMemberId) {
         new GetFamilyMemberLocation(this, token, familyMemberId).execute();
@@ -370,25 +413,18 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
 
+    public void sendSOS() {
+        new SendSOSTask(this, user, token).execute();
     }
 
     @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-    }
-
-    private boolean isMyServiceRunning(Class<?> GPS_Service) {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (GPS_Service.getName().equals(service.service.getClassName())) {
-                return true;
-            }
+    public void processFinish(Integer statuscode) {
+        if (statuscode == 200) {
+            Toast.makeText(this, "SOS sent successfully",
+                    Toast.LENGTH_LONG).show();
         }
-        return false;
+
     }
 
 
