@@ -26,7 +26,7 @@ public class PreChat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pre_chat);
 
-        listView = (ListView) findViewById(R.id.listview);
+        listView = (ListView) findViewById(R.id.familymemberlist);
 
         SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         token = prefs.getString("token",null);
@@ -48,7 +48,7 @@ public class PreChat extends AppCompatActivity {
         listView.setAdapter(customAdapter);
 
 
-        setTitle("Send message to:");
+        setTitle("Chat with:");
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

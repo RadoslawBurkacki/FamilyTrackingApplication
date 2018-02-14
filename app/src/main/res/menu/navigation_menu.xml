@@ -1,44 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      android:id="@+id/drawermenu">
+    android:id="@+id/drawermenu">
 
 
-    <item android:title="Family members tracking" android:orderInCategory="10" android:id="@+id/a">
+    <item
+        android:id="@+id/a"
+        android:orderInCategory="10"
+        android:title="Family members tracking">
         <menu android:id="@+id/aa">
 
         </menu>
     </item>
 
 
-    <item android:title="Features" android:orderInCategory="20" >
+    <item
+        android:orderInCategory="20"
+        android:title="Features">
         <menu>
-            <item android:id="@+id/nav_chat"
-                  android:title="Chat"/>
+            <item
+                android:id="@+id/nav_chat"
+                android:icon="@android:drawable/sym_action_chat"
+                android:title="Chat" />
 
-            <item android:id="@+id/nav_SOS"
-                  android:title="SOS"/>
+            <item
+                android:id="@+id/nav_SOS"
+                android:icon="@mipmap/ic_call_made_black_24dp"
+                android:title="SOS" />
         </menu>
     </item>
 
 
-    <item android:title="Family" android:orderInCategory="30">
+    <item
+        android:orderInCategory="30"
+        android:title="Family">
         <menu>
-            <item android:id="@+id/nav_myfamily"
-                  android:title="My Family"/>
+            <item
+                android:id="@+id/nav_myfamily"
+                android:icon="@mipmap/ic_people_black_24dp"
+                android:title="My Family" />
         </menu>
     </item>
 
 
-    <item android:title="Other" android:orderInCategory="40">
+    <item
+        android:orderInCategory="40"
+        android:title="Other">
         <menu>
-            <item android:id="@+id/nav_settings"
-                  android:title="Settings"/>
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@mipmap/ic_settings_black_24dp"
+                android:title="Settings" />
 
-            <item android:id="@+id/nav_about"
-                  android:title="About"/>
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@mipmap/ic_info_black_24dp"
+                android:title="About" />
 
-            <item android:id="@+id/nav_signout"
-                  android:title="Sign Out"/>
+            <item
+                android:id="@+id/nav_signout"
+                android:icon="@mipmap/ic_arrow_back_black_24dp"
+                android:title="Sign Out" />
         </menu>
     </item>
 

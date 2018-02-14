@@ -305,13 +305,12 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         Family f = getFamilyFromSharedPreferences();
 
         for (User u : f.getFamilyMembers()) {
-
-            if (u.getId() == user.getId()) {
-                subMenu.add(Menu.NONE, (int) u.getId(), Menu.NONE, u.getFname() + " " + u.getLname() + " (Me)");
+              if (u.getId() == user.getId()) {
+                subMenu.add(Menu.NONE, (int) u.getId(), Menu.NONE, u.getFname() + " " + u.getLname() + " (Me)").setIcon(R.drawable.ic_gps_fixed_black_24dp);
                 continue;
             }
 
-            subMenu.add(Menu.NONE, (int) u.getId(), Menu.NONE, u.getFname() + " " + u.getLname());
+            subMenu.add(Menu.NONE, (int) u.getId(), Menu.NONE, u.getFname() + " " + u.getLname()).setIcon(R.mipmap.ic_location_on_black_24dp);
         }
     }
 

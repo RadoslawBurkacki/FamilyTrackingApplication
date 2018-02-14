@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <item android:title="Family members" android:orderInCategory="10" android:id="@+id/a">
+    <item android:title="@string/familymembers" android:orderInCategory="10" android:id="@+id/a">
         <menu android:id="@+id/aa">
 
         </menu>
