@@ -47,6 +47,7 @@ import com.honoursproject.radoslawburkacki.familytrackingapplication.fcm.MyFireb
 import com.honoursproject.radoslawburkacki.familytrackingapplication.fcm.MyFirebaseMessagingService;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFamilyTask.AsyncResponse, GetFamilyMemberLocation.AsyncResponse, SendSOSTask.AsyncResponse, NavigationView.OnNavigationItemSelectedListener {
     public static final String MY_PREFS_NAME = "MyPrefsFile";
@@ -378,7 +379,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
     }
 
     @Override
-    public void processFinish(int statuscode, LatLng coordinates, long familyMemberId) {  // Gett family member location result
+    public void processFinish(int statuscode, LatLng coordinates, long familyMemberId, List<Integer> list) {  // Gett family member location result
         String trackedUserName = "";
 
         for (User u : family.getFamilyMembers()) {
@@ -397,7 +398,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
             Marker marker = mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(coordinates.latitude, coordinates.longitude))
                     .title(trackedUserName)
-                    .snippet("xx"));
+                    .snippet("Last seen:" + list.get(0) +list.get(1) + list.get(2) +list.get(3) + list.get(4) + list.get(5)));
             marker.setVisible(true);
 
             markerList.put(familyMemberId, marker); // add marker to hash list

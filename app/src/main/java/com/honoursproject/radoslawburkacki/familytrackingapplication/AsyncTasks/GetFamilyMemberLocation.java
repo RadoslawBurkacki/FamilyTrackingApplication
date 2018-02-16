@@ -2,21 +2,31 @@ package com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks
 
 import android.os.AsyncTask;
 import android.util.Log;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.ServerValues;
 import com.squareup.okhttp.*;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GetFamilyMemberLocation extends AsyncTask<Void, Void, Void> {
 
     public interface AsyncResponse {
-        void processFinish(int statuscode, LatLng coordinates, long familyMemberId);
+        void processFinish(int statuscode, LatLng coordinates, long familyMemberId, List<Integer> list);
     }
 
     public GetFamilyMemberLocation.AsyncResponse delegate = null;
 
+    List<Integer> list = new ArrayList<>();
     int statuscode;
     String token;
     long familyMemberId;
@@ -55,11 +65,26 @@ public class GetFamilyMemberLocation extends AsyncTask<Void, Void, Void> {
             JsonElement mJson = parser.parse(jsonData);
             coordinates = gson.fromJson(mJson, LatLng.class);
 
-            Log.d("hello", ""+ coordinates.latitude + coordinates.longitude);
+
+            JSONObject obj = new JSONObject(jsonData);
+            JSONArray params = obj.getJSONArray("list");
+
+            if (params != null) {
+                int len = params.length();
+                for (int i=0;i<len;i++){
+                    list.add(params.getInt(i));
+                }
+            }
+
+            Log.d("hello", "" + coordinates.latitude + coordinates.longitude);
+
+            for(Integer i : list){
+                Log.d("hello", ""+i);
+            }
 
 
         } catch (Exception e) {
-
+            Log.d("getFamilyMemberLocation", e.toString());
         }
 
         return null;
@@ -72,7 +97,7 @@ public class GetFamilyMemberLocation extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void v) {
-        delegate.processFinish(statuscode, coordinates, familyMemberId);
+        delegate.processFinish(statuscode, coordinates, familyMemberId, list);
     }
 
 
