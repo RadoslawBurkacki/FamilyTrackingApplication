@@ -42,8 +42,8 @@ public class Login extends AppCompatActivity implements LoginTask.AsyncResponse 
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
 
-        email.setText("1@1.pl");
-        password.setText("111111");
+      //  email.setText("1@1.pl");
+    //    password.setText("111111");
 
         btnlogin.setOnClickListener(new View.OnClickListener() { // action listener for login button
             @Override

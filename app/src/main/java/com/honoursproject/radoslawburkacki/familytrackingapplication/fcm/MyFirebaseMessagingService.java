@@ -2,9 +2,14 @@ package com.honoursproject.radoslawburkacki.familytrackingapplication.fcm;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -42,6 +47,7 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
         Log.d("FCM", "data received from FCM");
 
         if (remoteMessage.getData().size() > 0) { // data has been sent
+            playSoundandVib();
             Log.d("FCM", remoteMessage.getData().toString());
             if (remoteMessage.getData().containsKey("fromid") && remoteMessage.getData().containsKey("toid")
                     && remoteMessage.getData().containsKey("date")
@@ -88,6 +94,19 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
         }
 
         //showNotification(remoteMessage.getData().get("message"));
+    }
+
+    private void playSoundandVib(){
+        try {
+            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            v.vibrate(500);
+
+            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+            r.play();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void showSOSnotification(RemoteMessage remoteMessage){

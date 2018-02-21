@@ -41,7 +41,7 @@ public class Chat extends AppCompatActivity implements SendChatMessageTask.Async
     private User receiver;
     private String token;
 
-    private Date date = new Date();
+
     private DateFormat dateFormat = new SimpleDateFormat("dd/MMM/yyyy HH:mm:ss");
 
     List<Message> messages = new ArrayList<Message>();
@@ -77,7 +77,9 @@ public class Chat extends AppCompatActivity implements SendChatMessageTask.Async
                     }
                 });
 
-                Message m = new Message((long) 0, user.getId(), receiver.getId(), message.getText().toString(), dateFormat.format(date));
+
+
+                Message m = new Message((long) 0, user.getId(), receiver.getId(), message.getText().toString(), dateFormat.format(new Date()));
                 messages.add(m);    //display message
                 db.addMessage(m);   // save message to db
                 sendMessage(m);     // send message to server

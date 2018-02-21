@@ -31,24 +31,32 @@
                 android:id="@+id/btnjoinFamily"
                 android:background="@drawable/round_corners"
                 android:width="150dp"/>
-        <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:ems="10"
-                android:id="@+id/familyid"
-                android:layout_marginTop="95dp"
-                android:layout_below="@+id/title" android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" android:layout_marginLeft="26dp"
-                android:layout_marginStart="42dp"/>
 
         <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:ems="10"
-                android:layout_marginTop="50dp" android:id="@+id/familypassword" android:layout_below="@+id/familyid"
-                android:layout_alignLeft="@+id/familyid" android:layout_alignStart="@+id/familyid"/>
+            android:id="@+id/familyid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/title"
+            android:layout_marginLeft="26dp"
+            android:layout_marginStart="42dp"
+            android:layout_marginTop="95dp"
+            android:ems="10"
+            android:inputType="number"
+            android:text="1" />
+
+        <EditText
+            android:id="@+id/familypassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/familyid"
+            android:layout_alignStart="@+id/familyid"
+            android:layout_below="@+id/familyid"
+            android:layout_marginTop="50dp"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:text="111111" />
         <TextView
                 android:text="Please enter family unique number"
                 android:layout_width="wrap_content"
