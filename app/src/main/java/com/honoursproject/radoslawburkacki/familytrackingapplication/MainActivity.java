@@ -2,6 +2,7 @@ package com.honoursproject.radoslawburkacki.familytrackingapplication;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -20,15 +21,27 @@ public class MainActivity extends AppCompatActivity {
     Button btnlogin;
     Button btnregister;
 
-
     private ConstraintLayout constraintLayout;
     private AnimationDrawable animationDrawable;
 
+    public static final String MY_PREFS_NAME = "MyPrefsFile";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        SharedPreferences prefs;
+        prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+
+        if(prefs.contains("email")){
+            Intent intent = new Intent(MainActivity.this, Map.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            MainActivity.this.finish();
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         startBackgroundAnimation();
 

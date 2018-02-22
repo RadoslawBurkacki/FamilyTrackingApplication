@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">FamilyTrackingApplication</string>
-    <string name="title_activity_login">Sign in</string>
+    <string name="app_name" translatable="false">FamilyTrackingApplication</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -17,10 +16,22 @@
     <string name="title_activity_maps_activi_y">Map</string>
     <string name="title_activity_maps">MapMainScreen</string>
 
+
     <string name="open">Open</string>
     <string name="close">Close</string>
 
 
     <string name="familymembers">Family members</string>
 
+    <!-- Strings related to Map -->
+
+    <string name="last_seen">Last seen: </string>
+    <string name="ago">ago</string>
+    <string name="now">now</string>
+
+    <string name="years">years</string>
+    <string name="months">months</string>
+    <string name="days">days</string>
+    <string name="hours">hours</string>
+    <string name="minutes">minutes</string>
 </resources>

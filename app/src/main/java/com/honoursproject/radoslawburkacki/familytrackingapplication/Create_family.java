@@ -62,8 +62,11 @@ public class Create_family extends AppCompatActivity implements CreateFamilyTask
                     editor.putString("email", user.getEmail());
                     editor.apply();
 
+
                     Intent intent = new Intent(Create_family.this, Map.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
+                    Create_family.this.finish();
 
 
 

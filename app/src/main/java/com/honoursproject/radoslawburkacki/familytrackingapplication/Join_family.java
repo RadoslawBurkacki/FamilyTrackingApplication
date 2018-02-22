@@ -8,9 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.JoinFamilyTask;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
-
 
 
 public class Join_family extends AppCompatActivity implements JoinFamilyTask.AsyncResponse {
@@ -42,12 +42,9 @@ public class Join_family extends AppCompatActivity implements JoinFamilyTask.Asy
             @Override
             public void onClick(View view) { // when join button is pressed...
 
-
                 if (!familyid.getText().toString().equals("0") && !familyid.getText().toString().equals("") && familypassword.getText().toString().length() >= 6) {
 
-
                     JoinFamily();
-
 
                 }
 
@@ -76,7 +73,9 @@ public class Join_family extends AppCompatActivity implements JoinFamilyTask.Asy
             editor.apply();
 
             Intent intent = new Intent(Join_family.this, Map.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+            Join_family.this.finish();
 
 
         } else if (statuscode == 404) {

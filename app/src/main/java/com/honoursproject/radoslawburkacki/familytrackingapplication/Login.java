@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.LoginTask;
+import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.SendFCMTokenTask;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 
 
@@ -42,8 +44,8 @@ public class Login extends AppCompatActivity implements LoginTask.AsyncResponse 
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
 
-      //  email.setText("1@1.pl");
-    //    password.setText("111111");
+        email.setText("1@1.pl");
+        password.setText("111111");
 
         btnlogin.setOnClickListener(new View.OnClickListener() { // action listener for login button
             @Override
@@ -68,6 +70,9 @@ public class Login extends AppCompatActivity implements LoginTask.AsyncResponse 
             Toast.makeText(this, "Sorry server is currently offline.",
                     Toast.LENGTH_LONG).show();
         } else if (statuscode == 200) {   //authorization successful new token generated
+
+            SendFcmToken(user.getId(), token, FirebaseInstanceId.getInstance().getToken());
+
             this.token = token;
             this.statuscode = statuscode;
             this.user = user;
@@ -86,9 +91,10 @@ public class Login extends AppCompatActivity implements LoginTask.AsyncResponse 
                 editor.putString("email", user.getEmail());
                 editor.apply();
 
-
                 Intent intent = new Intent(Login.this, Map.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+                Login.this.finish();
 
 
             } else if (!isUserFamilyMember) { // User is not a member of any family go to family creation/join
@@ -104,6 +110,12 @@ public class Login extends AppCompatActivity implements LoginTask.AsyncResponse 
                     Toast.LENGTH_LONG).show();
         }
     }
+
+
+    public void SendFcmToken(Long userid, String token, String FCMtoken) {
+        new SendFCMTokenTask(userid, token, FCMtoken).execute();
+    }   // Start SendFcmToken Async Task
+
 
 
     public void login() {

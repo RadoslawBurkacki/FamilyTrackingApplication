@@ -24,6 +24,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.*;
+import android.widget.Button;
 import android.widget.Toast;
 
 
@@ -54,7 +55,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
     private static final String TAG = "MapActivity";
     private static final float DEFAULT_ZOOM = 15f;
 
-
+    private Button changeMaptype;
     private GoogleMap mMap;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -67,9 +68,12 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
     private String token;
 
     SharedPreferences prefs;
+    SharedPreferences.Editor editor;
+
     HashMap<Long, Marker> markerList = new HashMap<Long, Marker>();
 
     Menu menu;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +81,11 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         setContentView(R.layout.activity_map);
 
         prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+
+
+        changeMaptype = (Button) findViewById(R.id.changeMapType);
+
 
         token = prefs.getString("token", null);
 
@@ -103,8 +112,20 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
         Log.d("\n", FirebaseInstanceId.getInstance().getToken());
 
-        SendFcmToken(user.getId(), token, FirebaseInstanceId.getInstance().getToken());
 
+        changeMaptype.setOnClickListener(new View.OnClickListener() { // action listener for login button
+            @Override
+            public void onClick(View view) { // when login button is pressed then...
+                if (mMap.getMapType() == GoogleMap.MAP_TYPE_HYBRID) {
+                    mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                    editor.putString("maptype", "GoogleMap.MAP_TYPE_NORMAL");
+                } else {
+                    mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                    editor.putString("maptype", "GoogleMap.MAP_TYPE_HYBRID");
+                }
+                editor.commit();
+            }
+        });
 
     }
 
@@ -199,6 +220,13 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+        if (prefs.contains("maptype")) {
+            String a = prefs.getString("maptype", null);
+            if (a.equals("GoogleMap.MAP_TYPE_HYBRID")) {
+                mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            }
+        }
     }
 
     @Override
@@ -256,6 +284,32 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
             case R.id.nav_signout:
 
+                DialogInterface.OnClickListener dialogClickListenerSignOut = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case DialogInterface.BUTTON_POSITIVE:
+
+                                stopService(new Intent(getApplicationContext(), GPS_Service.class));
+                                SharedPreferences.Editor editor = prefs.edit();
+                                editor.clear();
+                                editor.commit();
+                                finish();
+                                System.exit(0);
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+
+                                break;
+                        }
+                    }
+                };
+
+                AlertDialog.Builder builderSignOut = new AlertDialog.Builder(this);
+                builderSignOut.setMessage("Would you like to sign out?").setPositiveButton("Yes", dialogClickListenerSignOut)
+                        .setNegativeButton("No", dialogClickListenerSignOut).show();
+
+
                 break;
 
             default:
@@ -306,13 +360,32 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         Family f = getFamilyFromSharedPreferences();
 
         for (User u : f.getFamilyMembers()) {
-              if (u.getId() == user.getId()) {
+            if (u.getId() == user.getId()) {
                 subMenu.add(Menu.NONE, (int) u.getId(), Menu.NONE, u.getFname() + " " + u.getLname() + " (Me)").setIcon(R.drawable.ic_gps_fixed_black_24dp);
                 continue;
             }
 
             subMenu.add(Menu.NONE, (int) u.getId(), Menu.NONE, u.getFname() + " " + u.getLname()).setIcon(R.mipmap.ic_location_on_black_24dp);
         }
+    }
+
+    public String getLastSeen(List<Integer> lastseenList) {
+        //lastseenList = [x(year),x(month),x(day),x(hour),x(min),x(sec)]
+
+        if (lastseenList.get(0) > 0) { // user has been seen atleast year ago
+            return getString(R.string.last_seen) + lastseenList.get(0) + " " + getString(R.string.years) + " " + getString(R.string.ago);
+        } else if (lastseenList.get(1) > 0) {   // user has been seen atleast month ago
+            return getString(R.string.last_seen) + lastseenList.get(1) + " " + getString(R.string.months) + " " + getString(R.string.ago);
+        } else if (lastseenList.get(2) > 0) {   // user has been seen atleast month ago
+            return getString(R.string.last_seen) + lastseenList.get(2) + " " + getString(R.string.days) + " " + getString(R.string.ago);
+        } else if (lastseenList.get(3) > 0) {   // user has been seen atleast month ago
+            return getString(R.string.last_seen) + lastseenList.get(3) + " " + getString(R.string.hours) + " " + getString(R.string.ago);
+        } else if (lastseenList.get(4) > 0) {   // user has been seen atleast month ago
+            return getString(R.string.last_seen) + lastseenList.get(4) + " " + getString(R.string.minutes) + " " + getString(R.string.ago);
+        } else {
+            return getString(R.string.last_seen) + " " + getString(R.string.now);
+        }
+
     }
 
     @Override
@@ -336,17 +409,12 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         return false;
     }
 
-
     // Below this line is the AsyncTask section
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void SendFcmToken(Long userid, String token, String FCMtoken) {
-        new SendFCMTokenTask(userid, token, FCMtoken).execute();
-    }
-
     public void getFamily() {
         new GetFamilyTask(this, user, token).execute();
-    }
+    }   // Start getFamily Async Task
 
     @Override
     public void processFinish(Family f) { // get family result
@@ -372,11 +440,11 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
             setUpDrawerMenu();
 
         }
-    }
+    }   // return from getFamily Async Task
 
     public void getFamilyMemberLocation(long familyMemberId) {
         new GetFamilyMemberLocation(this, token, familyMemberId).execute();
-    }
+    }  // Start getFamilyMemberLocation Async Task
 
     @Override
     public void processFinish(int statuscode, LatLng coordinates, long familyMemberId, List<Integer> list) {  // Gett family member location result
@@ -398,7 +466,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
             Marker marker = mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(coordinates.latitude, coordinates.longitude))
                     .title(trackedUserName)
-                    .snippet("Last seen:" + list.get(0) +list.get(1) + list.get(2) +list.get(3) + list.get(4) + list.get(5)));
+                    .snippet(getLastSeen(list)));
             marker.setVisible(true);
 
             markerList.put(familyMemberId, marker); // add marker to hash list
@@ -411,12 +479,11 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         }
 
 
-    }
-
+    }   // return from getFamilyMemberLocation Async Task
 
     public void sendSOS() {
         new SendSOSTask(this, user, token).execute();
-    }
+    } // Start SendSOS Async Task
 
     @Override
     public void processFinish(Integer statuscode) {
@@ -425,7 +492,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
                     Toast.LENGTH_LONG).show();
         }
 
-    }
+    }   // SensSOS return
 
 
 }
