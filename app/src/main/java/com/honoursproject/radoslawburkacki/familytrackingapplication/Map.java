@@ -110,7 +110,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
         getFamily();
 
-        Log.d("\n", FirebaseInstanceId.getInstance().getToken());
+        //Log.d("\n", FirebaseInstanceId.getInstance().getToken());
 
 
         changeMaptype.setOnClickListener(new View.OnClickListener() { // action listener for login button

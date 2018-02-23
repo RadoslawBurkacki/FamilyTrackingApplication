@@ -36,7 +36,7 @@ public class Create_family extends AppCompatActivity implements CreateFamilyTask
         token = (String) i.getSerializableExtra("token");
 
         familyname = (EditText) findViewById(R.id.txtFamilyName);
-        createfamily = (Button) findViewById(R.id.createFamily);
+        createfamily = (Button) findViewById(R.id.btnnext);
         pass = (EditText) findViewById(R.id.txtPassword);
         pass2 = (EditText) findViewById(R.id.txtRePassword);
 

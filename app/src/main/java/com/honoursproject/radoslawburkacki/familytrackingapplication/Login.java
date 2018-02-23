@@ -3,6 +3,8 @@ package com.honoursproject.radoslawburkacki.familytrackingapplication;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.AnimationDrawable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +26,9 @@ public class Login extends AppCompatActivity implements LoginTask.AsyncResponse 
     EditText email;
     EditText password;
 
+    private ConstraintLayout constraintLayout;
+    private AnimationDrawable animationDrawable;
+
     String token;
     User user;
     int statuscode;
@@ -39,6 +44,8 @@ public class Login extends AppCompatActivity implements LoginTask.AsyncResponse 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        startBackgroundAnimation();
 
         btnlogin = (Button) findViewById(R.id.btnlogin);
         email = (EditText) findViewById(R.id.email);
@@ -111,14 +118,37 @@ public class Login extends AppCompatActivity implements LoginTask.AsyncResponse 
         }
     }
 
-
     public void SendFcmToken(Long userid, String token, String FCMtoken) {
         new SendFCMTokenTask(userid, token, FCMtoken).execute();
     }   // Start SendFcmToken Async Task
 
-
-
     public void login() {
         new LoginTask(this, email.getText().toString(), password.getText().toString()).execute();
+    }
+
+    void startBackgroundAnimation(){
+        constraintLayout = (ConstraintLayout) findViewById(R.id.constraintLayout);
+        animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
+        animationDrawable.setEnterFadeDuration(2000);
+        animationDrawable.setExitFadeDuration(2000);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (animationDrawable != null && !animationDrawable.isRunning()) {
+            // start the animation
+            animationDrawable.start();
+        }
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (animationDrawable != null && animationDrawable.isRunning()) {
+            // stop the animation
+            animationDrawable.stop();
+        }
     }
 }

@@ -7,12 +7,20 @@
     <color name="colorDarkGrey">#696969</color>
 
 
+
+    <color name="mywhite">#DFE8FF</color>
+    <color name="greenbtn">#A6FF51</color>
+
     <color name="colorPurple_1">#a45af2</color>
     <color name="colorPurple_2">#6633ff</color>
 
 
     <color name="defaultblue">#0064d2</color>
     <color name="orange">#E87713</color>
+
+
+    <color name="colorBlue1">#3E4ABF</color>
+    <color name="colorBlue2">#4546FF</color>
 
 
     <color name="colorPurple_A400">#8f284e</color>

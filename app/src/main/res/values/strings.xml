@@ -23,6 +23,12 @@
 
     <string name="familymembers">Family members</string>
 
+
+    <!-- Strings related to Register -->
+    <string name="errpasswords">Passwords are not identical</string>
+    <string name="errpasswordtooshort">Password is too short</string>
+    <string name="erremail">Email is invalid</string>
+    <string name="errempty">Please fill in all boxes</string>
     <!-- Strings related to Map -->
 
     <string name="last_seen">Last seen: </string>

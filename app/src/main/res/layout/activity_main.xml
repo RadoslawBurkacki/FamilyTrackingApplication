@@ -18,7 +18,6 @@
             android:id="@+id/main">
 
         <Button
-                android:textColor="@color/colorDarkGrey"
                 android:textSize="18dp"
                 android:text="REGISTER"
                 android:layout_width="wrap_content"
@@ -31,7 +30,6 @@
 
 
         <Button
-                android:textColor="@color/colorDarkGrey"
                 android:textSize="18dp"
                 android:text="LOG IN"
                 android:layout_width="wrap_content"
@@ -42,14 +40,14 @@
                 android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"/>
 
         <TextView
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/mywhite"
                 android:textSize="14dp"
                 android:text="New user? Register for free."
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:layout_alignBottom="@+id/joinfamily"
                 android:layout_centerHorizontal="true" android:layout_marginBottom="49dp" android:id="@+id/textView"/>
         <TextView
-                android:textColor="@color/colorWhite"
+            android:textColor="@color/mywhite"
                 android:textSize="14dp"
                 android:text="Already a user?"
                 android:layout_width="wrap_content"

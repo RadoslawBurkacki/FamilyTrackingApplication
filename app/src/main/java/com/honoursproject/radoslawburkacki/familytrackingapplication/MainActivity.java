@@ -71,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
     void startBackgroundAnimation(){
         constraintLayout = (ConstraintLayout) findViewById(R.id.constraintLayout);
         animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
-        animationDrawable.setEnterFadeDuration(4000);
-        animationDrawable.setExitFadeDuration(4000);
+        animationDrawable.setEnterFadeDuration(2000);
+        animationDrawable.setExitFadeDuration(2000);
     }
 
     @Override
