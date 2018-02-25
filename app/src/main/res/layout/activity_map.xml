@@ -32,11 +32,11 @@
               tools:context="com.honoursproject.radoslawburkacki.familytrackingapplication.Map"
               android:name="com.google.android.gms.maps.SupportMapFragment">
 
-        <Button
+        <ImageButton
 
             android:id="@+id/changeMapType"
-            android:layout_width="38sp"
-            android:layout_height="38sp"
+            android:layout_width="41sp"
+            android:layout_height="41sp"
             android:layout_gravity="bottom|end"
             android:background="@mipmap/ic_satellite_black_24dp"
             />

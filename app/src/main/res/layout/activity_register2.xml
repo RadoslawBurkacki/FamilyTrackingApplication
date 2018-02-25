@@ -47,7 +47,7 @@
             android:layout_marginStart="42dp"
             android:layout_marginTop="95dp"
             android:background="@drawable/edittext"
-            android:ems="10"
+            android:ems="9"
             android:paddingBottom="3sp"
             android:paddingLeft="3sp"
             android:paddingTop="3sp"
@@ -75,7 +75,7 @@
             android:layout_alignStart="@+id/familyid"
             android:layout_below="@+id/familyid"
             android:layout_marginTop="50dp"
-            android:ems="10"
+            android:ems="9"
             android:inputType="textCapWords" />
 
         <TextView

@@ -10,6 +10,10 @@ import android.content.DialogInterface;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Build;
 import android.content.Intent;
@@ -26,6 +30,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.*;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 
@@ -56,7 +61,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
     private static final String TAG = "MapActivity";
     private static final float DEFAULT_ZOOM = 15f;
 
-    private Button changeMaptype;
+    private ImageButton changeMaptype;
     private GoogleMap mMap;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -85,7 +90,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
 
 
-        changeMaptype = (Button) findViewById(R.id.changeMapType);
+        changeMaptype = (ImageButton) findViewById(R.id.changeMapType);
 
 
         token = prefs.getString("token", null);
@@ -118,25 +123,35 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
                 if (mMap.getMapType() == GoogleMap.MAP_TYPE_HYBRID) {
                     mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                     editor.putString("maptype", "GoogleMap.MAP_TYPE_NORMAL");
+                    changeMaptype.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.mipmap.ic_satellite_black_24dp));
+
                 } else {
                     mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                     editor.putString("maptype", "GoogleMap.MAP_TYPE_HYBRID");
+                    // changeMaptype.setImageResource(android.R.drawable.alert_light_frame);
+                    // changeMaptype.setImageResource(R.mipmap.ic_satellite_white_24dp);
+                    changeMaptype.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.mipmap.ic_satellite_white_24dp));
                 }
                 editor.commit();
             }
         });
 
+        if (prefs.getString("maptype", "a").equals("GoogleMap.MAP_TYPE_HYBRID"))
+            changeMaptype.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.mipmap.ic_satellite_white_24dp));
+        else
+            changeMaptype.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.mipmap.ic_satellite_black_24dp));
+
+
     }
 
     private void startLocationService() {
 
-       // Intent i = new Intent(getApplicationContext(), GPS_Service.class);
-       // startService(i);
+        // Intent i = new Intent(getApplicationContext(), GPS_Service.class);
+        // startService(i);
 
         Intent i = new Intent(getApplicationContext(), FusedLocation_Service.class);
         startService(i);
-        moveCamera(new LatLng( 55.8751597, -4.2636893), DEFAULT_ZOOM);
-
+        moveCamera(new LatLng(55.8751597, -4.2636893), DEFAULT_ZOOM);
 
 
     }

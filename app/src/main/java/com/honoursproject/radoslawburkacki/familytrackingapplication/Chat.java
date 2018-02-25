@@ -70,23 +70,26 @@ public class Chat extends AppCompatActivity implements SendChatMessageTask.Async
 
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if (message.getText().toString().trim().length() > 0){
+                    listOfMessages.post(new Runnable() {
+                        public void run() {
+                            listOfMessages.setSelection(listOfMessages.getCount() - 1);
+                        }
+                    });
 
-                listOfMessages.post(new Runnable() {
-                    public void run() {
-                        listOfMessages.setSelection(listOfMessages.getCount() - 1);
-                    }
-                });
 
+                    Message m = new Message((long) 0, user.getId(), receiver.getId(), message.getText().toString(), dateFormat.format(new Date()));
+                    messages.add(m);    //display message
+                    db.addMessage(m);   // save message to db
+                    sendMessage(m);     // send message to server
+                    message.setText("");    //
 
+                    InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputManager.hideSoftInputFromWindow(message.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+                else {
 
-                Message m = new Message((long) 0, user.getId(), receiver.getId(), message.getText().toString(), dateFormat.format(new Date()));
-                messages.add(m);    //display message
-                db.addMessage(m);   // save message to db
-                sendMessage(m);     // send message to server
-                message.setText("");    //
-
-                InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputManager.hideSoftInputFromWindow(message.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                }
             }
         });
 
