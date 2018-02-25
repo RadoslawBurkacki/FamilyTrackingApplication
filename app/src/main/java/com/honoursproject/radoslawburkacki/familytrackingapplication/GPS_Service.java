@@ -1,5 +1,7 @@
 package com.honoursproject.radoslawburkacki.familytrackingapplication;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +13,8 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
@@ -53,6 +57,7 @@ public class GPS_Service extends Service implements SendCoordinatesTask.AsyncRes
 
     @Override
     public void onCreate() {
+        Log.d("aaaa", "err");
         SharedPreferences prefs;
         prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         this.token = prefs.getString("token", null);
@@ -99,7 +104,7 @@ public class GPS_Service extends Service implements SendCoordinatesTask.AsyncRes
 
         locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
 
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, listener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, listener);
 
 
     }

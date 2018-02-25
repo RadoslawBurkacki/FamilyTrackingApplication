@@ -85,6 +85,7 @@
         </activity>
 
         <service android:name=".GPS_Service"/>
+        <service android:name=".FusedLocation_Service"/>
 
         <activity android:name=".FamilyDetails">
         </activity>

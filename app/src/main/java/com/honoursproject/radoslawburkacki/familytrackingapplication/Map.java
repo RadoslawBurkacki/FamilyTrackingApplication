@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Build;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -110,8 +111,6 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
         getFamily();
 
-        //Log.d("\n", FirebaseInstanceId.getInstance().getToken());
-
 
         changeMaptype.setOnClickListener(new View.OnClickListener() { // action listener for login button
             @Override
@@ -131,11 +130,14 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
     private void startLocationService() {
 
-        Intent i = new Intent(getApplicationContext(), GPS_Service.class);
-        i.putExtra("userid", user.getId());
-        i.putExtra("token", token);
-        i.putExtra("familyid", family.getId());
+       // Intent i = new Intent(getApplicationContext(), GPS_Service.class);
+       // startService(i);
+
+        Intent i = new Intent(getApplicationContext(), FusedLocation_Service.class);
         startService(i);
+        moveCamera(new LatLng( 55.8751597, -4.2636893), DEFAULT_ZOOM);
+
+
 
     }
 
@@ -276,9 +278,11 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
             case R.id.nav_settings:
 
+
                 break;
 
             case R.id.nav_about:
+
 
                 break;
 
@@ -290,7 +294,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
                         switch (which) {
                             case DialogInterface.BUTTON_POSITIVE:
 
-                                stopService(new Intent(getApplicationContext(), GPS_Service.class));
+                                stopService(new Intent(getApplicationContext(), FusedLocation_Service.class));
                                 SharedPreferences.Editor editor = prefs.edit();
                                 editor.clear();
                                 editor.commit();
