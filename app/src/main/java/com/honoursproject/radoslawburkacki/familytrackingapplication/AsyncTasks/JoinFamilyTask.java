@@ -1,5 +1,13 @@
 package com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks;
 
+/**
+ * Radoslaw Burkacki Honours Project - Family Centre Application
+ *
+ * JoinFamilyTask
+ * This class is used to sent request to server, its sending a POST request to the server
+ * and which is used to attach new user to family.
+ */
+
 import android.os.AsyncTask;
 import android.util.Log;
 import com.google.gson.Gson;

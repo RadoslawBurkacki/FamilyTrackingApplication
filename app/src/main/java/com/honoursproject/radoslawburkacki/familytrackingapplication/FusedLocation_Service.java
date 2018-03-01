@@ -55,11 +55,13 @@ public class FusedLocation_Service extends Service implements SendCoordinatesTas
         return null;
     }
 
+    public static final String MY_PREFS_NAME = "FamilyCentreApplicationPrefFile";
+
     private GoogleApiClient mLocationClient;
     private Location mCurrentLocation;
     LocationRequest mLocationRequest;
 
-    public static final String MY_PREFS_NAME = "MyPrefsFile";
+
     private Long userid;
     private String token;
     private Long familyid;
@@ -110,6 +112,7 @@ public class FusedLocation_Service extends Service implements SendCoordinatesTas
             i.putExtra("Lat", location.getLatitude());
             i.putExtra("Long", location.getLongitude());
             sendBroadcast(i);
+            SendCoordinates(new LatLng(location.getLatitude(), location.getLongitude()));
         }
 
     }

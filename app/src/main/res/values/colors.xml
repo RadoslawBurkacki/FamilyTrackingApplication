@@ -17,12 +17,11 @@
 
 
     <color name="defaultblue">#0064d2</color>
-    <color name="orange">#E87713</color>
-
 
     <color name="colorBlue1">#3E4ABF</color>
     <color name="colorBlue2">#4546FF</color>
 
+    <color name="black">#000000</color>
 
     <color name="colorPurple_A400">#8f284e</color>
     <color name="colorPurple_900">#6821be</color>
@@ -41,4 +40,34 @@
     <color name="colorRed_A400">#FF1744</color>
     <color name="colorRed_900">#B71C1C</color>
 
+
+
+
+
+
+    <item name="azure" type="color">#5BAAF8</item>
+    <item name="blue" type="color">#5E54F6</item>
+    <item name="cyan" type="color">#51F6F7</item>
+    <item name="green" type="color">#53F653</item>
+    <item name="magnata" type="color">#F651F6</item>
+    <item name="orange" type="color">#F5A04B</item>
+    <item name="red" type="color">#F65353</item>
+    <item name="rose" type="color">#F54AA0</item>
+    <item name="violet" type="color">#A451F6</item>
+    <item name="yellow" type="color">#F5F549</item>
+
+    <integer-array name="androidcolors">
+        <item>@color/azure</item>
+        <item>@color/blue</item>
+        <item>@color/cyan</item>
+        <item>@color/green</item>
+        <item>@color/magnata</item>
+        <item>@color/orange</item>
+        <item>@color/red</item>
+        <item>@color/rose</item>*
+        <item>@color/violet</item>
+        <item>@color/yellow</item>
+    </integer-array>
+
 </resources>
+

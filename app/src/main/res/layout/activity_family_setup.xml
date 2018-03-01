@@ -23,7 +23,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="47dp"
-            android:text="Family Setup"
+            android:text="@string/titlefamsetup"
             android:textColor="@color/mywhite"
             android:textSize="36sp" />
 
@@ -38,7 +38,7 @@
             android:layout_marginBottom="50dp"
             android:width="335dp"
             android:background="@drawable/btnlogin"
-            android:text="Join family"
+            android:text="@string/btnjoinfamily"
             android:textSize="18dp" />
 
 
@@ -51,7 +51,7 @@
             android:layout_marginBottom="55dp"
             android:width="335dp"
             android:background="@drawable/btnlogin"
-            android:text="Create new family"
+            android:text="@string/btncreatefamily"
             android:textSize="18dp" />
 
         <TextView
@@ -61,7 +61,7 @@
             android:layout_alignBottom="@+id/joinfamily"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="49dp"
-            android:text="New user? Register for free."
+            android:text="@string/lbljoinfamily"
             android:textColor="@color/mywhite"
             android:textSize="14dp" />
 
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/createnewfamily"
             android:layout_centerHorizontal="true"
-            android:text="Already a user?"
+            android:text="@string/lblcreatefamily"
             android:textColor="@color/mywhite"
             android:textSize="14dp" />
     </RelativeLayout>

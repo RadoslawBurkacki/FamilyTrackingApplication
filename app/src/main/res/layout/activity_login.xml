@@ -8,99 +8,141 @@
     android:background="@drawable/avitivity_main_background"
     tools:context="com.honoursproject.radoslawburkacki.familytrackingapplication.Login">
 
-    <RelativeLayout
-        android:id="@+id/main"
-        android:layout_width="368dp"
-        android:layout_height="551dp"
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/title"
+
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edittext"
+        android:ems="9"
+        android:inputType="textEmailAddress"
+        android:paddingRight="3sp"
+        android:paddingBottom="3sp"
+        android:paddingLeft="3sp"
+        android:paddingTop="3sp"
+        android:textCursorDrawable="@drawable/color_cursor"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.353" />
+
+    <EditText
+        android:paddingRight="3sp"
+        android:id="@+id/password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/email"
+        android:layout_alignStart="@+id/email"
+        android:layout_below="@+id/textView8"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/edittext"
+        android:ems="9"
+        android:inputType="textPassword"
+        android:paddingBottom="3sp"
+        android:paddingLeft="3sp"
+        android:paddingTop="3sp"
+        android:textCursorDrawable="@drawable/color_cursor"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/login"
+        android:textColor="@color/mywhite"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.091" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView8"
+        android:layout_alignLeft="@+id/email"
+        android:layout_alignStart="@+id/email"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/lblenteremail"
+        android:textColor="@color/mywhite"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/email"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.313" />
 
 
-        <EditText
-            android:id="@+id/email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/title"
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/password"
+        android:layout_alignStart="@+id/password"
+        android:layout_below="@+id/email"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/lblenterpass"
+        android:textColor="@color/mywhite"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/password"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.44" />
 
-            android:layout_marginLeft="33dp"
-            android:layout_marginStart="42dp"
-            android:layout_marginTop="97dp"
-            android:background="@drawable/edittext"
-            android:ems="9"
-            android:inputType="textEmailAddress"
-            android:paddingBottom="3sp"
-            android:paddingLeft="3sp"
-            android:paddingTop="3sp"
-            android:textCursorDrawable="@drawable/color_cursor"
-            android:textSize="25sp" />
-
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/email"
-            android:layout_alignStart="@+id/email"
-            android:layout_below="@+id/textView8"
-            android:background="@drawable/edittext"
-            android:ems="9"
-            android:inputType="textPassword"
-            android:paddingBottom="3sp"
-            android:paddingLeft="3sp"
-            android:paddingTop="3sp"
-            android:textCursorDrawable="@drawable/color_cursor"
-            android:textSize="25sp" />
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="47dp"
-            android:text="Sign in"
-            android:textColor="@color/mywhite"
-            android:textSize="36sp" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/textView8"
-            android:layout_alignLeft="@+id/email"
-            android:layout_alignStart="@+id/email"
-            android:layout_marginBottom="39dp"
-            android:text="Please enter your email."
-            android:textColor="@color/mywhite" />
+    <Button
+        android:id="@+id/btnlogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/password"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="328dp"
+        android:width="150dp"
+        android:background="@drawable/btnlogin"
+        android:text="@string/login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.136" />
 
 
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/password"
-            android:layout_alignStart="@+id/password"
-            android:layout_below="@+id/email"
-            android:layout_marginTop="30dp"
-            android:text="Please enter your password."
-            android:textColor="@color/mywhite" />
-
-        <Button
-            android:id="@+id/btnlogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/password"
-            android:layout_marginEnd="39dp"
-            android:layout_marginRight="39dp"
-            android:layout_marginTop="26dp"
-            android:width="150dp"
-            android:background="@drawable/btnlogin"
-            android:text="Sign in" />
-
-    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

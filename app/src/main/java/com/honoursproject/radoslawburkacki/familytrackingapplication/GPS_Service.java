@@ -25,7 +25,7 @@ import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 
 public class GPS_Service extends Service implements SendCoordinatesTask.AsyncResponse {
 
-    public static final String MY_PREFS_NAME = "MyPrefsFile";
+    public static final String MY_PREFS_NAME = "FamilyCentreApplicationPrefFile";
 
     private LocationListener listener;
     private LocationManager locationManager;

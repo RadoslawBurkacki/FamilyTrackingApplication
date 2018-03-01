@@ -1,5 +1,7 @@
 package com.honoursproject.radoslawburkacki.familytrackingapplication;
 
+
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -8,13 +10,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.JoinFamilyTask;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 
 
 public class Join_family extends AppCompatActivity implements JoinFamilyTask.AsyncResponse {
-    public static final String MY_PREFS_NAME = "MyPrefsFile";
+    public static final String MY_PREFS_NAME = "FamilyCentreApplicationPrefFile";
+
     EditText familyid;
     EditText familypassword;
     Button joinfamily;
@@ -60,7 +62,7 @@ public class Join_family extends AppCompatActivity implements JoinFamilyTask.Asy
         this.statuscode = statuscode;
 
         if (statuscode == 201) {
-            Toast.makeText(this, "You have joined family.",
+            Toast.makeText(this, getResources().getString(R.string.msgjoinedfamily),
                     Toast.LENGTH_LONG).show();
 
 
@@ -79,13 +81,13 @@ public class Join_family extends AppCompatActivity implements JoinFamilyTask.Asy
 
 
         } else if (statuscode == 404) {
-            Toast.makeText(this, "Family does not exist",
+            Toast.makeText(this, getResources().getString(R.string.msgfamilydoesnotexist),
                     Toast.LENGTH_LONG).show();
         } else if (statuscode == 403) {
-            Toast.makeText(this, "Wrong family join password",
+            Toast.makeText(this, getResources().getString(R.string.msgwrongfamilypass),
                     Toast.LENGTH_LONG).show();
         } else if (statuscode == 409) {
-            Toast.makeText(this, "You are already a member of family",
+            Toast.makeText(this, getResources().getString(R.string.msgalreadyamember),
                     Toast.LENGTH_LONG).show();
         } else {
 

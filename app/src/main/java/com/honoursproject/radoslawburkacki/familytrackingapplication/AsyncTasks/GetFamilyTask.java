@@ -1,5 +1,13 @@
 package com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks;
 
+/**
+ * Radoslaw Burkacki Honours Project - Family Centre Application
+ *
+ * GetFamilyTask
+ * This class is used to sent request to server, its sending a GET request to the server and its passing
+ * email of the user in the uri, server is sending back a family object which contains all family members and family information
+ */
+
 import android.os.AsyncTask;
 import android.util.Log;
 import com.google.gson.Gson;
@@ -10,11 +18,10 @@ import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.ServerValues;
 import com.squareup.okhttp.*;
 
-
 public class GetFamilyTask extends AsyncTask<Void, Void, Void> {
 
     public interface AsyncResponse {
-        void processFinish(Family family);
+        void processFinish(Family family, int statuscode);
     }
 
     public GetFamilyTask.AsyncResponse delegate = null;
@@ -22,6 +29,7 @@ public class GetFamilyTask extends AsyncTask<Void, Void, Void> {
     User user;
     Family f;
     String token;
+    int statuscode;
 
     public GetFamilyTask(AsyncResponse delegate, User user, String token) {
         this.user = user;
@@ -47,6 +55,8 @@ public class GetFamilyTask extends AsyncTask<Void, Void, Void> {
 
             String jsonData = response.body().string();
 
+            statuscode = response.code();
+
             response.body().close();
 
             Gson gson = new Gson();
@@ -68,7 +78,7 @@ public class GetFamilyTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void v) {
-        delegate.processFinish(f);
+        delegate.processFinish(f,statuscode);
     }
 
 

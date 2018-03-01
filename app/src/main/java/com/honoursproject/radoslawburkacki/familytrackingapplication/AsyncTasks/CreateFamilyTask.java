@@ -1,12 +1,19 @@
 package com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks;
 
+/**
+ * Radoslaw Burkacki Honours Project - Family Centre Application
+ *
+ * CreateFamilyTask
+ * This class is used to sent request to server, its sending a POST request to server which is used
+ * to create ne family.
+ */
+
 import android.os.AsyncTask;
 import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.Family;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.ServerValues;
-
 import com.squareup.okhttp.*;
 
 

@@ -28,8 +28,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Chat extends AppCompatActivity implements SendChatMessageTask.AsyncResponse {
-    public static final String MY_PREFS_NAME = "MyPrefsFile";
-    private static final String TAG = "ChatActivity";
+    public static final String MY_PREFS_NAME = "FamilyCentreApplicationPrefFile";
 
     dbHandler db;
 

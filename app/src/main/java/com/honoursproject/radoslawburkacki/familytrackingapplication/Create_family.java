@@ -16,7 +16,8 @@ import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 
 
 public class Create_family extends AppCompatActivity implements CreateFamilyTask.AsyncResponse, GetFamilyTask.AsyncResponse {
-    public static final String MY_PREFS_NAME = "MyPrefsFile";
+    public static final String MY_PREFS_NAME = "FamilyCentreApplicationPrefFile";
+
     EditText familyname;
     Button createfamily;
     EditText pass;
@@ -82,9 +83,9 @@ public class Create_family extends AppCompatActivity implements CreateFamilyTask
     }
 
     @Override
-    public void processFinish(Family f) {
+    public void processFinish(Family f, int statuscode) {
 
-        final Toast toast = Toast.makeText(getBaseContext(), "Family created successfully\nFamily unique identifier is: " + f.getId() + ".\nDetails about family can be found in MyFamily tab",Toast.LENGTH_SHORT);
+        final Toast toast = Toast.makeText(getBaseContext(), getResources().getText(R.string.familycreated1)+"\n" +getResources().getText(R.string.familycreated2) +" "+ f.getId() + "\n" + getResources().getText(R.string.familycreated3),Toast.LENGTH_SHORT);
         toast.show();
         new CountDownTimer(10000, 1000)
         {

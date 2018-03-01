@@ -1,22 +1,30 @@
 package com.honoursproject.radoslawburkacki.familytrackingapplication;
 
+/**
+ * Radoslaw Burkacki Honours Project - Family Centre Application
+ *
+ * MainActivity
+ * This class is the starting point of the application. It is used to let user to pick either to login or register,
+ * it controls all the logic which is behind the UI which allows user to register or login. When the app is started
+ * it checks if user has login previously if so then autologin function is triggered, then it checks if used
+ * has changed the language if so then appropriate language is loaded.
+ */
+
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.drawable.AnimationDrawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
-
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.honoursproject.radoslawburkacki.familytrackingapplication.fcm.MyFirebaseInstanceIDService;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
+    public static final String MY_PREFS_NAME = "FamilyCentreApplicationPrefFile";
 
     Button btnlogin;
     Button btnregister;
@@ -24,27 +32,21 @@ public class MainActivity extends AppCompatActivity {
     private ConstraintLayout constraintLayout;
     private AnimationDrawable animationDrawable;
 
-    public static final String MY_PREFS_NAME = "MyPrefsFile";
+    SharedPreferences prefs;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        SharedPreferences prefs;
         prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
 
-        if(prefs.contains("email")){
-            Intent intent = new Intent(MainActivity.this, Map.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            MainActivity.this.finish();
-        }
+        setLanguage();
+        tryAutologin();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         startBackgroundAnimation();
-
 
         btnlogin = (Button) findViewById(R.id.createnewfamily);
         btnregister = (Button) findViewById(R.id.joinfamily);
@@ -68,7 +70,36 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    void startBackgroundAnimation(){
+    protected void tryAutologin(){
+        if (prefs.contains("email")) {
+            Intent intent = new Intent(MainActivity.this, Map.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            overridePendingTransition(0, 0);
+            startActivity(intent);
+            MainActivity.this.finish();
+        }
+    }
+
+    protected void setLanguage() {
+        prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+
+        String language = prefs.getString("language", "");
+
+        if(language.equals("")){
+
+        }else {
+            String languageToLoad = language;
+            Locale locale = new Locale(languageToLoad);
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config,
+                    getBaseContext().getResources().getDisplayMetrics());
+            this.setContentView(R.layout.activity_main);
+        }
+    }
+
+    protected void startBackgroundAnimation() {
         constraintLayout = (ConstraintLayout) findViewById(R.id.constraintLayout);
         animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
         animationDrawable.setEnterFadeDuration(2000);
@@ -93,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
             animationDrawable.stop();
         }
     }
-
 
 
 }

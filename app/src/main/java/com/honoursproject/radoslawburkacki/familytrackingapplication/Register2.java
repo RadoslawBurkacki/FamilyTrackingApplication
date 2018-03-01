@@ -1,5 +1,14 @@
 package com.honoursproject.radoslawburkacki.familytrackingapplication;
 
+/**
+ * Radoslaw Burkacki Honours Project - Family Centre Application
+ *
+ * Register2
+ * This class is allows user to register. It controls all the logic which is behind the UI which allows user to register.
+ * It gets data from user(firstname, lastname). When the create button is pressed POST request is sent to the server,
+ * this request is used to register user, this class awaits for the response from server, based on that it displays
+ * appropriate message (success/fail) then it goes back to Main Activity
+ */
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,8 +22,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.RegisterTask;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
-
-
 public class Register2 extends AppCompatActivity implements RegisterTask.AsyncResponse {
 
 
@@ -63,7 +70,7 @@ public class Register2 extends AppCompatActivity implements RegisterTask.AsyncRe
     }
 
     private void pleaseEnterCredentials(){
-        Toast.makeText(this,"Please enter first name and last name.",Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getResources().getText(R.string.msgplseneterfnamelnmae),Toast.LENGTH_LONG).show();
     }
 
     private boolean isNetworkAvailable() {
@@ -77,20 +84,20 @@ public class Register2 extends AppCompatActivity implements RegisterTask.AsyncRe
     public void processFinish(Integer statuscode) {
 
         if(!isNetworkAvailable()){
-            Toast.makeText(this, "Fail! Check your internet connection.",
+            Toast.makeText(this, getResources().getString(R.string.errconnection),
                     Toast.LENGTH_LONG).show();
         }
         else if (statuscode == 201) {
-            Toast.makeText(this, "Success! New account was created.",
+            Toast.makeText(this, getResources().getString(R.string.newacccreated),
                     Toast.LENGTH_LONG).show();
 
         } else if (statuscode == 409) {
-            Toast.makeText(this, "Fail! Email is already in use!",
+            Toast.makeText(this, getResources().getString(R.string.erremailinuse),
                     Toast.LENGTH_LONG).show();
 
         }
         else{
-            Toast.makeText(this, "Sorry. Our server is currently offline." + statuscode,
+            Toast.makeText(this, getResources().getString(R.string.errserveroff) + statuscode,
                     Toast.LENGTH_LONG).show();
         }
 

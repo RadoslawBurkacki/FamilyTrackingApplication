@@ -38,8 +38,7 @@
             android:layout_width="41sp"
             android:layout_height="41sp"
             android:layout_gravity="bottom|end"
-            android:background="@mipmap/ic_satellite_black_24dp"
-            />
+            android:background="@mipmap/ic_satellite_black_24dp" />
 
     </fragment>
 

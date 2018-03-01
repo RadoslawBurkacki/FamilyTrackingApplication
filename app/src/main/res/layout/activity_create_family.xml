@@ -23,7 +23,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="47dp"
-            android:text="Create new family"
+            android:text="@string/titlenewfamily"
             android:textColor="@color/mywhite"
             android:textSize="36sp" />
 
@@ -39,7 +39,7 @@
             android:layout_marginRight="45dp"
             android:width="150dp"
             android:background="@drawable/btnlogin"
-            android:text="Create" />
+            android:text="@string/btncreate" />
 
         <EditText
 
@@ -107,7 +107,7 @@
             android:layout_below="@+id/title"
             android:layout_marginLeft="2sp"
             android:layout_marginTop="77dp"
-            android:text="Family name"
+            android:text="@string/lblfamilyname"
             android:textColor="@color/mywhite" />
 
         <TextView
@@ -118,7 +118,7 @@
             android:layout_alignStart="@+id/txtPassword"
             android:layout_below="@+id/txtFamilyName"
             android:layout_marginTop="30dp"
-            android:text="Enter family password"
+            android:text="@string/lblenterfamilypass"
             android:textColor="@color/mywhite" />
 
         <TextView
@@ -129,10 +129,11 @@
             android:layout_alignStart="@+id/txtRePassword"
             android:layout_below="@+id/txtPassword"
             android:layout_marginTop="28dp"
-            android:text="Re-enter password"
+            android:text="@string/lblenterfamilyrepass"
             android:textColor="@color/mywhite" />
 
         <TextView
+
             android:id="@+id/textView13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -141,7 +142,7 @@
             android:layout_below="@+id/txtPassword"
             android:layout_marginLeft="12dp"
             android:layout_marginStart="12dp"
-            android:text="Use at least 6 characters."
+            android:text="@string/lbluse6char"
             android:textColor="@color/mywhite" />
 
         <TextView
@@ -151,7 +152,7 @@
             android:layout_alignLeft="@+id/textView13"
             android:layout_alignStart="@+id/textView13"
             android:layout_below="@+id/txtRePassword"
-            android:text="Use at least 6 characters."
+            android:text="@string/lbluse6char"
             android:textColor="@color/mywhite" />
 
     </RelativeLayout>

@@ -13,6 +13,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.support.design.widget.TabLayout;
 import android.util.Log;
 
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.Message;
@@ -27,7 +28,6 @@ public class dbHandler extends SQLiteOpenHelper {
     public static final String TOID = "to_id";
     public static final String MESSAGE = "message";
     public static final String DATE = "date";
-    private static final String DB_FULL_PATH = "/data/data/com.honoursproject.radoslawburkacki.familytrackingapplication/databases/messages.db";
 
 
     public dbHandler(Context context) {
@@ -126,6 +126,11 @@ public class dbHandler extends SQLiteOpenHelper {
         }
 
         return messagesList;
+    }
+
+    public void removeAllMesagess() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_MESSAGESS, null, null);
     }
 
 }

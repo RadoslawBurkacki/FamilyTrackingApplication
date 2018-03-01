@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.CustomAdapters.AdapterFamilyMember;
@@ -11,8 +12,7 @@ import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.Famil
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 
 public class PreChat extends AppCompatActivity {
-    public static final String MY_PREFS_NAME = "MyPrefsFile";
-    private final String TAG = "PreChat";
+    public static final String MY_PREFS_NAME = "FamilyCentreApplicationPrefFile";
 
     ListView listView;
 
@@ -48,12 +48,11 @@ public class PreChat extends AppCompatActivity {
         listView.setAdapter(customAdapter);
 
 
-        setTitle("Chat with:");
+        setTitle(getResources().getString(R.string.chatwith));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
 
 
                 Intent intent = new Intent(PreChat.this, Chat.class); // instance id? for recoognition of each unique chat??

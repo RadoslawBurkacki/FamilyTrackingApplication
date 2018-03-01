@@ -1,12 +1,19 @@
 package com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks;
 
+/**
+ * Radoslaw Burkacki Honours Project - Family Centre Application
+ *
+ * RegisterTask
+ * This class is used to sent request to server, its sending a POST request to the server
+ * and which is used to attach new user to family.
+ */
+
 import android.os.AsyncTask;
 import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.ServerValues;
-
 import com.squareup.okhttp.*;
 
 public class RegisterTask extends AsyncTask<User, String, Integer> {

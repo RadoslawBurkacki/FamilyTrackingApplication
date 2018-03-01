@@ -1,5 +1,14 @@
 package com.honoursproject.radoslawburkacki.familytrackingapplication;
 
+/**
+ * Radoslaw Burkacki Honours Project - Family Centre Application
+ *
+ * Register
+ * This class is allows user to register. It controls all the logic which is behind the UI which allows user to register.
+ * It gets data from user(email, password). When the next button is pressed it checks if the data is correct if its not
+ * then appropriate error message is displayed, if it is correct then it displays register2 activity
+ */
+
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,7 +16,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 
 

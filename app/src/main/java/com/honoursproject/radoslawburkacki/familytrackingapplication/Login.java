@@ -1,5 +1,19 @@
 package com.honoursproject.radoslawburkacki.familytrackingapplication;
 
+/**
+ * Radoslaw Burkacki Honours Project - Family Centre Application
+ *
+ * Login
+ * This class is used to allow user to login, it controls all the logic which is behind the UI
+ * which is used to get input from user. This class is mainly responsible for getting data from user
+ * (email and password) and sending it to server, based on response in can do various actions:
+ * 1. Display error message (no connection)
+ * 2. Display error message (wrong email/password)
+ * 3. Display error message (server off)
+ * 4. Login successful, if login is successful then another request to server is made
+ * it getting information if this user belongs to family if he does then map screen is displayed
+ * if not then family setup screen is displayed
+ */
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,28 +31,20 @@ import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.
 import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.SendFCMTokenTask;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 
-
 public class Login extends AppCompatActivity implements LoginTask.AsyncResponse {
+    protected static final String MY_PREFS_NAME = "FamilyCentreApplicationPrefFile";
 
-    public static final String MY_PREFS_NAME = "MyPrefsFile";
-
-    Button btnlogin;
-    EditText email;
-    EditText password;
+    private Button btnlogin;
+    private EditText email;
+    private EditText password;
 
     private ConstraintLayout constraintLayout;
     private AnimationDrawable animationDrawable;
 
-    String token;
-    User user;
-    int statuscode;
-    boolean isUserFamilyMember;
-
-    // to login the following steps must be made
-    // 1. validate user credentials
-    // 2. ger user instance
-    // 3. check if a user is a part of family - if he is then go to main screen if not then go to family creation
-
+    protected String token;
+    protected User user;
+    protected int statuscode;
+    protected boolean isUserFamilyMember;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +75,12 @@ public class Login extends AppCompatActivity implements LoginTask.AsyncResponse 
     public void processFinish(String token, int statuscode, User user, boolean isUserFamilyMember) {
 
         if (statuscode == 401) { // error 401 means that user has entered wrong credentials
-            Toast.makeText(this, "You have entered wrong email or password. Please try agaain.",
+            Toast.makeText(this, getResources().getText(R.string.errwrongcred),
                     Toast.LENGTH_LONG).show();
             email.setText("");
             password.setText("");
         } else if (statuscode == 0) { // server is offline
-            Toast.makeText(this, "Sorry server is currently offline.",
+            Toast.makeText(this, getResources().getText(R.string.errserveroff),
                     Toast.LENGTH_LONG).show();
         } else if (statuscode == 200) {   //authorization successful new token generated
 
@@ -84,7 +90,7 @@ public class Login extends AppCompatActivity implements LoginTask.AsyncResponse 
             this.statuscode = statuscode;
             this.user = user;
             this.isUserFamilyMember = isUserFamilyMember;
-            Toast.makeText(this, "Login successful",
+            Toast.makeText(this,  getResources().getText(R.string.loginsu),
                     Toast.LENGTH_LONG).show();
 
             if (isUserFamilyMember) { // User is already member of a family so open map screen
@@ -113,7 +119,7 @@ public class Login extends AppCompatActivity implements LoginTask.AsyncResponse 
             }
 
         } else {
-            Toast.makeText(this, "Error " + statuscode,
+            Toast.makeText(this, getResources().getText(R.string.error) +" "+ statuscode,
                     Toast.LENGTH_LONG).show();
         }
     }

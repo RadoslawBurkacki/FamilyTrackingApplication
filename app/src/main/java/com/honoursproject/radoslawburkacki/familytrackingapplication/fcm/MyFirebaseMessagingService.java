@@ -31,7 +31,7 @@ import com.honoursproject.radoslawburkacki.familytrackingapplication.R;
  */
 
 public class MyFirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
-    public static final String MY_PREFS_NAME = "MyPrefsFile";
+    public static final String MY_PREFS_NAME = "FamilyCentreApplicationPrefFile";
     private LocalBroadcastManager broadcaster;
     private dbHandler db;
 
@@ -111,12 +111,10 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
 
     private void showSOSnotification(RemoteMessage remoteMessage){
 
-        Log.d("FCM", "Displaying SOS notification");
-
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setAutoCancel(true)
-                .setContentTitle(remoteMessage.getData().get("sos")+": SOS!")
-                .setContentText(remoteMessage.getData().get("sos")+": SOS!")
+                .setContentTitle(getResources().getText(R.string.sosnotification))
+                .setContentText(remoteMessage.getData().get("sos"))
                 .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark);
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -127,28 +125,21 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
 
     private void showNewFamilyMemberNotification(String newFamilyMemberName) {
 
-        Log.d("FCM", "Displaying new family member notification");
-
-
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setAutoCancel(true)
-                .setContentTitle("New user has joined your family")
+                .setContentTitle(getResources().getText(R.string.newmembernotification))
                 .setContentText(newFamilyMemberName)
                 .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark);
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         manager.notify(0, builder.build());
-
     }
-
 
     private void showPMNotification(String message, String senderid, String toid, String date) {
 
         User sender = new User();
         User user = new User();
-
-        Log.d("FCM", "Displaying PM Notification");
 
         Family f = getFamilyFromSharedPreferences();
 
@@ -168,14 +159,13 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
         i.putExtra("user", user);
         i.putExtra("receiver", sender);
 
-
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setAutoCancel(true)
-                .setContentTitle("New chat message received")
+                .setContentTitle(getResources().getText(R.string.newchatmessagenotifcation))
                 .setContentText(message)
                 .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
                 .setContentIntent(pendingIntent);

@@ -6,7 +6,7 @@
     <item
         android:id="@+id/a"
         android:orderInCategory="10"
-        android:title="Family members tracking">
+        android:title="@string/drawerfamilymembertracking">
         <menu android:id="@+id/aa">
 
         </menu>
@@ -15,51 +15,51 @@
 
     <item
         android:orderInCategory="20"
-        android:title="Features">
+        android:title="@string/features">
         <menu>
             <item
                 android:id="@+id/nav_chat"
                 android:icon="@android:drawable/sym_action_chat"
-                android:title="Chat" />
+                android:title="@string/chat" />
 
             <item
                 android:id="@+id/nav_SOS"
                 android:icon="@mipmap/ic_call_made_black_24dp"
-                android:title="SOS" />
+                android:title="@string/sos" />
         </menu>
     </item>
 
 
     <item
         android:orderInCategory="30"
-        android:title="Family">
+        android:title="@string/family">
         <menu>
             <item
                 android:id="@+id/nav_myfamily"
                 android:icon="@mipmap/ic_people_black_24dp"
-                android:title="My Family" />
+                android:title="@string/myfamily" />
         </menu>
     </item>
 
 
     <item
         android:orderInCategory="40"
-        android:title="Other">
+        android:title="@string/other">
         <menu>
             <item
                 android:id="@+id/nav_settings"
                 android:icon="@mipmap/ic_settings_black_24dp"
-                android:title="Settings" />
+                android:title="@string/settings" />
 
             <item
                 android:id="@+id/nav_about"
                 android:icon="@mipmap/ic_info_black_24dp"
-                android:title="About" />
+                android:title="@string/about" />
 
             <item
                 android:id="@+id/nav_signout"
                 android:icon="@mipmap/ic_arrow_back_black_24dp"
-                android:title="Sign Out" />
+                android:title="@string/signout" />
         </menu>
     </item>
 

@@ -10,11 +10,6 @@ import android.content.DialogInterface;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
-import android.location.Location;
 import android.os.Build;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -22,42 +17,37 @@ import android.support.design.widget.NavigationView;
 import android.os.Bundle;
 
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.*;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
-import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.GetFamilyMemberLocation;
+import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.GetFamilyMemberLocationTask;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.GetFamilyTask;
-import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.SendFCMTokenTask;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks.SendSOSTask;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.Family;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
-import com.honoursproject.radoslawburkacki.familytrackingapplication.fcm.MyFirebaseInstanceIDService;
-import com.honoursproject.radoslawburkacki.familytrackingapplication.fcm.MyFirebaseMessagingService;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFamilyTask.AsyncResponse, GetFamilyMemberLocation.AsyncResponse, SendSOSTask.AsyncResponse, NavigationView.OnNavigationItemSelectedListener {
-    public static final String MY_PREFS_NAME = "MyPrefsFile";
+public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFamilyTask.AsyncResponse, GetFamilyMemberLocationTask.AsyncResponse, SendSOSTask.AsyncResponse, NavigationView.OnNavigationItemSelectedListener {
+    public static final String MY_PREFS_NAME = "FamilyCentreApplicationPrefFile";
+
     private static final String TAG = "MapActivity";
     private static final float DEFAULT_ZOOM = 15f;
 
@@ -104,7 +94,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         actionBarDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setTitle("Hello " + user.getFname());
+        setTitle(getResources().getString(R.string.hello) + " " + user.getFname());
 
         menu = navigationView.getMenu();
         setNavigationViewListner();
@@ -197,6 +187,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
                             Marker marker = mMap.addMarker(new MarkerOptions()
                                     .position(new LatLng((Double) intent.getExtras().get("Lat"), (Double) intent.getExtras().get("Long")))
                                     .title(user.getFname() + " " + user.getFname())
+                                    .icon(BitmapDescriptorFactory.defaultMarker(getMarkerColour((int) user.getId())))
                                     .snippet("xx"));
                             marker.setVisible(true);
 
@@ -278,8 +269,8 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
                 };
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
-                        .setNegativeButton("No", dialogClickListener).show();
+                builder.setMessage(getResources().getString(R.string.areyousure)).setPositiveButton(getResources().getString(R.string.yes), dialogClickListener)
+                        .setNegativeButton(getResources().getString(R.string.no), dialogClickListener).show();
 
                 break;
 
@@ -287,12 +278,16 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
                 Intent intentFamilyDetails = new Intent(Map.this, FamilyDetails.class);
                 intentFamilyDetails.putExtra("family", family);
+                intentFamilyDetails.putExtra("user", user);
                 startActivity(intentFamilyDetails);
 
                 break;
 
-            case R.id.nav_settings:
 
+            case R.id.nav_settings:
+                Intent settings = new Intent(Map.this, SettingsMenu.class);
+
+                startActivity(settings);
 
                 break;
 
@@ -311,7 +306,16 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
                                 stopService(new Intent(getApplicationContext(), FusedLocation_Service.class));
                                 SharedPreferences.Editor editor = prefs.edit();
-                                editor.clear();
+
+                                editor.remove("token");
+                                editor.remove("family");
+                                editor.remove("userid");
+                                editor.remove("email");
+                                editor.remove("token");
+                                editor.remove("fname");
+                                editor.remove("lname");
+
+
                                 editor.commit();
                                 finish();
                                 System.exit(0);
@@ -325,8 +329,8 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
                 };
 
                 AlertDialog.Builder builderSignOut = new AlertDialog.Builder(this);
-                builderSignOut.setMessage("Would you like to sign out?").setPositiveButton("Yes", dialogClickListenerSignOut)
-                        .setNegativeButton("No", dialogClickListenerSignOut).show();
+                builderSignOut.setMessage(getResources().getString(R.string.logoutmsg)).setPositiveButton(getResources().getString(R.string.yes), dialogClickListenerSignOut)
+                        .setNegativeButton(getResources().getString(R.string.no), dialogClickListenerSignOut).show();
 
 
                 break;
@@ -428,6 +432,40 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         return false;
     }
 
+    public Float getMarkerColour(int userid) {
+
+        String a = "colorForUser:" + userid;
+        Log.d("aaaa", a);
+
+
+        int i = prefs.getInt(a, 6);
+        Log.d("aaaa", i + "");
+        switch (i) {
+            case 0:
+                return BitmapDescriptorFactory.HUE_AZURE;
+            case 1:
+                return BitmapDescriptorFactory.HUE_BLUE;
+            case 2:
+                return BitmapDescriptorFactory.HUE_CYAN;
+            case 3:
+                return BitmapDescriptorFactory.HUE_GREEN;
+            case 4:
+                return BitmapDescriptorFactory.HUE_MAGENTA;
+            case 5:
+                return BitmapDescriptorFactory.HUE_ORANGE;
+            case 6:
+                return BitmapDescriptorFactory.HUE_RED;
+            case 7:
+                return BitmapDescriptorFactory.HUE_ROSE;
+            case 8:
+                return BitmapDescriptorFactory.HUE_VIOLET;
+            case 9:
+                return BitmapDescriptorFactory.HUE_YELLOW;
+
+        }
+        return (float) 6;
+    }
+
     // Below this line is the AsyncTask section
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -436,33 +474,40 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
     }   // Start getFamily Async Task
 
     @Override
-    public void processFinish(Family f) { // get family result
-        this.family = f;
-        Log.d(TAG, family.toString());
+    public void processFinish(Family f, int statuscode) { // get family result
 
-        if (f.getFamilyMembers().size() != 0) { // family has atleast 1 family member
+        if (statuscode != 0) {
 
-            saveFamilyToSharedPreferences(f);
+            this.family = f;
+            Log.d(TAG, family.toString());
 
-            if (isMyServiceRunning(GPS_Service.class)) {
-                Log.d(TAG, "gps service on");
-            } else {
-                Log.d(TAG, "gps service off");
-                if (!runtime_permissions()) {
-                    startLocationService();
-                    Log.d(TAG, "Starting location service");
+            if (f.getFamilyMembers().size() != 0) { // family has atleast 1 family member
+
+                saveFamilyToSharedPreferences(f);
+
+                if (isMyServiceRunning(GPS_Service.class)) {
+                    Log.d(TAG, "gps service on");
+                } else {
+                    Log.d(TAG, "gps service off");
+                    if (!runtime_permissions()) {
+                        startLocationService();
+                        Log.d(TAG, "Starting location service");
+                    }
                 }
-            }
 
-            Log.d(TAG, "Setting up drawer menu");
+                Log.d(TAG, "Setting up drawer menu");
 
-            setUpDrawerMenu();
+                setUpDrawerMenu();
+
+            } else
+                Toast.makeText(this, getResources().getText(R.string.errnetworkproblem),
+                        Toast.LENGTH_LONG).show();
 
         }
     }   // return from getFamily Async Task
 
     public void getFamilyMemberLocation(long familyMemberId) {
-        new GetFamilyMemberLocation(this, token, familyMemberId).execute();
+        new GetFamilyMemberLocationTask(this, token, familyMemberId).execute();
     }  // Start getFamilyMemberLocation Async Task
 
     @Override
@@ -482,9 +527,11 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
                 markerList.get(familyMemberId).setVisible(false);   // if true then remove marker
             }
 
+
             Marker marker = mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(coordinates.latitude, coordinates.longitude))
                     .title(trackedUserName)
+                    .icon(BitmapDescriptorFactory.defaultMarker(getMarkerColour((int) familyMemberId)))
                     .snippet(getLastSeen(list)));
             marker.setVisible(true);
 
@@ -493,7 +540,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
             marker.showInfoWindow();
 
         } else if (statuscode == 404) {
-            Toast.makeText(this, "We cant locate this user",
+            Toast.makeText(this, getResources().getString(R.string.errcantlocate),
                     Toast.LENGTH_LONG).show();
         }
 
@@ -507,7 +554,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
     @Override
     public void processFinish(Integer statuscode) {
         if (statuscode == 200) {
-            Toast.makeText(this, "SOS sent successfully",
+            Toast.makeText(this, getResources().getString(R.string.sossent),
                     Toast.LENGTH_LONG).show();
         }
 

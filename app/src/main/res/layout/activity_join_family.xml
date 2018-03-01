@@ -23,7 +23,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="47dp"
-            android:text="Join family"
+            android:text="@string/titlejoinfamily"
             android:textColor="@color/mywhite"
             android:textSize="36sp" />
 
@@ -40,7 +40,7 @@
             android:layout_marginRight="45dp"
             android:width="150dp"
             android:background="@drawable/btnlogin"
-            android:text="Join" />
+            android:text="@string/btnjoin" />
 
         <EditText
             android:id="@+id/familyid"
@@ -91,7 +91,7 @@
             android:layout_below="@+id/title"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="76dp"
-            android:text="Please enter family unique number"
+            android:text="@string/lblfamilyid"
             android:textColor="@color/mywhite" />
 
         <TextView
@@ -102,7 +102,7 @@
             android:layout_alignStart="@+id/familypassword"
             android:layout_below="@+id/familyid"
             android:layout_marginTop="30dp"
-            android:text="Please enter family password"
+            android:text="@string/lblfamilypass"
             android:textColor="@color/mywhite" />
 
 

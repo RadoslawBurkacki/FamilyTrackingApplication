@@ -24,7 +24,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="47dp"
-                    android:text="Create Account"
+                    android:text="@string/titlecreateacc"
                     android:textColor="@color/mywhite"
                     android:textSize="36sp" />
 
@@ -40,7 +40,7 @@
                     android:layout_marginRight="45dp"
                     android:width="150dp"
                     android:background="@drawable/btnlogin"
-                    android:text="NEXT" />
+                    android:text="@string/btnnext" />
 
                 <EditText
                     android:id="@+id/txtFamilyName"
@@ -104,7 +104,7 @@
                     android:layout_alignLeft="@+id/txtFamilyName"
                     android:layout_alignStart="@+id/txtFamilyName"
                     android:layout_marginBottom="39dp"
-                    android:text="Enter your email."
+                    android:text="@string/lblenteremail"
                     android:textColor="@color/mywhite" />
 
                 <TextView
@@ -115,7 +115,7 @@
                     android:layout_alignStart="@+id/txtPassword"
                     android:layout_below="@+id/txtFamilyName"
                     android:layout_marginTop="30dp"
-                    android:text="Enter your password."
+                    android:text="@string/lblenterpass"
                     android:textColor="@color/mywhite" />
 
                 <TextView
@@ -126,7 +126,7 @@
                     android:layout_alignStart="@+id/txtRePassword"
                     android:layout_below="@+id/txtPassword"
                     android:layout_marginTop="28dp"
-                    android:text="Re-enter password."
+                    android:text="@string/lblenterpass"
                     android:textColor="@color/mywhite" />
 
                 <TextView
@@ -138,7 +138,7 @@
                     android:layout_below="@+id/txtPassword"
                     android:layout_marginLeft="12dp"
                     android:layout_marginStart="12dp"
-                    android:text="Use at least 6 characters."
+                    android:text="@string/lbluse6char"
                     android:textColor="@color/mywhite" />
 
                 <TextView
@@ -148,7 +148,7 @@
                     android:layout_alignLeft="@+id/textView13"
                     android:layout_alignStart="@+id/textView13"
                     android:layout_below="@+id/txtRePassword"
-                    android:text="Use at least 6 characters."
+                    android:text="@string/lbluse6char"
                     android:textColor="@color/mywhite" />
 
         </RelativeLayout>

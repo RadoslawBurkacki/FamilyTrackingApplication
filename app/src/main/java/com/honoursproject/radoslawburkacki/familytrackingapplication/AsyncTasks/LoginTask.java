@@ -1,5 +1,13 @@
 package com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks;
 
+/**
+ * Radoslaw Burkacki Honours Project - Family Centre Application
+ *
+ * LoginTask
+ * This class is used to sent request to server, its sending 3 requests to the server POST, GET and HEAD.
+ * Its used to send login data from client to server and get the authentication token which will be used later to communicate.
+ */
+
 import android.os.AsyncTask;
 import android.util.Log;
 import com.google.gson.Gson;

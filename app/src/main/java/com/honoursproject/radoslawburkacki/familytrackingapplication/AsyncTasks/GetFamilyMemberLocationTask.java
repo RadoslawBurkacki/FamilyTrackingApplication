@@ -1,30 +1,34 @@
 package com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks;
 
+/**
+ * Radoslaw Burkacki Honours Project - Family Centre Application
+ *
+ * GetFamilyMemberLocationTask
+ * This class is used to sent request to server, its sending a GET request to the server and its passing
+ * user id in the uri then its getting location data of a user
+ */
+
+
 import android.os.AsyncTask;
 import android.util.Log;
-
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.ServerValues;
 import com.squareup.okhttp.*;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetFamilyMemberLocation extends AsyncTask<Void, Void, Void> {
+public class GetFamilyMemberLocationTask extends AsyncTask<Void, Void, Void> {
 
     public interface AsyncResponse {
         void processFinish(int statuscode, LatLng coordinates, long familyMemberId, List<Integer> list);
     }
 
-    public GetFamilyMemberLocation.AsyncResponse delegate = null;
+    public GetFamilyMemberLocationTask.AsyncResponse delegate = null;
 
     List<Integer> list = new ArrayList<>();
     int statuscode;
@@ -32,7 +36,7 @@ public class GetFamilyMemberLocation extends AsyncTask<Void, Void, Void> {
     long familyMemberId;
     LatLng coordinates;
 
-    public GetFamilyMemberLocation(AsyncResponse delegate, String token, long familyMemberId) {
+    public GetFamilyMemberLocationTask(AsyncResponse delegate, String token, long familyMemberId) {
         this.familyMemberId = familyMemberId;
         this.token = token;
         this.delegate = delegate;

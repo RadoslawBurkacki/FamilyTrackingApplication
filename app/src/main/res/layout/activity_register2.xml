@@ -24,7 +24,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="47dp"
-            android:text="Create Account"
+            android:text="@string/titlecreateacc"
             android:textSize="36sp" />
 
 
@@ -40,7 +40,7 @@
             android:layout_marginRight="45dp"
             android:width="150dp"
             android:background="@drawable/btnlogin"
-            android:text="CREATE" />
+            android:text="@string/btncreate" />
 
         <EditText
             android:layout_marginLeft="42dp"
@@ -86,7 +86,7 @@
             android:layout_alignLeft="@+id/familyid"
             android:layout_alignStart="@+id/familyid"
             android:layout_marginBottom="42dp"
-            android:text="Please enter your first name."
+            android:text="@string/lblenterfname"
             android:textColor="@color/mywhite" />
 
         <TextView
@@ -98,7 +98,7 @@
             android:layout_alignStart="@+id/familypassword"
             android:layout_below="@+id/familyid"
             android:layout_marginTop="30dp"
-            android:text="Please enter your last name." />
+            android:text="@string/lblenterlname"/>
 
 
     </RelativeLayout>

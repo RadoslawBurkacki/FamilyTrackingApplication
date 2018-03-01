@@ -19,7 +19,7 @@
 
         <Button
                 android:textSize="18dp"
-                android:text="REGISTER"
+                android:text="@string/register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/joinfamily"
@@ -31,7 +31,7 @@
 
         <Button
                 android:textSize="18dp"
-                android:text="LOG IN"
+                android:text="@string/login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="55dp" android:id="@+id/createnewfamily"
@@ -42,14 +42,14 @@
         <TextView
                 android:textColor="@color/mywhite"
                 android:textSize="14dp"
-                android:text="New user? Register for free."
+                android:text="@string/registerlbl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:layout_alignBottom="@+id/joinfamily"
                 android:layout_centerHorizontal="true" android:layout_marginBottom="49dp" android:id="@+id/textView"/>
         <TextView
             android:textColor="@color/mywhite"
                 android:textSize="14dp"
-                android:text="Already a user?"
+                android:text="@string/loginlbl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:layout_above="@+id/createnewfamily"
                 android:layout_centerHorizontal="true" android:id="@+id/textView2"/>
