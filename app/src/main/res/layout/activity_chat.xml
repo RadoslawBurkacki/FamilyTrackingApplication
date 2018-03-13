@@ -11,17 +11,17 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.honoursproject.radoslawburkacki.familytrackingapplication.Chat">
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/list_of_messages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="58dp"
         android:divider="@android:color/transparent"
-        android:dividerHeight="16dp"
+        android:dividerHeight="5dp"
         app:layout_constraintBottom_toTopOf="@+id/inputlayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"></ListView>
+        app:layout_constraintStart_toStartOf="parent"></android.support.v7.widget.RecyclerView>
 
     <View
         android:id="@+id/view"

@@ -9,6 +9,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -28,60 +30,71 @@ import java.util.Date;
 import java.util.List;
 
 public class Chat extends AppCompatActivity implements SendChatMessageTask.AsyncResponse {
-    public static final String MY_PREFS_NAME = "FamilyCentreApplicationPrefFile";
 
-    dbHandler db;
+    private dbHandler db;
 
-    FloatingActionButton fab;
-    EditText message;
-    ListView listOfMessages;
+
+    private AdapterChatMessage adapterChatMessage;
+
+    private FloatingActionButton fab;
+    private EditText message;
+    private RecyclerView listOfMessages;
 
     private User user;
     private User receiver;
     private String token;
 
-
     private DateFormat dateFormat = new SimpleDateFormat("dd/MMM/yyyy HH:mm:ss");
 
-    List<Message> messages = new ArrayList<Message>();
+    private List<Message> messages = new ArrayList<Message>();
 
+    private MyBroadcastReceiver myReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-
-        listOfMessages = (ListView) findViewById(R.id.list_of_messages);
+        listOfMessages = (RecyclerView) findViewById(R.id.list_of_messages);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         message = (EditText) findViewById(R.id.input);
         db = new dbHandler(this);
 
-        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(ServerValues.MY_PREFS_NAME, MODE_PRIVATE);
         token = prefs.getString("token", null);
 
         Intent i = getIntent();
         user = (User) i.getSerializableExtra("user");
         receiver = (User) i.getSerializableExtra("receiver");
 
-        setUpChat();
+        messages.add(new Message((long) 0, user.getId(), receiver.getId(), message.getText().toString(), dateFormat.format(new Date())));
 
+        setUpChat();
 
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (message.getText().toString().trim().length() > 0){
-                    listOfMessages.post(new Runnable() {
-                        public void run() {
-                            listOfMessages.setSelection(listOfMessages.getCount() - 1);
-                        }
-                    });
-
+                    //listOfMessages.post(new Runnable() {
+                     //   public void run() {
+                     //       listOfMessages.setSelection(listOfMessages.getCount() - 1);
+                    //    }
+                    //});
 
                     Message m = new Message((long) 0, user.getId(), receiver.getId(), message.getText().toString(), dateFormat.format(new Date()));
                     messages.add(m);    //display message
                     db.addMessage(m);   // save message to db
                     sendMessage(m);     // send message to server
                     message.setText("");    //
+
+                    int newMsgPosition = adapterChatMessage.getItemCount()-1;
+
+                    // Notify recycler view insert one new data.
+                    adapterChatMessage.notifyItemInserted(newMsgPosition);
+
+                    // Scroll RecyclerView to the last message.
+                    listOfMessages.scrollToPosition(newMsgPosition);
+
+
 
                     InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     inputManager.hideSoftInputFromWindow(message.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
@@ -92,11 +105,7 @@ public class Chat extends AppCompatActivity implements SendChatMessageTask.Async
             }
         });
 
-
     }
-
-
-    private MyBroadcastReceiver myReceiver;
 
     @Override
     public void onResume() {
@@ -123,7 +132,7 @@ public class Chat extends AppCompatActivity implements SendChatMessageTask.Async
     }
 
 
-    public void sendMessage(Message m) {
+    private void sendMessage(Message m) {
         new SendChatMessageTask(this, m, token).execute();
     }
 
@@ -131,7 +140,7 @@ public class Chat extends AppCompatActivity implements SendChatMessageTask.Async
     public void processFinish(int statuscode) {
     }
 
-    public void setUpChat() {
+    private void setUpChat() {
         messages.clear();
         setTitle(receiver.getFname() + " " + receiver.getLname());
 
@@ -148,15 +157,38 @@ public class Chat extends AppCompatActivity implements SendChatMessageTask.Async
 
 
 
-        AdapterChatMessage customAdapter = new AdapterChatMessage(this, R.layout.message, messages, user, receiver);
+        //AdapterChatMessage customAdapter = new AdapterChatMessage(this, R.layout.message, messages, user, receiver);
 
-        listOfMessages.setAdapter(customAdapter);
+        //listOfMessages.setAdapter(customAdapter);
 
-        listOfMessages.post(new Runnable() {
-            public void run() {
-                listOfMessages.setSelection(listOfMessages.getCount() - 1);
-            }
-        });
+       // listOfMessages.post(new Runnable() {
+      //      public void run() {
+       //         listOfMessages.setSelection(listOfMessages.getCount() - 1);
+       //     }
+      //  });
+
+
+
+        listOfMessages.setAdapter(adapterChatMessage = new AdapterChatMessage(this, messages,user,receiver));
+        listOfMessages.setLayoutManager(new LinearLayoutManager(this));
+
+
+        int newMsgPosition = adapterChatMessage.getItemCount()-1;
+
+        // Notify recycler view insert one new data.
+        adapterChatMessage.notifyItemInserted(newMsgPosition);
+
+        // Scroll RecyclerView to the last message.
+        listOfMessages.scrollToPosition(newMsgPosition);
+
+
+        
+        // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+       // linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+       // mMessageRecycler.setLayoutManager(linearLayoutManager);
+
+       // AdapterChatMessage menuRecAdapter = new AdapterChatMessage(this, messages,user,receiver);
+       // mMessageRecycler.setAdapter(menuRecAdapter);
 
 
     }

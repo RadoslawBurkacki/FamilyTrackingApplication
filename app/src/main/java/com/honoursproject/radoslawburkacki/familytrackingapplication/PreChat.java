@@ -12,14 +12,11 @@ import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.Famil
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 
 public class PreChat extends AppCompatActivity {
-    public static final String MY_PREFS_NAME = "FamilyCentreApplicationPrefFile";
 
-    ListView listView;
-
-    User user;
-    Family family;
-    String token;
-
+    private ListView listView;
+    private User user;
+    private Family family;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +25,7 @@ public class PreChat extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.familymemberlist);
 
-        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(ServerValues.MY_PREFS_NAME, MODE_PRIVATE);
         token = prefs.getString("token",null);
 
         Intent i = getIntent();

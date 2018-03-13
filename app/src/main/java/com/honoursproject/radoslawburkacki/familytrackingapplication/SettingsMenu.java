@@ -34,11 +34,11 @@ import java.util.Set;
 public class SettingsMenu extends AppCompatActivity {
     public static final String MY_PREFS_NAME = "FamilyCentreApplicationPrefFile";
 
-    ListView listView;
-    dbHandler db;
-    List<String> settings = new ArrayList<>();
-    List<String> settingsdesc = new ArrayList<>();
-    SharedPreferences.Editor editor;
+    private ListView listView;
+    private dbHandler db;
+    private List<String> settings = new ArrayList<>();
+    private List<String> settingsdesc = new ArrayList<>();
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -150,12 +150,12 @@ public class SettingsMenu extends AppCompatActivity {
 
     }
 
-    public void saveLanguageToSharedpref(String arg) {
+    private void saveLanguageToSharedpref(String arg) {
         editor.putString("language", arg);
         editor.apply();
     }
 
-    public void setUpSettings() {
+    private void setUpSettings() {
         settings.add(getResources().getString(R.string.settingmarkerseset));
         settingsdesc.add(getResources().getString(R.string.settingmarkerdesc));
         settings.add(getResources().getString(R.string.language));
