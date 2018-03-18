@@ -48,6 +48,8 @@ public class Join_family extends AppCompatActivity implements JoinFamilyTask.Asy
 
                     JoinFamily();
 
+                }else{
+                    displayErrMsg();
                 }
 
 
@@ -55,6 +57,10 @@ public class Join_family extends AppCompatActivity implements JoinFamilyTask.Asy
         });
     }
 
+    private void displayErrMsg(){
+        Toast.makeText(this, "Make sure that all boxes are filled in correctly.",
+                Toast.LENGTH_LONG).show();
+    }
 
     @Override
     public void processFinish(int statuscode) {

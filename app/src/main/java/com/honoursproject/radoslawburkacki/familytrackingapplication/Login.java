@@ -66,9 +66,16 @@ public class Login extends AppCompatActivity implements LoginTask.AsyncResponse 
 
                 if (password.length() >= 6 && android.util.Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()) {  // if passwords lenght is at least 6 characters and email is correct then...
                     login(); // call function to login, login function includes: 1. authenticating user, 2. getting user instance, 3. checking if user is a member of family
+                }else{
+                    displayErrMsg();
                 }
             }
         });
+    }
+
+    private void displayErrMsg(){
+        Toast.makeText(this, "Make sure that all boxes are filled in correctly.",
+                Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -132,7 +139,7 @@ public class Login extends AppCompatActivity implements LoginTask.AsyncResponse 
         new LoginTask(this, email.getText().toString(), password.getText().toString()).execute();
     }
 
-    void startBackgroundAnimation(){
+    private void startBackgroundAnimation(){
         constraintLayout = (ConstraintLayout) findViewById(R.id.constraintLayout);
         animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
         animationDrawable.setEnterFadeDuration(2000);

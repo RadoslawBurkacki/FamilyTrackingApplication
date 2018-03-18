@@ -24,12 +24,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
         String token = FirebaseInstanceId.getInstance().getToken();
 
-        registerToken(token);
     }
 
-    private void registerToken(String token) { // send token to server
 
-
-
-    }
 }

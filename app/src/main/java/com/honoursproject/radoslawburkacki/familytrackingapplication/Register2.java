@@ -105,7 +105,7 @@ public class Register2 extends AppCompatActivity implements RegisterTask.AsyncRe
     }
 
     public void register() {
-        new RegisterTask(this, newUser).execute();
+        new RegisterTask(this,getApplicationContext(), newUser).execute();
     }
 
 

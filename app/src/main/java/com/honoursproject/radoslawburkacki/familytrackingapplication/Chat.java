@@ -156,19 +156,6 @@ public class Chat extends AppCompatActivity implements SendChatMessageTask.Async
         }
 
 
-
-        //AdapterChatMessage customAdapter = new AdapterChatMessage(this, R.layout.message, messages, user, receiver);
-
-        //listOfMessages.setAdapter(customAdapter);
-
-       // listOfMessages.post(new Runnable() {
-      //      public void run() {
-       //         listOfMessages.setSelection(listOfMessages.getCount() - 1);
-       //     }
-      //  });
-
-
-
         listOfMessages.setAdapter(adapterChatMessage = new AdapterChatMessage(this, messages,user,receiver));
         listOfMessages.setLayoutManager(new LinearLayoutManager(this));
 
@@ -180,15 +167,6 @@ public class Chat extends AppCompatActivity implements SendChatMessageTask.Async
 
         // Scroll RecyclerView to the last message.
         listOfMessages.scrollToPosition(newMsgPosition);
-
-
-        
-        // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-       // linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-       // mMessageRecycler.setLayoutManager(linearLayoutManager);
-
-       // AdapterChatMessage menuRecAdapter = new AdapterChatMessage(this, messages,user,receiver);
-       // mMessageRecycler.setAdapter(menuRecAdapter);
 
 
     }

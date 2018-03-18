@@ -422,17 +422,17 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         super.onRestoreInstanceState(savedInstanceState);
     }
 
-    private boolean isMyServiceRunning(Class<?> GPS_Service) {
+    private boolean isMyServiceRunning(Class<?> FusedLocation_Service) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (GPS_Service.getName().equals(service.service.getClassName())) {
+            if (FusedLocation_Service.getName().equals(service.service.getClassName())) {
                 return true;
             }
         }
         return false;
     }
 
-    public Float getMarkerColour(int userid) {
+    private Float getMarkerColour(int userid) {
 
         String a = "colorForUser:" + userid;
         Log.d("aaaa", a);
@@ -485,7 +485,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
                 saveFamilyToSharedPreferences(f);
 
-                if (isMyServiceRunning(GPS_Service.class)) {
+                if (isMyServiceRunning(FusedLocation_Service.class)) {
                     Log.d(TAG, "gps service on");
                 } else {
                     Log.d(TAG, "gps service off");

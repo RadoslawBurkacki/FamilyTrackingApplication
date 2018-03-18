@@ -69,16 +69,24 @@ public class Create_family extends AppCompatActivity implements CreateFamilyTask
                     startActivity(intent);
                     Create_family.this.finish();
 
+                }
+
+                else {
+                    displayErrMsg();
+                }
 
 
                 }
-
-            }
         });
 
     }
 
-    void GetFamily() {
+    private void displayErrMsg(){
+        Toast.makeText(this, "Make sure that all boxes are filled in correctly.",
+                Toast.LENGTH_LONG).show();
+    }
+
+    private void GetFamily() {
         new GetFamilyTask(this, user, token).execute();
     }
 
@@ -107,7 +115,7 @@ public class Create_family extends AppCompatActivity implements CreateFamilyTask
     }
 
 
-    void createNewFamily() {
+    private void createNewFamily() {
         new CreateFamilyTask(this, newFamily, token).execute();
     }
 

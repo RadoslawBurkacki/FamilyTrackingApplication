@@ -8,6 +8,7 @@ package com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks
  * and which is used to attach new user to family.
  */
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -16,13 +17,18 @@ import com.google.gson.JsonObject;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.R;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.ServerValues;
+import com.mklimek.sslutilsandroid.SslUtils;
 
 import java.security.KeyStore;
 import java.security.SecureRandom;
+import java.util.Collections;
+import java.util.concurrent.TimeUnit;
 
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
@@ -38,10 +44,12 @@ public class RegisterTask extends AsyncTask<User, String, Integer> {
     public AsyncResponse delegate = null;
     int statuscode;
     User newUser;
+    Context context;
 
-    public RegisterTask(AsyncResponse delegate, User newUser) {
+    public RegisterTask(AsyncResponse delegate,Context context, User newUser) {
         this.newUser = newUser;
         this.delegate = delegate;
+        this.context =context;
     }
 
     @Override
@@ -49,6 +57,7 @@ public class RegisterTask extends AsyncTask<User, String, Integer> {
 
         final MediaType jsonMediaType = MediaType.parse("application/json");
         try {
+
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("id", newUser.getId());
             jsonObject.addProperty("email", newUser.getEmail());
@@ -66,6 +75,7 @@ public class RegisterTask extends AsyncTask<User, String, Integer> {
                     .addHeader("content-type", "application/json")
                     .build();
 
+
             Response response = client.newCall(request).execute();
 
             statuscode = response.code();
@@ -74,11 +84,15 @@ public class RegisterTask extends AsyncTask<User, String, Integer> {
 
             response.body().close();
 
+
+
         } catch (Exception e) {
             Log.d("https", e.toString());
         }
         return statuscode;
     }
+
+
 
 
     @Override
