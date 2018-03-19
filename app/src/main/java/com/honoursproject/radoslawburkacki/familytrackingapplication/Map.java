@@ -196,9 +196,28 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
                         }
 
                     } else if (intent.getAction().toString().equals("newUserJoinedFamily")) {
-
+                        getFamily();
+                    } else if (intent.getAction().toString().equals("userremoved")) {
                         getFamily();
                     }
+                    else if (intent.getAction().toString().equals("ihavebeenremoved")) {
+                        stopService(new Intent(getApplicationContext(), FusedLocation_Service.class));
+                        SharedPreferences.Editor editor = prefs.edit();
+
+                        editor.remove("token");
+                        editor.remove("family");
+                        editor.remove("userid");
+                        editor.remove("email");
+                        editor.remove("token");
+                        editor.remove("fname");
+                        editor.remove("lname");
+
+
+                        editor.commit();
+                        finish();
+                        System.exit(0);
+                    }
+
 
 
                 }
@@ -207,7 +226,9 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
         Log.d("aaa", "register new receiver");
         IntentFilter filterRefreshUpdate = new IntentFilter();
         filterRefreshUpdate.addAction("newUserJoinedFamily");
+        filterRefreshUpdate.addAction("userremoved");
         filterRefreshUpdate.addAction("location_update");
+        filterRefreshUpdate.addAction("ihavebeenremoved");
 
         registerReceiver(broadcastReceiver, filterRefreshUpdate);
     }
@@ -279,6 +300,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
                 Intent intentFamilyDetails = new Intent(Map.this, FamilyDetails.class);
                 intentFamilyDetails.putExtra("family", family);
                 intentFamilyDetails.putExtra("user", user);
+                intentFamilyDetails.putExtra("token", token);
                 startActivity(intentFamilyDetails);
 
                 break;

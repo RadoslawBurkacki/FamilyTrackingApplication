@@ -76,7 +76,6 @@
             android:theme="@style/Map"
             android:windowSoftInputMode="stateHidden" />
 
-        <service android:name=".GPS_Service" />
         <service android:name=".FusedLocation_Service" />
 
         <activity

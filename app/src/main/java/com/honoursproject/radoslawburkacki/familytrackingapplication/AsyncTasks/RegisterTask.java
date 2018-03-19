@@ -80,14 +80,14 @@ public class RegisterTask extends AsyncTask<User, String, Integer> {
 
             statuscode = response.code();
 
-            Log.d("https", statuscode + response.body().toString());
+            Log.d("http", statuscode + response.body().toString());
 
             response.body().close();
 
 
 
         } catch (Exception e) {
-            Log.d("https", e.toString());
+            Log.d("http", e.toString());
         }
         return statuscode;
     }

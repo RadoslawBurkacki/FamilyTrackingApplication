@@ -75,7 +75,6 @@
             android:paddingBottom="3sp"
             android:paddingLeft="3sp"
             android:paddingTop="3sp"
-            android:text="111111"
             android:textCursorDrawable="@drawable/color_cursor"
             android:textSize="25sp" />
 
@@ -94,7 +93,6 @@
             android:paddingBottom="3sp"
             android:paddingLeft="3sp"
             android:paddingTop="3sp"
-            android:text="111111"
             android:textCursorDrawable="@drawable/color_cursor"
             android:textSize="25sp" />
 

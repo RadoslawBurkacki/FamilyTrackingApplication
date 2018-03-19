@@ -42,11 +42,6 @@ public class Register2 extends AppCompatActivity implements RegisterTask.AsyncRe
         lname = (EditText) findViewById(R.id.familypassword);
         create = (Button) findViewById(R.id.btncreate);
 
-         fname.setText("first name");
-         lname.setText("last name");
-
-
-
         create.setOnClickListener(new View.OnClickListener() {
 
             @Override

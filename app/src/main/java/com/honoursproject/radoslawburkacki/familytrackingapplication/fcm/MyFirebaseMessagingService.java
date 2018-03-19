@@ -34,11 +34,16 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
     public static final String MY_PREFS_NAME = "FamilyCentreApplicationPrefFile";
     private LocalBroadcastManager broadcaster;
     private dbHandler db;
+    User user;
+    SharedPreferences prefs;
 
     @Override
     public void onCreate() {
         db = new dbHandler(this);
         broadcaster = LocalBroadcastManager.getInstance(this);
+
+        prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        user = new User(prefs.getLong("userid", 0), prefs.getString("email", null), "", prefs.getString("fname", null), prefs.getString("lname", null));
     }
 
     @Override
@@ -91,9 +96,38 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
             else if(remoteMessage.getData().containsKey("sos")){
                 showSOSnotification(remoteMessage);
             }
+            else if(remoteMessage.getData().containsKey("firstname") &&remoteMessage.getData().containsKey("lastname") &&remoteMessage.getData().containsKey("userid") ){
+                showFamilyMemberRemovedNotification(remoteMessage);
+                if(user.getId()==Long.parseLong(remoteMessage.getData().get("userid"))){
+                    Intent z = new Intent("ihavebeenremoved");
+                    sendBroadcast(z);
+                }else{
+                    Intent z = new Intent("userremoved");
+                    sendBroadcast(z);
+                }
+
+            }
         }
 
-        //showNotification(remoteMessage.getData().get("message"));
+    }
+
+    private void showFamilyMemberRemovedNotification(RemoteMessage rm){
+        String msg="User has been removed from family:";
+        String msg2=rm.getData().get("firstname") +" " +rm.getData().get("lastname");
+        if(user.getId()==Long.parseLong(rm.getData().get("userid"))){
+            msg ="You have been removed from family";
+            msg2 = "";
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setAutoCancel(true)
+                .setContentTitle(msg)
+                .setContentText(msg2 )
+                .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark);
+
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        manager.notify(0, builder.build());
     }
 
     private void playSoundandVib(){
