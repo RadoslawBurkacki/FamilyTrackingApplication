@@ -16,7 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.ServerValues;
-import com.squareup.okhttp.*;
+import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class GetFamilyMemberLocationTask extends AsyncTask<Void, Void, Void> {
 
 
         try {
-            OkHttpClient client = new OkHttpClient();
+            OkHttpClient client = ServerValues.getOkHttpClient();
 
             Request request = new Request.Builder()
                     .url(ServerValues.SERVER_ADDRESS + "/families/location/" + familyMemberId)

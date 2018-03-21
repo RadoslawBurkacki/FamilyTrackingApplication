@@ -1,5 +1,16 @@
 package com.honoursproject.radoslawburkacki.familytrackingapplication;
 
+import java.security.cert.CertificateException;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
+import okhttp3.OkHttpClient;
+
 /**
  * Radoslaw Burkacki Honours Project - Family Centre Application
  *
@@ -10,14 +21,47 @@ package com.honoursproject.radoslawburkacki.familytrackingapplication;
  */
 
 public class ServerValues {
-    final public static String SERVER_ADDRESS = "http://86.27.89.213:1000";
+    final public static String SERVER_ADDRESS = "https://86.27.89.213:1000";
     public static final String MY_PREFS_NAME = "FamilyCentreApplicationPrefFile";
-    //https://familycentre.herokuapp.com/
-    //"http://86.27.89.213:1000"
-    //http://192.168.0.13:2000
-    //http://192.168.0.10:2000
 
-    // DESKTOP - AIzaSyA8O1o30Gj-QbCrG3OgApPFDcrthVPD2_w
-    // LAPTOP ubu - AIzaSyBY0mBfDVmxpFT_IKFVsxTJIIjSVIQKDNg
+    public static OkHttpClient getOkHttpClient() {
+        try {
+
+            final TrustManager[] trustAllCerts = new TrustManager[] {
+                    new X509TrustManager() {
+                        @Override
+                        public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                        }
+
+                        @Override
+                        public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+                        }
+
+                        @Override
+                        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                            return new java.security.cert.X509Certificate[]{};
+                        }
+                    }
+            };
+
+            final SSLContext sslContext = SSLContext.getInstance("SSL");
+            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+            final SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+
+            OkHttpClient.Builder builder = new OkHttpClient.Builder();
+            builder.sslSocketFactory(sslSocketFactory, (X509TrustManager)trustAllCerts[0]);
+            builder.hostnameVerifier(new HostnameVerifier() {
+                @Override
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            });
+
+            OkHttpClient okHttpClient = builder.build();
+            return okHttpClient;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

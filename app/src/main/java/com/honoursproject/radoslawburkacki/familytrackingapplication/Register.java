@@ -37,10 +37,6 @@ public class Register extends AppCompatActivity {
         pass2 = (EditText) findViewById(R.id.txtRePassword);
         btnnext = (Button) findViewById(R.id.btnnext);
 
-        email.setText("1@1.pl");
-        pass.setText("111111");
-        pass2.setText("111111");
-
         btnnext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

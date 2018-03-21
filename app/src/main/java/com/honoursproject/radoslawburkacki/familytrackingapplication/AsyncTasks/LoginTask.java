@@ -16,8 +16,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.ServerValues;
-import com.squareup.okhttp.*;
-
+import okhttp3.*;
 
 
 public class LoginTask extends AsyncTask<Void, Void, String> {
@@ -52,7 +51,8 @@ public class LoginTask extends AsyncTask<Void, Void, String> {
 
             RequestBody requestBody = RequestBody.create(jsonMediaType, new Gson().toJson(jsonObject));
 
-            OkHttpClient client = new OkHttpClient();
+            okhttp3.OkHttpClient client = ServerValues.getOkHttpClient();
+
 
             Request request = new Request.Builder()
                     .url(ServerValues.SERVER_ADDRESS + "/login")

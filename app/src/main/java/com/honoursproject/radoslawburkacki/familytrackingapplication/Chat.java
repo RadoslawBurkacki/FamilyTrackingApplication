@@ -74,11 +74,9 @@ public class Chat extends AppCompatActivity implements SendChatMessageTask.Async
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (message.getText().toString().trim().length() > 0){
-                    //listOfMessages.post(new Runnable() {
-                     //   public void run() {
-                     //       listOfMessages.setSelection(listOfMessages.getCount() - 1);
-                    //    }
-                    //});
+
+
+                    messages.add(new Message((long) 0, 2, 1, "Hello test message 2", dateFormat.format(new Date())));
 
                     Message m = new Message((long) 0, user.getId(), receiver.getId(), message.getText().toString(), dateFormat.format(new Date()));
                     messages.add(m);    //display message
@@ -154,6 +152,7 @@ public class Chat extends AppCompatActivity implements SendChatMessageTask.Async
             messages.add(cn);
 
         }
+
 
 
         listOfMessages.setAdapter(adapterChatMessage = new AdapterChatMessage(this, messages,user,receiver));

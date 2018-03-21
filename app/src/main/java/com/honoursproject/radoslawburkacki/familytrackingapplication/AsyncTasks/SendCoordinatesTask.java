@@ -7,7 +7,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.ServerValues;
-import com.squareup.okhttp.*;
+import okhttp3.*;
 
 public class SendCoordinatesTask extends AsyncTask<Void, Void, Void> {
 
@@ -41,7 +41,7 @@ public class SendCoordinatesTask extends AsyncTask<Void, Void, Void> {
 
             RequestBody requestBody = RequestBody.create(jsonMediaType, new Gson().toJson(jsonObject));
 
-            OkHttpClient client = new OkHttpClient();
+            OkHttpClient client = ServerValues.getOkHttpClient();
 
             Request request = new Request.Builder()
                     .url(ServerValues.SERVER_ADDRESS + "/families/location/" + userid)

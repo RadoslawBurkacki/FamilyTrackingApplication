@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.squareup.okhttp.*;
+import okhttp3.*;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.ServerValues;
 
@@ -41,7 +41,8 @@ public class DeleteUserFromFamilyTask extends AsyncTask<Void, Void, Void> {
             jsonObject.addProperty("familyId", familyid);
             jsonObject.addProperty("familyPassword", "none");
             jsonObject.addProperty("userId", newUser.getId());
-            OkHttpClient client = new OkHttpClient();
+
+            OkHttpClient client = ServerValues.getOkHttpClient();
 
             RequestBody requestBody = RequestBody.create(jsonMediaType, new Gson().toJson(jsonObject));
 

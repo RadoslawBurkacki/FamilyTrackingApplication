@@ -16,7 +16,7 @@ import com.google.gson.JsonParser;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.Family;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.ServerValues;
-import com.squareup.okhttp.*;
+import okhttp3.*;
 
 public class GetFamilyTask extends AsyncTask<Void, Void, Void> {
 
@@ -42,7 +42,7 @@ public class GetFamilyTask extends AsyncTask<Void, Void, Void> {
 
         try {
 
-            OkHttpClient client = new OkHttpClient();
+            OkHttpClient client = ServerValues.getOkHttpClient();
 
             Request request = new Request.Builder()
                     .url(ServerValues.SERVER_ADDRESS + "/families/by-user-id/"+user.getId())

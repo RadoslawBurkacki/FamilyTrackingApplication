@@ -6,26 +6,10 @@ package com.honoursproject.radoslawburkacki.familytrackingapplication.AsyncTasks
 
 import android.os.AsyncTask;
 import android.util.Log;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
 import com.honoursproject.radoslawburkacki.familytrackingapplication.ServerValues;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
+import okhttp3.*;
 
-import android.os.AsyncTask;
-import android.util.Log;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.honoursproject.radoslawburkacki.familytrackingapplication.Model.User;
-import com.honoursproject.radoslawburkacki.familytrackingapplication.ServerValues;
-
-import com.squareup.okhttp.*;
 
 public class SendSOSTask extends AsyncTask<Void, Void, Void> {
 
@@ -48,7 +32,7 @@ public class SendSOSTask extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... param) {
 
         try {
-            OkHttpClient client = new OkHttpClient();
+            OkHttpClient client = ServerValues.getOkHttpClient();
 
             Request request = new Request.Builder()
                     .url(ServerValues.SERVER_ADDRESS + "/sos/" + user.getId())
