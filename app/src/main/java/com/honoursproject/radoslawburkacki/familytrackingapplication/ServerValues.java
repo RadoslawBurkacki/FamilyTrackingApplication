@@ -21,7 +21,7 @@ import okhttp3.OkHttpClient;
  */
 
 public class ServerValues {
-    final public static String SERVER_ADDRESS = "https://86.27.89.213:1000";
+    final public static String SERVER_ADDRESS = "https://192.168.0.10:1000";        // server ip
     public static final String MY_PREFS_NAME = "FamilyCentreApplicationPrefFile";
 
     public static OkHttpClient getOkHttpClient() {

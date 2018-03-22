@@ -188,7 +188,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
                                     .position(new LatLng((Double) intent.getExtras().get("Lat"), (Double) intent.getExtras().get("Long")))
                                     .title(user.getFname() + " " + user.getFname())
                                     .icon(BitmapDescriptorFactory.defaultMarker(getMarkerColour((int) user.getId())))
-                                    .snippet("xx"));
+                                    .snippet(""));
                             marker.setVisible(true);
 
                             markerList.put(user.getId(), marker);
@@ -315,6 +315,8 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback, GetFam
 
             case R.id.nav_about:
 
+                Toast.makeText(getBaseContext(),"This application was developed as my honours project. Created by: Radoslaw Burkacki, B00309449",
+                        Toast.LENGTH_SHORT).show();
 
                 break;
 

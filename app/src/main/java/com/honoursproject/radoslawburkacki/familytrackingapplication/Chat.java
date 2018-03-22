@@ -75,9 +75,6 @@ public class Chat extends AppCompatActivity implements SendChatMessageTask.Async
             public void onClick(View v) {
                 if (message.getText().toString().trim().length() > 0){
 
-
-                    messages.add(new Message((long) 0, 2, 1, "Hello test message 2", dateFormat.format(new Date())));
-
                     Message m = new Message((long) 0, user.getId(), receiver.getId(), message.getText().toString(), dateFormat.format(new Date()));
                     messages.add(m);    //display message
                     db.addMessage(m);   // save message to db
